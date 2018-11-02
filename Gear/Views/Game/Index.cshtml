@@ -1,7 +1,124 @@
-﻿
+﻿@model Gear.Models.Game
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Game";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>GamePageStart</h2>
-<h3>Tadas Kalvaitis</h3>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    .screenshot {
+        list-style-type: none;
+    }
+
+        .screenshot li {
+            float: left;
+            list-style-type: none;
+            text-align: center;
+            border: 5px;
+            margin: 5px;
+        }
+
+            .screenshot li img {
+                width: 110px;
+                height: auto;
+                cursor: pointer;
+            }
+
+    .screenshotBox {
+        height: 70px;
+        width: 620px;
+        overflow: auto;
+        white-space: nowrap;
+    }
+
+    .left {
+        width: 60%;
+        display: inline-block;
+    }
+
+    .right {
+        width: 39%;
+        display: inline-block;
+    }
+
+
+
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+    }
+
+    .row {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    @@media screen and (max-width: 1200px) {
+        .column {
+            width: 100%;
+        }
+    }
+</style>
+
+<script type="text/javascript">
+
+    function showImage(imgPath) {
+        var curImage = document.getElementById('currentImg');
+        curImage.src = imgPath;
+        curImage.alt = imgPath;
+    }
+
+
+    function getId(url) {
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        var match = url.match(regExp);
+
+        if (match && match[2].length == 11) {
+            return match[2];
+        } else {
+            return 'error';
+        }
+    }
+
+</script>
+
+<h2>@Model.Name</h2>
+
+<div class=" row">
+    <div class="column 1">
+
+        <img id="currentImg" src="~/Content/images/witcher.jpg" alt="witcher.jpg" title="Witcher">
+
+        <div class="screenshotBox">
+            <div class="screenshot">
+                <li><img src="~/Content/images/witcher.jpg" onclick="showImage('../Content/images/witcher.jpg');" data-pin-nopin="true"></li>
+                <li><img src="~/Content/images/witcher1.jpg" onclick="showImage('../Content/images/witcher1.jpg');" data-pin-nopin="true"></li>
+                <li><img src="~/Content/images/witcher2.jpg" onclick="showImage('../Content/images/witcher2.jpg');" data-pin-nopin="true"></li>
+                <li><img src="~/Content/images/witcher3.jpg" onclick="showImage('../Content/images/witcher3.jpg');" data-pin-nopin="true"></li>
+                <li><img src="~/Content/images/witcher4.jpg" onclick="showImage('../Content/images/witcher4.jpg');" data-pin-nopin="true"></li>
+                <li><img src="~/Content/images/witcher5.jpg" onclick="showImage('../Content/images/witcher5.jpg');" data-pin-nopin="true"></li>
+                <li><img src="~/Content/images/witcher6.jpg" onclick="showImage('../Content/images/witcher6.jpg');" data-pin-nopin="true"></li>
+                <li><img src="~/Content/images/witcher7.jpg" onclick="showImage('../Content/images/witcher7.jpg');" data-pin-nopin="true"></li>
+            </div>
+        </div>
+        <br>
+        <h1>About Game:</h1>
+        <b>@Model.Description</b>
+    </div>
+
+    <div class="column 2">
+        <iframe style="position: relative; margin: 30px; top: -50px;" class="videoplayer" src="https://player.twitch.tv/?channel=amdee__" height="215" width="460" allowfullscreen"></iframe>
+        <iframe style="position: relative; margin: 30px; top: -100px;" width="460" height="215" onload="this.onload=null; this.src='//www.youtube.com/embed/' + getId('https://www.youtube.com/embed/XHrskkHf958');" allowfullscreen></iframe>
+
+        <b style="position: relative; margin: 30px; top: -110px;"> Developer:</b><br>
+        <b style="position: relative; margin: 30px; top: -110px;"> Relese date:</b><br>
+        <b style="position: relative; margin: 30px; top: -110px;"> Average score:</b><br>
+        <b style="position: relative; margin: 30px; top: -110px;"> Tagas:</b><br>
+        <center>
+            <font size="7"><b style="position: relative; top: -90px; margin: 10px;"> Price: 30$</b></font>
+            <input style="height: 50px; width: 100px; position: relative; top: -100px;" id="Button1" type="button" value="To cart" />
+        </center>
+    </div>
+</div>
