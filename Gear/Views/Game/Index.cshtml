@@ -6,59 +6,84 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-    .screenshot {
-        list-style-type: none;
+    .image-showcase {
+        height: 394px;
+        width: 700px;
+        margin-bottom: 5px;
     }
 
-        .screenshot li {
-            float: left;
-            list-style-type: none;
-            text-align: center;
-            border: 5px;
-            margin: 5px;
-        }
-
-            .screenshot li img {
-                width: 110px;
-                height: auto;
-                cursor: pointer;
-            }
-
-    .screenshotBox {
-        height: 70px;
-        width: 620px;
+    /*Sensitive values for width and height*/
+    .image-menu {
+        height: 125px;
+        width: 700px;
         overflow: auto;
         white-space: nowrap;
     }
 
-    .left {
-        width: 60%;
-        display: inline-block;
-    }
-
-    .right {
-        width: 39%;
-        display: inline-block;
-    }
-
-
-
-    .column {
-        float: left;
-        width: 50%;
-        padding: 10px;
-    }
-
-    .row {
-        content: "";
-        display: table;
-        clear: both;
-    }
-
-    @@media screen and (max-width: 1200px) {
-        .column {
-            width: 100%;
+        .image-menu img {
+            margin-top: 5px;
+            width: 172px;
+            height: 97px;
+            cursor: pointer;
         }
+
+    .info-text {
+        
+    }
+
+    .video-player {
+        position: relative;
+        width: 460px;
+        height: 259px;
+    }
+
+    .content-head{
+        display:grid;
+        grid-auto-columns: auto;
+    }
+
+    .image-wrapper {
+        grid-column: 1;
+    }
+
+    .video-player-wrapper {
+        grid-column: 2;
+        text-align:right;
+    }
+
+    .cart-button-wrapper{
+        border-radius: 5px;
+        background-color:black;
+        width: fit-content;
+    }
+
+    .cart-button-wrapper span {
+        font-size: 15px;
+        color: white;
+        margin: 5px;
+    }
+
+    .cart-button-wrapper input {
+        margin:2px;
+    }
+
+    .info-wrapper {
+        display: grid;
+    }
+
+    .info-developer {
+        grid-column: 1;
+    }
+
+    .cart-button-wrapper {
+        grid-column: 2;
+        align-self:start;
+        justify-self:right;
+        margin-right:3px;
+    }
+
+    .info-extensive {
+        grid-column: 1/3;
     }
 </style>
 
@@ -84,41 +109,47 @@
 
 </script>
 
-<h2>@Model.Name</h2>
+<div class="row">
+    <h2>@Model.Name</h2>
+    <div class="content-head">
+        <div class="image-wrapper">
+            <img class="image-showcase" id="currentImg" src="~/Content/images/witcher.jpg" alt="witcher.jpg" title="Witcher">
 
-<div class=" row">
-    <div class="column 1">
-
-        <img id="currentImg" src="~/Content/images/witcher.jpg" alt="witcher.jpg" title="Witcher">
-
-        <div class="screenshotBox">
-            <div class="screenshot">
-                <li><img src="~/Content/images/witcher.jpg" onclick="showImage('../Content/images/witcher.jpg');" data-pin-nopin="true"></li>
-                <li><img src="~/Content/images/witcher1.jpg" onclick="showImage('../Content/images/witcher1.jpg');" data-pin-nopin="true"></li>
-                <li><img src="~/Content/images/witcher2.jpg" onclick="showImage('../Content/images/witcher2.jpg');" data-pin-nopin="true"></li>
-                <li><img src="~/Content/images/witcher3.jpg" onclick="showImage('../Content/images/witcher3.jpg');" data-pin-nopin="true"></li>
-                <li><img src="~/Content/images/witcher4.jpg" onclick="showImage('../Content/images/witcher4.jpg');" data-pin-nopin="true"></li>
-                <li><img src="~/Content/images/witcher5.jpg" onclick="showImage('../Content/images/witcher5.jpg');" data-pin-nopin="true"></li>
-                <li><img src="~/Content/images/witcher6.jpg" onclick="showImage('../Content/images/witcher6.jpg');" data-pin-nopin="true"></li>
-                <li><img src="~/Content/images/witcher7.jpg" onclick="showImage('../Content/images/witcher7.jpg');" data-pin-nopin="true"></li>
+            <div class="image-menu">
+                <img src="~/Content/images/witcher.jpg" onclick="showImage('../Content/images/witcher.jpg');" data-pin-nopin="true">
+                <img src="~/Content/images/witcher1.jpg" onclick="showImage('../Content/images/witcher1.jpg');" data-pin-nopin="true">
+                <img src="~/Content/images/witcher2.jpg" onclick="showImage('../Content/images/witcher2.jpg');" data-pin-nopin="true">
+                <img src="~/Content/images/witcher3.jpg" onclick="showImage('../Content/images/witcher3.jpg');" data-pin-nopin="true">
+                <img src="~/Content/images/witcher4.jpg" onclick="showImage('../Content/images/witcher4.jpg');" data-pin-nopin="true">
+                <img src="~/Content/images/witcher5.jpg" onclick="showImage('../Content/images/witcher5.jpg');" data-pin-nopin="true">
+                <img src="~/Content/images/witcher6.jpg" onclick="showImage('../Content/images/witcher6.jpg');" data-pin-nopin="true">
+                <img src="~/Content/images/witcher7.jpg" onclick="showImage('../Content/images/witcher7.jpg');" data-pin-nopin="true">
             </div>
         </div>
-        <br>
-        <h1>About Game:</h1>
-        <b>@Model.Description</b>
+        <div class="video-player-wrapper">
+            <iframe class="video-player" onload="this.onload=null; this.src='//www.youtube.com/embed/' + getId('https://www.youtube.com/embed/XHrskkHf958');" allowfullscreen></iframe>
+            <iframe class="video-player" src="https://player.twitch.tv/?channel=amdee__" allowfullscreen></iframe>
+        </div>
+        <div class="info-wrapper">
+            <div class="info-developer">
+                <span class="info-text"> Developer:</span><br>
+                <span class="info-text"> Relese date:</span><br>
+                <span class="info-text"> Average score:</span><br>
+                <span class="info-text"> Tags:</span><br>
+            </div>
+            <div class="cart-button-wrapper">
+                <span>30€</span>
+                <input class="cart-button" id="add-to-cart" type="button" value="Add to Cart" />
+            </div>
+            <div class="info-extensive">
+                <h1>About Game:</h1>
+                <span>@Model.Description</span>
+            </div>
+        </div>
     </div>
 
-    <div class="column 2">
-        <iframe style="position: relative; margin: 30px; top: -50px;" class="videoplayer" src="https://player.twitch.tv/?channel=amdee__" height="215" width="460" allowfullscreen"></iframe>
-        <iframe style="position: relative; margin: 30px; top: -100px;" width="460" height="215" onload="this.onload=null; this.src='//www.youtube.com/embed/' + getId('https://www.youtube.com/embed/XHrskkHf958');" allowfullscreen></iframe>
-
-        <b style="position: relative; margin: 30px; top: -110px;"> Developer:</b><br>
-        <b style="position: relative; margin: 30px; top: -110px;"> Relese date:</b><br>
-        <b style="position: relative; margin: 30px; top: -110px;"> Average score:</b><br>
-        <b style="position: relative; margin: 30px; top: -110px;"> Tagas:</b><br>
-        <center>
-            <font size="7"><b style="position: relative; top: -90px; margin: 10px;"> Price: 30$</b></font>
-            <input style="height: 50px; width: 100px; position: relative; top: -100px;" id="Button1" type="button" value="To cart" />
-        </center>
+    <!--Naudoti jei nebereik grid-->
+    <div class="content-tail">
+        
     </div>
 </div>
