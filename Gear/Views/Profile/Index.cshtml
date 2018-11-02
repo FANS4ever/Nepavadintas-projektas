@@ -1,7 +1,86 @@
-﻿
+﻿@model Gear.Models.User
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ProfilePageStart</h2>
-<h3>Karolis Stončius</h3>
+<html>
+<head>
+    <title> Profile </title>
+    <style>
+        .profile{
+            
+        }
+        .profil-sidebar{
+            text-align: right;
+
+        }
+        .profile-user-pic {
+      
+            
+        }
+        .profile-user-title {
+
+        }
+        .profile-user-name{
+
+        }
+        .btn-primary, .btn-primary:active, .btn-primary:visited {
+            background-color: #dcdcdc !important;
+            border-color: #dcdcdc !important;
+            color: #000000 !important;
+            font-weight: bold;
+        }
+        .btn-primary:hover {
+            background-color: #b1abab !important;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Profile</h1>
+    </header>
+
+    <div class="container">
+        <div class="row profile">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-5">
+
+            </div>
+            <div class="col-md-3">
+                <div class="profil-sidebar">
+                    <div class="profile-user-pic">
+                        <img src="@Url.Content(Model.Avatar)" class="img-fluid" alt="Avatar" style="width: 100px; height: 100px">
+                    </div>
+                    <div class="profile-user-title">
+                        <div class="profile-user-username">
+                            @Model.Username
+                        </div>
+                        <div class="profile-user-name">
+                            @Model.Name @Model.Surname
+                        </div>
+                        <div class="profile-user-email">
+                            @Model.Email
+                        </div>
+                    </div>
+                    <div class="btn-group-vertical button">
+                        <button class="btn btn-primary">Edit profile</button>
+                        <button class="btn btn-primary">Login with Facebook</button>
+                        <button class="btn btn-primary">Chat room</button>
+                        <button class="btn btn-primary">Shopping cart</button>
+                    </div>
+                    <div class="profile-use-menu">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
