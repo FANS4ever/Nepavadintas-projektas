@@ -151,6 +151,28 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\ChatRoom.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\Discount.cs" />
+    <Compile Include="Models\File.cs" />
+    <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\GameCode.cs" />
+    <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\Marker.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\Payment.cs" />
+    <Compile Include="Models\PaymentMethod.cs" />
+    <Compile Include="Models\Picture.cs" />
+    <Compile Include="Models\Receipt.cs" />
+    <Compile Include="Models\Traffic.cs" />
+    <Compile Include="Models\UserGameLibrary.cs" />
+    <Compile Include="Models\UserType.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\Warning.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -195,7 +217,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
