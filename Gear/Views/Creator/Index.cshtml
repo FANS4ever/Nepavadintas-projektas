@@ -1,8 +1,47 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
-<h2>CreatorPageStart</h2>
-<h3>Gabrielius Ulejevas</h3>
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
 
+    <h1>Creator</h1>
+    <h3>Published games</h3>
+
+    <table style="width:100%">
+        <tr>
+            <th>
+                <img src="~/Content/images/witcher.jpg" onclick="showImage('../Content/images/witcher.jpg');" data-pin-nopin="true">
+            </th>
+            <th>Lastname</th>
+            <th>
+                <button type="button" class="btn btn-primary">Primary</button>
+                <button type="button" class="btn btn-primary">Primary</button>
+            </th>
+        </tr>
+        <tr>
+            <td>Jill</td>
+            <td>Smith</td>
+            <td>
+                <button type="button" class="btn btn-primary">Primary</button>
+                <button type="button" class="btn btn-primary">Primary</button>
+            </td>
+        </tr>
+        <tr>
+            <td>Eve</td>
+            <td>Jackson</td>
+            <td>
+                <button type="button" class="btn btn-primary">Primary</button>
+                <button type="button" class="btn btn-primary">Primary</button>
+            </td>
+        </tr>
+    </table>
