@@ -1,7 +1,205 @@
 ﻿
+@model Gear.ViewModels.StoreViewModel
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>StorePageStart</h2>
-<h3>Domantas Banionis</h3>
+<style>
+    .section-header{
+        text-transform: uppercase;
+    }
+
+    .showcase {
+        display: inline-block;
+        /*Fit content*/
+        height: auto;
+        /*Make scroll menu*/
+        overflow: auto;
+        white-space: nowrap;
+        /*Add margins*/
+        margin-top: 10px;
+        margin-bottom: 15px;
+        /*fix whitespaces*/
+        padding-right: 16px;
+    }
+    .showcase-item {
+        display: inline-grid;
+        width: 20%;
+        /*Remove whitespace*/
+    }
+
+    .showcase-item-image {
+        grid-row: 1;
+        grid-column: 1;
+        width: 100%;
+        height: auto;
+    }
+
+    .showcase-item-text {
+        grid-row: 1;
+        grid-column: 1;
+        width: 100%;
+        align-self: flex-end;
+        background-color: rgb(224,224,224,0.7);
+    }
+
+    .showcase-item-price {
+        grid-row: 1;
+        grid-column: 1;
+        align-self: flex-end;
+        justify-self: flex-end;
+        padding: 0px 3px 0px 3px;
+        background-color: rgb(88,88,88,0.7);
+        color: mediumturquoise;
+    }
+
+    .showcase-item-discount {
+        grid-row: 1;
+        grid-column: 1;
+        align-self: flex-start;
+        justify-self: flex-end;
+        padding: 0px 3px 0px 3px;
+        background-color: limegreen;
+        color: lightgreen;
+        opacity: 0.9;
+        border-bottom-left-radius: 8px;
+    }
+</style>
+
+<style>
+    .game-list-wrapper {
+
+    }
+
+    .game-list {
+        margin-top: 5px;
+    }
+
+    .game-list-item {
+        display: grid;
+        grid-auto-columns: max-content;
+        height: 120px;
+        padding: 3px;
+        margin-bottom: 3px;
+        border-bottom: 1px solid rgb(222, 222, 222,0.8);
+    }
+
+    .game-list-item-image {
+        grid-column: 1;
+        /*Cant auto cause grid is autizmo*/
+        width: 195px;
+        height: 110px;
+    }
+
+    .game-list-item-data {
+        grid-column: 2;
+        display:grid;
+        margin-left: 20px;
+    }
+
+    .game-list-item-title {
+        grid-column: 1;
+        font-size: 25px;
+    }
+
+    .game-list-item-short-description {
+        grid-column:1;
+    }
+
+    .game-list-item-tags {
+        grid-column:1;
+        list-style-type: none;
+        padding: 0px;
+        align-self: flex-end;
+    }
+
+        .game-list-item-tags li {
+            display: inline-block;
+            border: 1px solid rgb(128, 128, 128);
+            padding: 1px;
+            border-radius: 40px;
+            background-color: black;
+            color: white;
+        }
+
+    .game-list-item-other {
+        grid-column: 2;
+        grid-row: 1/4;
+        margin-left: 400px;
+        align-self: center;
+        justify-self: flex-end;
+    }
+
+</style>
+
+<div class="row">
+    <div class="showcase row">
+        <h1 class="section-header">Featured</h1>
+        @for (int i = 0; i < Model.Showcase.Count; i++)
+        {
+            <div class="showcase-item">
+                <img class="showcase-item-image" src="@Model.Showcase[i].Picture.Directory" />
+                <text class="showcase-item-text">@Model.Showcase[i].Game.Name</text>
+                <text class="showcase-item-price">10.99$</text>
+                <text class="showcase-item-discount">100%</text>
+            </div>
+        }
+    </div>
+    <div class="game-list-wrapper row">
+        <h3 class="section-header">Find what you like</h3>
+        <ul class="nav nav-tabs">
+            <li class="@(Model.Category == 1 ? "active" : "")"><a href="?listcategory=1">Popular</a></li>
+            <li class="@(Model.Category == 2 ? "active" : "")"><a href="?listcategory=2">Newest</a></li>
+            <li class="@(Model.Category == 3 ? "active" : "")"><a href="?listcategory=3">Specials</a></li>
+        </ul>
+        <div class="game-list">
+            @{
+                List<Gear.ViewModels.GameViewModel> ShowList;
+                switch (Model.Category)
+                {
+                    default:
+                    case 1:
+                        ShowList = Model.Pupular;
+                        break;
+                    case 2:
+                        ShowList = Model.Newest;
+                        break;
+                    case 3:
+                        ShowList = Model.Discounted;
+                        break;
+                }
+            }
+
+            @for (int i = 0; i < ShowList.Count; i++)
+            {
+                <div class="game-list-item">
+                    <img class="game-list-item-image" src="@ShowList[i].Picture.Directory"/>
+                    <div class="game-list-item-data">
+                        <text class="game-list-item-title">@ShowList[i].Game.Name</text>
+                        <text class="game-list-item-short-description">A game about Geralt of Rivia. (Add ShortDescription field to model)</text>
+                        <ul class="game-list-item-tags">
+                            <li>Tag1</li>
+                            <li>Tag2</li>
+                            <li>Tag3</li>
+                            <li>(Implement this system later)</li>
+                        </ul>
+                        <text class="game-list-item-other">Price and buttons here</text>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <a class="text-center list-group-item" href="#">Show More</a>
+    </div>
+    <div class="row">
+        Valdymo skydelis
+        <div>
+            Paieska pagal pavadinima/Isplestine paieska
+        </div>
+        <div>
+            Krepselio quickview
+        </div>
+    </div>
+
+</div>
