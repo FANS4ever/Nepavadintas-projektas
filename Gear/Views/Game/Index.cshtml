@@ -28,7 +28,6 @@
         }
 
     .info-text {
-        
     }
 
     .video-player {
@@ -37,8 +36,8 @@
         height: 259px;
     }
 
-    .content-head{
-        display:grid;
+    .content-head {
+        display: grid;
         grid-auto-columns: auto;
     }
 
@@ -48,23 +47,23 @@
 
     .video-player-wrapper {
         grid-column: 2;
-        text-align:right;
+        text-align: right;
     }
 
-    .cart-button-wrapper{
+    .cart-button-wrapper {
         border-radius: 5px;
-        background-color:black;
+        background-color: black;
     }
 
-    .cart-button-wrapper span {
-        font-size: 15px;
-        color: white;
-        margin: 5px;
-    }
+        .cart-button-wrapper span {
+            font-size: 15px;
+            color: white;
+            margin: 5px;
+        }
 
-    .cart-button-wrapper input {
-        margin:2px;
-    }
+        .cart-button-wrapper input {
+            margin: 2px;
+        }
 
     .info-wrapper {
         display: grid;
@@ -76,14 +75,103 @@
 
     .cart-button-wrapper {
         grid-column: 2;
-        align-self:flex-start;
-        justify-self:flex-end;
-        margin-right:3px;
+        align-self: flex-start;
+        justify-self: flex-end;
+        margin-right: 3px;
     }
 
     .info-extensive {
         grid-column: 1/3;
     }
+
+    .comment-write {
+        grid-column: 1;
+        max-width: 700px;
+        width: 700px;
+        height: 150px;
+        resize: none;
+    }
+
+    .comment-display {
+        grid-column: 1;
+        max-width: 700px;
+        border: none;
+    }
+
+    .user-profile-image {
+        border-radius: 50%;
+        width: 200px
+    }
+
+    .post-button {
+        grid-column: 1;
+        width: 70px;
+        height: 35px;
+        margin-top: 5px;
+        justify-self: flex-end;
+    }
+
+    fieldset, label {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        margin: 20px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        margin: 10px;
+    }
+
+    /****** Style Star Rating Widget *****/
+
+    .rating {
+        border: none;
+        justify-self: flex-start;
+        margin-left: -270px;
+        margin-top: -2px;
+    }
+
+        .rating > input {
+            display: none;
+        }
+
+        .rating > label:before {
+            margin: 5px;
+            font-size: 2.25em;
+            font-family: FontAwesome;
+            display: inline-block;
+            content: "\f005";
+        }
+
+        /*.rating > .half:before {
+            content: "\f089";
+            position: absolute;
+        }*/
+
+        .rating > label {
+            color: #ddd;
+            float: right;
+        }
+
+        /***** CSS Magic to Highlight Stars on Hover *****/
+
+        .rating > input:checked ~ label, /* show gold star when clicked */
+        .rating:not(:checked) > label:hover, /* hover current star */
+        .rating:not(:checked) > label:hover ~ label {
+            color: #FFD700;
+        }
+            /* hover previous stars in list */
+
+            .rating > input:checked + label:hover, /* hover current star when changing rating */
+            .rating > input:checked ~ label:hover,
+            .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+            .rating > input:checked ~ label:hover ~ label {
+                color: #FFED85;
+            } 
+
 </style>
 
 <script type="text/javascript">
@@ -108,47 +196,78 @@
 
 </script>
 
-<div class="row">
-    <h2>@Model.Name</h2>
-    <div class="content-head">
-        <div class="image-wrapper">
-            <img class="image-showcase" id="currentImg" src="~/Content/images/witcher.jpg" alt="witcher.jpg" title="Witcher">
 
-            <div class="image-menu">
-                <img src="~/Content/images/witcher.jpg" onclick="showImage('../Content/images/witcher.jpg');" data-pin-nopin="true">
-                <img src="~/Content/images/witcher1.jpg" onclick="showImage('../Content/images/witcher1.jpg');" data-pin-nopin="true">
-                <img src="~/Content/images/witcher2.jpg" onclick="showImage('../Content/images/witcher2.jpg');" data-pin-nopin="true">
-                <img src="~/Content/images/witcher3.jpg" onclick="showImage('../Content/images/witcher3.jpg');" data-pin-nopin="true">
-                <img src="~/Content/images/witcher4.jpg" onclick="showImage('../Content/images/witcher4.jpg');" data-pin-nopin="true">
-                <img src="~/Content/images/witcher5.jpg" onclick="showImage('../Content/images/witcher5.jpg');" data-pin-nopin="true">
-                <img src="~/Content/images/witcher6.jpg" onclick="showImage('../Content/images/witcher6.jpg');" data-pin-nopin="true">
-                <img src="~/Content/images/witcher7.jpg" onclick="showImage('../Content/images/witcher7.jpg');" data-pin-nopin="true">
-            </div>
-        </div>
-        <div class="video-player-wrapper">
-            <iframe class="video-player" onload="this.onload=null; this.src='//www.youtube.com/embed/' + getId('https://www.youtube.com/embed/XHrskkHf958');" allowfullscreen></iframe>
-            <iframe class="video-player" src="https://player.twitch.tv/?channel=amdee__" allowfullscreen></iframe>
-        </div>
-        <div class="info-wrapper">
-            <div class="info-developer">
-                <span class="info-text"> Developer:</span><br>
-                <span class="info-text"> Relese date:</span><br>
-                <span class="info-text"> Average score:</span><br>
-                <span class="info-text"> Tags:</span><br>
-            </div>
-            <div class="cart-button-wrapper">
-                <span>30€</span>
-                <input class="cart-button" id="add-to-cart" type="button" value="Add to Cart" />
-            </div>
-            <div class="info-extensive">
-                <h1>About Game:</h1>
-                <span>@Model.Description</span>
-            </div>
+<h2>@Model.Name</h2>
+<div class="content-head">
+    <div class="image-wrapper">
+        <img class="image-showcase" id="currentImg" src="~/Content/images/witcher.jpg" alt="witcher.jpg" title="Witcher">
+
+        <div class="image-menu">
+            <img src="~/Content/images/witcher.jpg" onclick="showImage('../Content/images/witcher.jpg');" data-pin-nopin="true">
+            <img src="~/Content/images/witcher1.jpg" onclick="showImage('../Content/images/witcher1.jpg');" data-pin-nopin="true">
+            <img src="~/Content/images/witcher2.jpg" onclick="showImage('../Content/images/witcher2.jpg');" data-pin-nopin="true">
+            <img src="~/Content/images/witcher3.jpg" onclick="showImage('../Content/images/witcher3.jpg');" data-pin-nopin="true">
+            <img src="~/Content/images/witcher4.jpg" onclick="showImage('../Content/images/witcher4.jpg');" data-pin-nopin="true">
+            <img src="~/Content/images/witcher5.jpg" onclick="showImage('../Content/images/witcher5.jpg');" data-pin-nopin="true">
+            <img src="~/Content/images/witcher6.jpg" onclick="showImage('../Content/images/witcher6.jpg');" data-pin-nopin="true">
+            <img src="~/Content/images/witcher7.jpg" onclick="showImage('../Content/images/witcher7.jpg');" data-pin-nopin="true">
         </div>
     </div>
-
-    <!--Naudoti jei nebereik grid-->
-    <div class="content-tail">
-        
+    <div class="video-player-wrapper">
+        <iframe class="video-player" onload="this.onload=null; this.src='//www.youtube.com/embed/' + getId('https://www.youtube.com/embed/XHrskkHf958');" allowfullscreen></iframe>
+        <iframe class="video-player" src="https://player.twitch.tv/?channel=pjt_gaming" allowfullscreen></iframe>
     </div>
+
+    <div class="info-wrapper">
+        <div class="info-developer">
+            <span class="info-text"> Developer:</span><br>
+            <span class="info-text"> Relese date:</span><br>
+            <span class="info-text"> Average score:</span><br>
+            <span class="info-text"> Tags:</span><br>
+        </div>
+        <div class="cart-button-wrapper">
+            <span>30€</span>
+            <input class="cart-button" id="add-to-cart" type="button" value="Add to Cart" />
+        </div>
+        <div class="info-extensive">
+            <h1>About Game:</h1>
+            <span>@Model.Description</span><br><br>
+        </div>
+
+        <h1>Reviews:</h1><br><br>
+        <span class="info-text"> 5 star: </span><br>
+        <span class="info-text"> 4 star: </span><br>
+        <span class="info-text"> 3 star: </span><br>
+        <span class="info-text"> 2 star: </span><br>
+        <span class="info-text"> 1 star: </span><br>
+        <span class="info-text"> Average score:</span><br>
+        <span class="info-text"> Reviews:</span><br><br>
+    </div>
+
+
+    <textarea class="comment-write"></textarea>
+    <input class="post-button" id="post" type="button" value="Post" />
+    <fieldset class="rating">
+        <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="5 stars"></label>
+        <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="4 stars"></label>
+        <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="3 stars"></label>
+        <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="2 stars"></label>
+        <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="1 star"></label>
+    </fieldset>
+
+    <div class="info-wrapper">
+        <img class="image-showcase" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
+        <span class="comment-display">Cia yra komentaras</span>
+    </div>
+
 </div>
+
+<!--Naudoti jei nebereik grid-->
+<div class="content-tail">
+
+</div>
+
+
+
+
+
