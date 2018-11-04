@@ -84,6 +84,12 @@
         grid-column: 1/3;
     }
 
+    .comment-grid {
+        display: grid;
+        max-width: 700px;
+        grid-template-columns: auto auto;
+    }
+
     .comment-write {
         grid-column: 1;
         max-width: 700px;
@@ -94,8 +100,7 @@
     }
 
     .comment-display {
-        max-width: 635px;
-        margin-left: -635px;
+        grid-column: 2;
     }
 
     .comment-rating-display {
@@ -113,6 +118,8 @@
         }
 
     .user-profile-image {
+        grid-column: 1;
+        grid-row: 1 / span 3;
         border-radius: 50%;
         width: 50px;
         height: 50px;
@@ -176,10 +183,9 @@
 
 
     .rating-comment {
+        grid-column: 2;
         border: none;
-        margin-left: -635px;
         height: 25px;
-        margin-top: -2px;
     }
 
         .rating-comment > label:before {
@@ -189,18 +195,18 @@
             content: "\f005";
         }
 
-        .rating-comment-empty {
-            color: #ddd;
-        }
-        .rating-comment-full {
-            color: #FFD700;
-        }
+    .rating-comment-empty {
+        color: #ddd;
+    }
+
+    .rating-comment-full {
+        color: #FFD700;
+    }
 
 
     .rating-review {
         grid-column: 2;
         border: none;
-        /*margin-left: -590px;*/
         height: 25px;
         margin-top: -5px;
     }
@@ -224,19 +230,47 @@
         grid-column: 1;
         grid-row: 1 / span 6;
         margin-top: 20px;
-        /*margin-top: -200px;*/
-        /*margin-left: -700px;*/
     }
 
     .rating-grid {
         grid-column: 1;
+        max-width: 700px;
         display: grid;
         grid-template-columns: 20% 80%;
         margin-top: -20px;
     }
 
+    .reply-button {
+        grid-column: 2;
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        outline: none;
+        width: 60px;
+        font-weight: bold;
+        color: #4f4f4f;
+    }
 
+        .reply-button:hover {
+            grid-column: 2;
+            background-color: Transparent;
+            background-repeat: no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+            width: 60px;
+            font-weight: bold;
+            color: black;
+        }
 
+    .date {
+        color: #4f4f4f;
+        font-weight: bold;
+        font-size: 9pt;
+    }
 </style>
 
 <script type="text/javascript">
@@ -299,7 +333,7 @@
             <span>@Model.Description</span><br><br>
         </div>
 
-        <h1>Reviews:</h1>
+
 
 
         @*<span class="info-text"> 5 star: </span><br>
@@ -311,7 +345,11 @@
             <span class="info-text"> Reviews:</span><br><br>*@
     </div>
 
+    <h1 style="grid-column: 1;">Recomended games:</h1>
 
+
+
+    <h1 style="grid-column: 1;">Reviews:</h1>
     <div class="rating-grid">
 
         <center class="rating-text">
@@ -324,7 +362,9 @@
             <label class="rating-review-full" for="star3" title="3 stars"> </label>
             <label class="rating-review-full" for="star4" title="4 stars"> </label>
             <label class="rating-review-full" for="star5" title="5 stars"> </label>
+
             <span>7367378</span>
+
         </div>
 
         <div class="rating-review">
@@ -365,6 +405,8 @@
             <label class="rating-review-empty" for="star5" title="5 stars"> </label>
             <span>54645</span>
         </div>
+
+
     </div>
 
 
@@ -378,13 +420,12 @@
         <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="1 star"></label>
     </fieldset>
 
-
-    <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
-
-    <div class="info-wrapper">
-        <b><span class="comment-display"> Vartotojas 1</span></b>
+    <div class="comment-grid">
+        <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
 
         <div class="rating-comment">
+            <b><span class="comment-display"> Vartotojas 1</span></b>
+
             <label class="rating-comment-full" for="star1" title="1 stars"> </label>
             <label class="rating-comment-full" for="star2" title="2 stars"> </label>
             <label class="rating-comment-full" for="star3" title="3 stars"> </label>
@@ -392,8 +433,31 @@
             <label class="rating-comment-empty" for="star5" title="5 stars"> </label>
         </div>
 
-        <span class="comment-display">Cia yra labai labai labai labai labai labai labai labai labai labai labai labai ilgas pirmo vartotojo komentaras</span>
+        <span class="date"> 2018-10-29 </span>
+        <span class="comment-display">Cia yra labai labai labai labai labai labai labai labai labai labai labai labai ilgas ilgas pirmo vartotojo komentaras</span>
+        <input class="reply-button" id="reply" type="button" value="Reply" /><br>
     </div>
+
+    <br>
+
+    <div class="comment-grid" style="margin-left: 50px;">
+        <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
+
+        <div class="rating-comment">
+            <b><span class="comment-display"> Vartotojas 2</span></b>
+
+            <label class="rating-comment-full" for="star1" title="1 stars"> </label>
+            <label class="rating-comment-full" for="star2" title="2 stars"> </label>
+            <label class="rating-comment-full" for="star3" title="3 stars"> </label>
+            <label class="rating-comment-empty" for="star4" title="4 stars"> </label>
+            <label class="rating-comment-empty" for="star5" title="5 stars"> </label>
+        </div>
+
+        <span class="date"> 2018-10-30 </span>
+        <span class="comment-display">Cia yra atsakymas i labai labai labai labai labai labai labai labai labai labai labai labai ilga pirmo vartotojo komentara</span>
+        <input class="reply-button" id="reply" type="button" value="Reply" />
+    </div>
+
 
 </div>
 
