@@ -1,4 +1,5 @@
-﻿@model Gear.Models.User
+﻿@model Gear.Models.UserGame
+
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,32 +8,143 @@
 <html>
 <head>
     <title> Profile </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        .profile{
-            
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1000px 200px;
         }
-        .profil-sidebar{
+
+            .grid-container > columns {
+            }
+
+        .profile {
+            background: #edecec;
+        }
+
+        .profile-sidebar {
             text-align: right;
-
         }
+
         .profile-user-pic {
-      
-            
+            text-align: center;
         }
+
         .profile-user-title {
-
+            padding-left: 10px;
+            font-weight: bold;
+            text-align: left;
         }
-        .profile-user-name{
 
+        .profile-user-name {
         }
+
         .btn-primary, .btn-primary:active, .btn-primary:visited {
             background-color: #dcdcdc !important;
             border-color: #dcdcdc !important;
             color: #000000 !important;
             font-weight: bold;
         }
-        .btn-primary:hover {
-            background-color: #b1abab !important;
+
+            .btn-primary:hover {
+                background-color: #b1abab !important;
+            }
+
+
+        .btn {
+            border: none;
+            background-color: inherit;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            width: 300px;
+            text-align: left;
+        }
+        .btn-game {
+            border: none;
+            background-color: inherit;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            text-align: left;
+        }
+
+        
+
+        #myInput {
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            
+            font-size: 18px;
+            padding: 12px 20px 12px 2px;
+            border: none;
+            margin-bottom: 12px;
+            margin-left: 15px;
+        }
+
+        #myUL {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            
+        }
+
+            #myUL li a {
+                background: #edecec;
+                text-decoration: none;
+                font-size: 18px;
+                color: black;
+                display: block;
+                width: 300px;
+                padding: 10px;
+            }
+
+                #myUL li a:hover:not(.header) {
+                    background-color: #b1b0b0;
+                }
+
+        .popup {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            
+        }
+            .popup:checked {
+                visibility: visible;
+            }
+            /* The actual popup */
+            .popup .popuptext {
+                visibility: hidden;
+                width: 160px;
+                background-color: #edecec;
+                
+                text-align: center;
+               
+                padding: 8px;
+                margin-left: 300px;
+                
+            }
+            /* Toggle this class - hide and show the popup */
+            .popup .show {
+                visibility: visible;
+                -webkit-animation: fadeIn 1s;
+                animation: fadeIn 1s;
+            }
+        .radio-input {
+            visibility: hidden;
+        }
+        .radio-input:checked + label .popup .popuptext {
+            visibility: visible;
+        }
+        div1 {
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -42,44 +154,85 @@
         <h1>Profile</h1>
     </header>
 
-    <div class="container">
-        <div class="row profile">
-            <div class="col-md-4">
+    <div class="grid-container">
+        <columns>
+            <input type="text" id="myInput" onkeyup="Search()" placeholder="Search for names.." title="Type in a name" >
 
-            </div>
-            <div class="col-md-5">
+            <ul id="myUL">
+                @foreach (var game in Model.games)
+                {
+                <li>
+                    <input class="radio-input" type="radio" name="games" id="@game.Id" />
+                    <label for="@game.Id">
+                            <a  class="btn-game">@game.Name</a>
+                        <div1 class="popup">
+                            <span class="popuptext" id="myPopup">
+                                @game.Name
+                                Bought: @game.Description
+                                Time played: @game.Icon h
+                            </span>
+                        </div1>
+                    </label>
+                </li>
+                }
+                
+            </ul>
 
-            </div>
-            <div class="col-md-3">
-                <div class="profil-sidebar">
+        </columns>
+
+        <columns>
+            <div class=" profile">
+
+                <div class="profile-sidebar">
                     <div class="profile-user-pic">
-                        <img src="@Url.Content(Model.Avatar)" class="img-fluid" alt="Avatar" style="width: 100px; height: 100px">
+                        <img src="@Url.Content(Model.user.Avatar)" class="img-fluid img-circle" alt="Avatar" style="width: 200px; height: 200px">
                     </div>
                     <div class="profile-user-title">
                         <div class="profile-user-username">
-                            @Model.Username
+                            @Model.user.Username
                         </div>
                         <div class="profile-user-name">
-                            @Model.Name @Model.Surname
+                            @Model.user.Name @Model.user.Surname
                         </div>
                         <div class="profile-user-email">
-                            @Model.Email
+                            @Model.user.Email
                         </div>
                     </div>
                     <div class="btn-group-vertical button">
-                        <button class="btn btn-primary">Edit profile</button>
-                        <button class="btn btn-primary">Login with Facebook</button>
-                        <button class="btn btn-primary">Chat room</button>
-                        <button class="btn btn-primary">Shopping cart</button>
+                        <button class="btn btn-primary" style="width: 200px !important">Edit profile</button>
+                        <button class="btn btn-primary" style="width: 200px !important">Facebook login</button>
+                        <button class="btn btn-primary" style="width: 200px !important">Chat room</button>
+                        <button class="btn btn-primary" style="width: 200px !important">Shopping cart</button>
+                        <button class="btn btn-primary" style="width: 200px !important">Sign out</button>
                     </div>
                     <div class="profile-use-menu">
 
                     </div>
+
                 </div>
             </div>
-        </div>
+        </columns>
     </div>
 
+
+    <script>
+        function Search() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+
+    </script>
 
 </body>
 

@@ -173,6 +173,7 @@
     <Compile Include="Models\Picture.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\Traffic.cs" />
+    <Compile Include="Models\UserGame.cs" />
     <Compile Include="Models\UserGameLibrary.cs" />
     <Compile Include="Models\UserType.cs" />
     <Compile Include="Models\User.cs" />
