@@ -87,7 +87,7 @@
     .comment-grid {
         display: grid;
         max-width: 700px;
-        grid-template-columns: auto auto;
+        grid-template-columns: 9% 91%;
     }
 
     .comment-write {
@@ -102,20 +102,6 @@
     .comment-display {
         grid-column: 2;
     }
-
-    .comment-rating-display {
-        grid-column: 1;
-        border: none;
-    }
-
-        .comment-rating-display > label:before {
-            margin: 5px;
-            font-size: 2.25em;
-            font-family: FontAwesome;
-            display: inline-block;
-            content: "\f005";
-            color: #ddd;
-        }
 
     .user-profile-image {
         grid-column: 1;
@@ -178,28 +164,24 @@
             }
 
 
-
-
-
-
-    .rating-comment {
+    .comment-rating {
         grid-column: 2;
         border: none;
         height: 25px;
     }
 
-        .rating-comment > label:before {
+        .comment-rating > label:before {
             font-size: 1.25em;
             font-family: FontAwesome;
             display: inline-block;
             content: "\f005";
         }
 
-    .rating-comment-empty {
+    .comment-rating-empty {
         color: #ddd;
     }
 
-    .rating-comment-full {
+    .comment-rating-full {
         color: #FFD700;
     }
 
@@ -251,6 +233,8 @@
         width: 60px;
         font-weight: bold;
         color: #4f4f4f;
+        margin-left: -11px;
+        margin-top: -3px;
     }
 
         .reply-button:hover {
@@ -267,10 +251,83 @@
         }
 
     .date {
+        grid-column: 2;
         color: #4f4f4f;
         font-weight: bold;
         font-size: 9pt;
     }
+
+
+    .section-header {
+        text-transform: uppercase;
+    }
+
+    .showcase {
+        display: inline-block;
+        /*Fit content*/
+        height: auto;
+        max-width: 700px;
+        /*Make scroll menu*/
+        overflow: auto;
+        white-space: nowrap;
+        /*Add margins*/
+        margin-top: 10px;
+        margin-bottom: 15px;
+        margin-left: 5px;
+        /*fix whitespaces*/
+        padding-right: 16px;
+    }
+
+    .showcase-item {
+        display: inline-grid;
+        width: 250px;
+        /*Remove whitespace*/
+    }
+
+    .showcase-item-image {
+        grid-row: 1;
+        grid-column: 1;
+        width: 250px;
+        height: auto;
+    }
+
+    .showcase-item-text {
+        grid-row: 1;
+        grid-column: 1;
+        width: 100%;
+        align-self: flex-end;
+        background-color: rgb(224,224,224,0.7);
+    }
+
+    .showcase-item-price {
+        grid-row: 1;
+        grid-column: 1;
+        align-self: flex-end;
+        justify-self: flex-end;
+        padding: 0px 3px 0px 3px;
+        background-color: rgb(88,88,88,0.7);
+        color: mediumturquoise;
+    }
+
+    .showcase-item-discount {
+        grid-row: 1;
+        grid-column: 1;
+        align-self: flex-start;
+        justify-self: flex-end;
+        padding: 0px 3px 0px 3px;
+        background-color: limegreen;
+        color: lightgreen;
+        opacity: 0.9;
+        border-bottom-left-radius: 8px;
+    }
+
+    .line {
+        grid-column: 2;
+        border-bottom: 1px solid gray;
+        max-width: 700px;
+        margin-top: 8px;
+    }
+
 </style>
 
 <script type="text/javascript">
@@ -291,6 +348,14 @@
         } else {
             return 'error';
         }
+    }
+
+    function noteForBookmark() {
+
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('name', 'note');
+        form.appendChild(input);
     }
 
 </script>
@@ -325,28 +390,33 @@
             <span class="info-text"> Tags:</span><br>
         </div>
         <div class="cart-button-wrapper">
-            <span>30€</span>
+            <span>10.99€</span>
             <input class="cart-button" id="add-to-cart" type="button" value="Add to Cart" />
+            <input class="cart-button" id="bookmark" type="button" value="Bookmark" onclick="noteForBookmark()" />
         </div>
+
+        
+        @*justify-self: flex-end;*@
         <div class="info-extensive">
             <h1>About Game:</h1>
             <span>@Model.Description</span><br><br>
         </div>
-
-
-
-
-        @*<span class="info-text"> 5 star: </span><br>
-            <span class="info-text"> 4 star: </span><br>
-            <span class="info-text"> 3 star: </span><br>
-            <span class="info-text"> 2 star: </span><br>
-            <span class="info-text"> 1 star: </span><br>
-            <span class="info-text"> Average score:</span><br>
-            <span class="info-text"> Reviews:</span><br><br>*@
     </div>
 
-    <h1 style="grid-column: 1;">Recomended games:</h1>
-
+    <div style="grid-column: 1;">
+        <h1>Recomended games:</h1>
+        <div class="showcase row">
+            @for (int i = 0; i < 5; i++)
+            {
+                <div class="showcase-item">
+                    <img class="showcase-item-image" src="~/Content/images/witcher.jpg" />
+                    <text class="showcase-item-text">@Model.Name</text>
+                    <text class="showcase-item-price">10.99$</text>
+                    <text class="showcase-item-discount">100%</text>
+                </div>
+            }
+        </div>
+    </div>
 
 
     <h1 style="grid-column: 1;">Reviews:</h1>
@@ -423,18 +493,21 @@
     <div class="comment-grid">
         <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
 
-        <div class="rating-comment">
+        <div class="comment-rating">
             <b><span class="comment-display"> Vartotojas 1</span></b>
 
-            <label class="rating-comment-full" for="star1" title="1 stars"> </label>
-            <label class="rating-comment-full" for="star2" title="2 stars"> </label>
-            <label class="rating-comment-full" for="star3" title="3 stars"> </label>
-            <label class="rating-comment-full" for="star4" title="4 stars"> </label>
-            <label class="rating-comment-empty" for="star5" title="5 stars"> </label>
+            <label class="comment-rating-full" for="star1" title="1 stars"> </label>
+            <label class="comment-rating-full" for="star2" title="2 stars"> </label>
+            <label class="comment-rating-full" for="star3" title="3 stars"> </label>
+            <label class="comment-rating-full" for="star4" title="4 stars"> </label>
+            <label class="comment-rating-empty" for="star5" title="5 stars"> </label>
         </div>
 
         <span class="date"> 2018-10-29 </span>
         <span class="comment-display">Cia yra labai labai labai labai labai labai labai labai labai labai labai labai ilgas ilgas pirmo vartotojo komentaras</span>
+
+        <div class="line"> </div>
+        <span class="date"> Average score of review:  3</span>
         <input class="reply-button" id="reply" type="button" value="Reply" /><br>
     </div>
 
@@ -443,19 +516,21 @@
     <div class="comment-grid" style="margin-left: 50px;">
         <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
 
-        <div class="rating-comment">
+        <div class="comment-rating">
             <b><span class="comment-display"> Vartotojas 2</span></b>
 
-            <label class="rating-comment-full" for="star1" title="1 stars"> </label>
-            <label class="rating-comment-full" for="star2" title="2 stars"> </label>
-            <label class="rating-comment-full" for="star3" title="3 stars"> </label>
-            <label class="rating-comment-empty" for="star4" title="4 stars"> </label>
-            <label class="rating-comment-empty" for="star5" title="5 stars"> </label>
+            <label class="comment-rating-full" for="star1" title="1 stars"> </label>
+            <label class="comment-rating-full" for="star2" title="2 stars"> </label>
+            <label class="comment-rating-full" for="star3" title="3 stars"> </label>
+            <label class="comment-rating-empty" for="star4" title="4 stars"> </label>
+            <label class="comment-rating-empty" for="star5" title="5 stars"> </label>
         </div>
 
         <span class="date"> 2018-10-30 </span>
         <span class="comment-display">Cia yra atsakymas i labai labai labai labai labai labai labai labai labai labai labai labai ilga pirmo vartotojo komentara</span>
-        <input class="reply-button" id="reply" type="button" value="Reply" />
+        <div class="line"> </div>
+        <span class="date"> Average score of review:  0</span>
+        <input class="reply-button" id="reply" type="button" value="Reply" onclick="noteForBookmark()" />
     </div>
 
 
@@ -465,8 +540,3 @@
 <div class="content-tail">
 
 </div>
-
-
-
-
-
