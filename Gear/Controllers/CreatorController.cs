@@ -17,5 +17,9 @@ namespace Gear.Controllers
         {
             return View();
         }
+        public ActionResult Add()
+        {
+            return View(@"~/Views/Creator/Edit.cshtml");
+        }
     }
 }

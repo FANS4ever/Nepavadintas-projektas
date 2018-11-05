@@ -233,6 +233,7 @@
     <Content Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Creator\Index.cshtml" />
+    <Content Include="Views\Creator\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

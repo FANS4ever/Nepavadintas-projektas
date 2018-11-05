@@ -2,46 +2,53 @@
     ViewBag.Title = "Index";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-    </style>
-</head>
-<body>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
 
-    <h1>Creator</h1>
-    <h3>Published games</h3>
+    img {
+        width: 256px;
+        height: 128px;
+    }
 
-    <table style="width:100%">
-        <tr>
-            <th>
-                <img src="~/Content/images/witcher.jpg" onclick="showImage('../Content/images/witcher.jpg');" data-pin-nopin="true">
-            </th>
-            <th>Lastname</th>
-            <th>
-                <button type="button" class="btn btn-primary">Primary</button>
-                <button type="button" class="btn btn-primary">Primary</button>
-            </th>
-        </tr>
-        <tr>
-            <td>Jill</td>
-            <td>Smith</td>
-            <td>
-                <button type="button" class="btn btn-primary">Primary</button>
-                <button type="button" class="btn btn-primary">Primary</button>
-            </td>
-        </tr>
-        <tr>
-            <td>Eve</td>
-            <td>Jackson</td>
-            <td>
-                <button type="button" class="btn btn-primary">Primary</button>
-                <button type="button" class="btn btn-primary">Primary</button>
-            </td>
-        </tr>
-    </table>
+    p {
+        padding: 15px;
+    }
+</style>
+
+<h1>Creator</h1>
+<h3>Published games</h3>
+
+<table style="width:100%">
+    <tr>
+        <th width="256px">
+            <img src="~/Content/images/witcher.jpg" alt="Witcher">
+        </th>
+        <th>Sales</th>
+        <th width="256px">
+            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Add", "Creator")'" />Edit</button>
+            <button type="button" class="btn btn-primary">Statistics</button>
+            <button type="button" class="btn btn-primary" onclick="removeConfirmation()">Remove</button>
+        </th>
+    </tr>
+</table>
+<p>
+    <button type="button" class="btn btn-primary">Publish a new game</button>
+</p>
+<p id="demo"></p>
+
+<script>
+    function myFunction() {
+        var txt;
+    var r = confirm("Do you what to remove the game");
+    if (r == true) {
+        txt = "You pressed OK!";
+    } else
+    {
+        txt = "You pressed Cancel";
+    }
+    document.getElementById("demo").innerHTML = txt;
+}
+</script>
