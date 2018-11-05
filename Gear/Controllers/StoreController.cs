@@ -51,30 +51,31 @@ namespace Gear.Controllers
                 };
 
         // GET: Store
-        public ActionResult Index(int? listcategory)
+        public ActionResult Index()
         {
-            if (!listcategory.HasValue)
-            {
-                listcategory = 1;
-            }
-
             var tmp = new Gear.ViewModels.StoreViewModel()
             {
                 Showcase = TemporarySet,
                 Newest = TemporarySet,
                 Pupular = TemporarySet,
                 Discounted = TemporarySet,
-                Category = (int)listcategory
+
             };
-
-            
-
             return View(tmp);
         }
 
         public ActionResult Search()
         {
-            return View();
+            var tmp = new Gear.ViewModels.StoreViewModel()
+            {
+                Showcase = TemporarySet,
+                Newest = TemporarySet,
+                Pupular = TemporarySet,
+                Discounted = TemporarySet,
+
+            };
+
+            return View(tmp);
         }
 
         public ActionResult Payment()
