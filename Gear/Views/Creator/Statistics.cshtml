@@ -3,25 +3,53 @@
     ViewBag.Title = "Statistics";
 }
 <style>
-    btn.btn-primary{
-        width: 25%;
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
     }
-
-        .block:hover {
-            background-color: #ddd;
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
             color: black;
+            width:25%;
+        }
 
+            /* Change background color of buttons on hover */
+            .tab button:hover {
+                background-color: #ddd;
+            }
+
+            /* Create an active/current tablink class */
+            .tab button.active {
+                background-color: #ccc;
+            }
+    .highlight {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px;
+        padding-left: 10px;
+    }
     </style>
 
 
 <body onload="document.getElementById('1').click();">
-    <div align="center">
+    <div class = "tab" align="center">
         <button class="btn-primary" id="1" onclick="chart('Sales')" >Sales</button>
         <button class="btn-primary" onclick="chart('Profits')" >Profits</button>
         <button class="btn-primary" onclick="chart('Downloads')" >Downloads</button>
         <button class="btn-primary" onclick="chart('Amout of people visited')" width="25%">Amout of people visited</button>
     </div>
-
+    <br>
     <script>
         function chart(msg = "Naujas") {
 
@@ -50,6 +78,7 @@
 
     </script>
 
-
+    <div class="highlight">
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+     </div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

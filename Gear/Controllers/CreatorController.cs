@@ -19,7 +19,7 @@ namespace Gear.Controllers
         {
             return View();
         }
-        public ActionResult Add()
+        public ActionResult Edit()
         {
             return View(@"~/Views/Creator/Edit.cshtml");
         }
@@ -38,6 +38,10 @@ namespace Gear.Controllers
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
             return View(@"~/Views/Creator/Statistics.cshtml");
+        }
+        public ActionResult Create()
+        {
+            return View(@"~/Views/Creator/Create.cshtml");
         }
     }
 }
