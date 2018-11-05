@@ -10,5 +10,7 @@ namespace Gear.Models
     {
         public User user { get; set; }
         public List<Game> games { get; set; }
+
+        public Country country { get; set; }
     }
 }
