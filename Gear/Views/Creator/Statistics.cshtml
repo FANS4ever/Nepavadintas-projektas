@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Statistics";
+}
+<style>
+    btn.btn-primary{
+        width: 25%;
+    }
+
+        .block:hover {
+            background-color: #ddd;
+            color: black;
+
+    </style>
+
+
+<body onload="document.getElementById('1').click();">
+    <div align="center">
+        <button class="btn-primary" id="1" onclick="chart('Sales')" >Sales</button>
+        <button class="btn-primary" onclick="chart('Profits')" >Profits</button>
+        <button class="btn-primary" onclick="chart('Downloads')" >Downloads</button>
+        <button class="btn-primary" onclick="chart('Amout of people visited')" width="25%">Amout of people visited</button>
+    </div>
+
+    <script>
+        function chart(msg = "Naujas") {
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                animationEnabled: true,
+                zoomEnabled: true,
+                title: {
+                    text: msg.toString()
+                },
+                data: [{
+                    type: "line",
+                    dataPoints: [
+                        { x: 1, y: 20 },
+                        { x: 10, y: 50 },
+                        { x: 20, y: 50 },
+                        { x: 30, y: 60 },
+                        { x: 65, y: 210 },
+                        { x: 100, y: 106 }
+                    ]
+                }]
+            });
+
+            chart.render();
+        }
+
+    </script>
+
+
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

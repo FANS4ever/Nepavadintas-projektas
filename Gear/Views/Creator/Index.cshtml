@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
+<!doctype html>
 
 <style>
     table, th, td {
@@ -16,6 +17,48 @@
     p {
         padding: 15px;
     }
+    .overlay {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,.85);
+        z-index: 10000;
+    }
+
+    .popup {
+        width: 98%;
+        padding: 15px;
+        left: 0;
+        margin-left: 1%;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background: white;
+        position: absolute;
+        top: -100%;
+        box-shadow: 5px 5px 5px #000;
+        z-index: 10001;
+    }
+    @@media (min-width: 768px) {
+  .popup {
+    width: 66.66666666%;
+    margin-left: 16.666666%;
+  }
+}
+    @@media (min-width: 992px) {
+  .popup {
+    width: 50%;
+    margin-left: 25%;
+  }
+}
+    @@media (min-width: 1200px) {
+  .popup {
+    width: 33.33333%;
+    margin-left: 33.33333%;
+  }
+  }
 </style>
 
 <h1>Creator</h1>
@@ -28,9 +71,11 @@
         </th>
         <th>Sales</th>
         <th width="256px">
-            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Add", "Creator")'" />Edit</button>
-            <button type="button" class="btn btn-primary">Statistics</button>
-            <button type="button" class="btn btn-primary" onclick="removeConfirmation()">Remove</button>
+            <div align="center">
+            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Add", "Creator")'" >Edit</button>
+            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Statistics", "Creator")'">Statistics</button>
+            <button type="button" class="btn btn-primary" onclick="showPrompt('Do you realy want to remove the game?');">Remove</button>
+            </div>
         </th>
     </tr>
 </table>
@@ -39,16 +84,55 @@
 </p>
 <p id="demo"></p>
 
+<!-- Code for confirmation window -->
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script>
-    function myFunction() {
-        var txt;
-    var r = confirm("Do you what to remove the game");
-    if (r == true) {
-        txt = "You pressed OK!";
-    } else
-    {
-        txt = "You pressed Cancel";
+    function showPrompt(msg) {
+        // CREATE A Promise TO RETURN
+        var p = new Promise(function (resolve, reject) {
+            ;
+
+            var dialog = $('<div/>', { class: 'popup' })
+                .append(
+                    $('<p/>').html(msg)
+                )
+                .append(
+                    $('<div/>', { class: 'text-right' })
+                        .append($('<button/>', { class: 'btn btn-cancel' }).html('Cancel').on('click', function () {
+                            $('.overlay').remove();
+                            // RESOLVE Promise TO false
+                            resolve(false);
+                        }))
+                        .append($('<button/>', { class: 'btn btn-primary' }).html('Ok').on('click', function () {
+                            $('.overlay').remove();
+                            // RESOLVE Promise TO true
+                            resolve(true);
+                        }))
+                );
+
+            var overlay = $('<div/>', { class: 'overlay' })
+                .append(dialog);
+
+            $('body').append(overlay);
+            $(dialog).animate({ top: '15%' }, 1000);
+        });
+
+        // RETURN THE Promise
+        return p;
     }
-    document.getElementById("demo").innerHTML = txt;
-}
+
+    $(function () {
+        // HANDLE open-dialog CLICK
+        $('.open-dialog').on('click', function (e) {
+            // PREVENT DEFAULT BEHAVIOUR FOR <a/>
+            e.preventDefault();
+
+            // SAVE PROMISE RETURN
+            var res = showPrompt('Do you like our confirmation?');
+            res.then(function (ret) {
+                ret ? alert('Ok clicked') : alert('Cancel clicked');
+            })
+        });
+    });
 </script>

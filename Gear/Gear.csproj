@@ -160,6 +160,7 @@
     <Compile Include="Models\ChatRoom.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\Discount.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Game.cs" />
@@ -234,6 +235,7 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Creator\Index.cshtml" />
     <Content Include="Views\Creator\Edit.cshtml" />
+    <Content Include="Views\Creator\Statistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
