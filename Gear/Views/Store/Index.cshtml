@@ -76,62 +76,24 @@
         margin-top: 5px;
     }
 
-    .game-list-item {
-        display: grid;
-        grid-auto-columns: max-content;
-        height: 120px;
-        padding: 3px;
-        margin-bottom: 3px;
-        border-bottom: 1px solid rgb(222, 222, 222,0.8);
-    }
-
-    .game-list-item-image {
-        grid-column: 1;
-        /*Cant auto cause grid is autizmo*/
-        width: 195px;
-        height: 110px;
-    }
-
-    .game-list-item-data {
-        grid-column: 2;
-        display:grid;
-        margin-left: 20px;
-    }
-
-    .game-list-item-title {
-        grid-column: 1;
-        font-size: 25px;
-    }
-
-    .game-list-item-short-description {
-        grid-column:1;
-    }
-
-    .game-list-item-tags {
-        grid-column:1;
-        list-style-type: none;
-        padding: 0px;
-        align-self: flex-end;
-    }
-
-        .game-list-item-tags li {
-            display: inline-block;
-            border: 1px solid rgb(128, 128, 128);
-            padding: 1px;
-            border-radius: 40px;
-            background-color: black;
-            color: white;
-        }
-
-    .game-list-item-other {
-        grid-column: 2;
-        grid-row: 1/4;
-        margin-left: 400px;
-        align-self: center;
-        justify-self: flex-end;
-    }
+    
 
 </style>
+
+<script language="javascript" type="text/javascript">
+    var oldCallingElement = "pupularButton";
+    var oldContentContainer = "popularTab";
+    function selectTab(callingElement, contentContainer) {
+        document.getElementById(oldCallingElement).classList.remove("active");
+        document.getElementById(callingElement).classList.add("active");
+
+        document.getElementById(oldContentContainer).hidden = true;
+        document.getElementById(contentContainer).hidden = false;
+
+        oldCallingElement = callingElement;
+        oldContentContainer = contentContainer;
+    }
+</script>
 
 <div class="row">
     <div class="showcase row">
@@ -149,49 +111,165 @@
     <div class="game-list-wrapper row">
         <h3 class="section-header">Find what you like</h3>
         <ul class="nav nav-tabs">
-            <li class="@(Model.Category == 1 ? "active" : "")"><a href="?listcategory=1">Popular</a></li>
-            <li class="@(Model.Category == 2 ? "active" : "")"><a href="?listcategory=2">Newest</a></li>
-            <li class="@(Model.Category == 3 ? "active" : "")"><a href="?listcategory=3">Specials</a></li>
+            <li id="pupularButton" class="active"><a onclick="selectTab('pupularButton', 'popularTab')">Popular</a></li>
+            <li id="newestButton"  class=""><a onclick="selectTab('newestButton','newestTab')">Newest</a></li>
+            <li id="specialsButton"class=""><a onclick="selectTab('specialsButton','specialsTab')">Specials</a></li>
         </ul>
         <div class="game-list">
-            @{
-                List<Gear.ViewModels.GameViewModel> ShowList;
-                switch (Model.Category)
+            <div id="popularTab">
+                <style>
+                    .game-list-item {
+                        display: grid;
+                        grid-template-columns: max-content 1fr max-content;
+                        margin: 0px 3px 5px;px 3px;
+                        padding:0px 5px 5px 5px;
+                        border-bottom: 1px solid rgb(204,204,204,0.7);
+                    }
+
+                        .game-list-item .icon-wrapper {
+                            max-width: 200px;
+                            max-height: 113px;
+                        }
+
+                            .game-list-item .icon-wrapper .icon {
+                                width: 100%;
+                                height: 100%;
+                            }
+
+                       .game-list-item .info-wrapper {
+                            /*grid-area: info;*/
+                            display: grid;
+                            grid-template-rows: max-content auto max-content;
+                            margin-left: 10px;
+                            padding-bottom: 2px;
+                            white-space:nowrap;
+                            overflow: hidden;
+                        }
+
+                            .game-list-item .info-wrapper .title {
+                                font-size: 20px;
+                            }
+
+                            .game-list-item .info-wrapper .description {
+                                font-size: 15px;
+                            }
+
+                            .game-list-item .info-wrapper .tags {
+                                font-size: 12px;
+                            }
+
+                                .game-list-item .info-wrapper .tags .tag {
+                                    border: 1px solid rgb(204,204,204);
+                                    border-radius: 10px;
+                                    padding: 2px;
+                                }
+
+                        .game-list-item .cart-wrapper {
+                            /*grid-area: cart;*/
+                            align-self: center;
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            grid-template-rows: 1fr 1fr;
+                            text-align: center;
+                            margin-left: 30px;
+                            margin-right: 30px;
+                        }
+
+                            .game-list-item .cart-wrapper .price {
+                                grid-row: 1;
+                                grid-column: 2;
+                                margin-left: 2px;
+                            }
+
+                            .game-list-item .cart-wrapper .discount {
+                                grid-row : 1;
+                                grid-column: 1;
+                                margin-right: 2px;
+                                background-color: lightgreen;
+                                border-radius: 3px;
+                            }
+
+                            .game-list-item .cart-wrapper .cart-button {
+                                grid-row: 2;
+                                grid-column: 1/-1;
+                            }
+
+                </style>
+                
+                @for (int i = 0; i < 3; i++)
                 {
-                    default:
-                    case 1:
-                        ShowList = Model.Pupular;
-                        break;
-                    case 2:
-                        ShowList = Model.Newest;
-                        break;
-                    case 3:
-                        ShowList = Model.Discounted;
-                        break;
-                }
-            }
-
-            @for (int i = 0; i < ShowList.Count; i++)
-            {
-                <div class="game-list-item">
-                    <img class="game-list-item-image" src="@ShowList[i].Picture.Directory"/>
-                    <div class="game-list-item-data">
-                        <text class="game-list-item-title">@ShowList[i].Game.Name</text>
-                        <text class="game-list-item-short-description">A game about Geralt of Rivia. (Add ShortDescription field to model)</text>
-                        <ul class="game-list-item-tags">
-                            <li>Tag1</li>
-                            <li>Tag2</li>
-                            <li>Tag3</li>
-                            <li>(Implement this system later)</li>
-                        </ul>
-                        <text class="game-list-item-other">Price and buttons here</text>
+                    <div class="game-list-item">
+                        <div class="icon-wrapper">
+                            <img class="icon" src=@(Model.Pupular[0].Picture.Directory)>
+                        </div>
+                        <div class="info-wrapper">
+                            <div class="title">@(Model.Pupular[0].Game.Name)</div>
+                            <div class="description">@(Model.Pupular[0].Game.Description) popular tab</div>
+                            <div class="tags">
+                                <a class="tag">Tag 1</a>
+                                <a class="tag">Tag 2</a>
+                                <a class="tag">Tag 3</a>
+                            </div>
+                        </div>
+                        <div class="cart-wrapper">
+                            <div class="price">10.99 $</div>
+                            <div class="discount">100%</div>
+                            <div class="cart-button"><a class="button">+ To cart</a></div>
+                        </div>
                     </div>
-                </div>
-            }
-
+                }
+            </div>
+            <div id="newestTab" hidden>
+                @for (int i = 0; i < 3; i++)
+                {
+                    <div class="game-list-item">
+                        <div class="icon-wrapper">
+                            <img class="icon" src=@(Model.Pupular[0].Picture.Directory)>
+                        </div>
+                        <div class="info-wrapper">
+                            <div class="title">@(Model.Pupular[0].Game.Name)</div>
+                            <div class="description">@(Model.Pupular[0].Game.Description) newest tab</div>
+                            <div class="tags">
+                                <a class="tag">Tag 1</a>
+                                <a class="tag">Tag 2</a>
+                                <a class="tag">Tag 3</a>
+                            </div>
+                        </div>
+                        <div class="cart-wrapper">
+                            <div class="price">10.99 $</div>
+                            <div class="discount">100%</div>
+                            <div class="cart-button"><a class="button">+ To cart</a></div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div id="specialsTab" hidden>
+                @for (int i = 0; i < 3; i++)
+                {
+                    <div class="game-list-item">
+                        <div class="icon-wrapper">
+                            <img class="icon" src=@(Model.Pupular[0].Picture.Directory)>
+                        </div>
+                        <div class="info-wrapper">
+                            <div class="title">@(Model.Pupular[0].Game.Name)</div>
+                            <div class="description">@(Model.Pupular[0].Game.Description) special tab</div>
+                            <div class="tags">
+                                <a class="tag">Tag 1</a>
+                                <a class="tag">Tag 2</a>
+                                <a class="tag">Tag 3</a>
+                            </div>
+                        </div>
+                        <div class="cart-wrapper">
+                            <div class="price">10.99 $</div>
+                            <div class="discount">100%</div>
+                            <div class="cart-button"><a class="button">+ To cart</a></div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-        <a class="text-center list-group-item" href="#">Show More</a>
     </div>
+    <hr/>
     <div class="row">
         Valdymo skydelis
         <div>

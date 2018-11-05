@@ -15,7 +15,7 @@ namespace Gear.Controllers
                 {
                     new Gear.ViewModels.GameViewModel
                     {
-                        Game = new Gear.Models.Game { Name = "The Witcher® 3: Wild Hunt" },
+                        Game = new Gear.Models.Game { Name = "The Witcher® 3: Wild Hunt",Description="Description"},
                         Picture = new Gear.Models.Picture { Directory = "../Content/images/witcher.jpg" }
                     },
                     new Gear.ViewModels.GameViewModel
