@@ -107,14 +107,15 @@
                 }
 
         .popup {
-            position: relative;
-            display: inline-block;
+            
+            display: flex;
             cursor: pointer;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            
+            transform: translate(0px,-50px);
+            margin-top: 5px;
         }
             .popup:checked {
                 visibility: visible;
@@ -128,7 +129,9 @@
                 text-align: center;
                
                 padding: 8px;
-                margin-left: 300px;
+                
+
+
                 
             }
             /* Toggle this class - hide and show the popup */
@@ -143,9 +146,7 @@
         .radio-input:checked + label .popup .popuptext {
             visibility: visible;
         }
-        div1 {
-            margin-top: 5px;
-        }
+        
     </style>
 </head>
 
@@ -158,20 +159,20 @@
         <columns>
             <input type="text" id="myInput" onkeyup="Search()" placeholder="Search for names.." title="Type in a name" >
 
-            <ul id="myUL">
+            <ul id="myUL">              
                 @foreach (var game in Model.games)
                 {
+                   
                 <li>
                     <input class="radio-input" type="radio" name="games" id="@game.Id" />
-                    <label for="@game.Id">
-                            <a  class="btn-game">@game.Name</a>
-                        <div1 class="popup">
-                            <span class="popuptext" id="myPopup">
-                                @game.Name
-                                Bought: @game.Description
-                                Time played: @game.Icon h
+                    <label for="@game.Id" style="height: 50px">
+                        <a class="btn-game">@game.Name</a>
+                        <div class="popup" style="transform: translate(299px,-50px); width: 150px; visibility: hidden">
+                            <span class="popuptext" id="myPopup" style="padding-bottom: 11px">
+                                @game.Name <br />
+                                Bought: @game.Description <br />
                             </span>
-                        </div1>
+                        </div>
                     </label>
                 </li>
                 }
@@ -199,9 +200,11 @@
                         </div>
                     </div>
                     <div class="btn-group-vertical button">
-                        <button class="btn btn-primary" style="width: 200px !important">Edit profile</button>
+
+
+                        <button role="button" onclick="window.location.href= '/Profile/Edit';" class="btn btn-primary" style="width: 200px !important">Edit profile</button>
                         <button class="btn btn-primary" style="width: 200px !important">Facebook login</button>
-                        <button class="btn btn-primary" style="width: 200px !important">Chat room</button>
+                        <button role="button" onclick="window.location.href= '/Profile/ChatRoom';" class="btn btn-primary" style="width: 200px !important">Chat room</button>
                         <button class="btn btn-primary" style="width: 200px !important">Shopping cart</button>
                         <button class="btn btn-primary" style="width: 200px !important">Sign out</button>
                     </div>

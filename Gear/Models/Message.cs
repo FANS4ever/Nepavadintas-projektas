@@ -11,5 +11,7 @@ namespace Gear.Models
         public DateTime SendDate { get; set; }
         public string Contents { get; set; }
         public bool Seen { get; set; }
+
+        public List<Message> messages { get; set; }
     }
 }
