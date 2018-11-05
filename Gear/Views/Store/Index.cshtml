@@ -5,80 +5,6 @@
     ViewBag.Title = "Index";
 }
 
-<style>
-    .section-header{
-        text-transform: uppercase;
-    }
-
-    .showcase {
-        display: inline-block;
-        /*Fit content*/
-        height: auto;
-        /*Make scroll menu*/
-        overflow: auto;
-        white-space: nowrap;
-        /*Add margins*/
-        margin-top: 10px;
-        margin-bottom: 15px;
-        /*fix whitespaces*/
-        padding-right: 16px;
-    }
-    .showcase-item {
-        display: inline-grid;
-        width: 20%;
-        /*Remove whitespace*/
-    }
-
-    .showcase-item-image {
-        grid-row: 1;
-        grid-column: 1;
-        width: 100%;
-        height: auto;
-    }
-
-    .showcase-item-text {
-        grid-row: 1;
-        grid-column: 1;
-        width: 100%;
-        align-self: flex-end;
-        background-color: rgb(224,224,224,0.7);
-    }
-
-    .showcase-item-price {
-        grid-row: 1;
-        grid-column: 1;
-        align-self: flex-end;
-        justify-self: flex-end;
-        padding: 0px 3px 0px 3px;
-        background-color: rgb(88,88,88,0.7);
-        color: mediumturquoise;
-    }
-
-    .showcase-item-discount {
-        grid-row: 1;
-        grid-column: 1;
-        align-self: flex-start;
-        justify-self: flex-end;
-        padding: 0px 3px 0px 3px;
-        background-color: limegreen;
-        color: lightgreen;
-        opacity: 0.9;
-        border-bottom-left-radius: 8px;
-    }
-</style>
-
-<style>
-    .game-list-wrapper {
-
-    }
-
-    .game-list {
-        margin-top: 5px;
-    }
-
-    
-
-</style>
 
 <script language="javascript" type="text/javascript">
     var oldCallingElement = "pupularButton";
@@ -96,34 +22,131 @@
 </script>
 
 <div class="row">
-    <div class="showcase row">
-        <h1 class="section-header">Featured</h1>
-        @for (int i = 0; i < Model.Showcase.Count; i++)
-        {
-            <div class="showcase-item">
-                <img class="showcase-item-image" src="@Model.Showcase[i].Picture.Directory" />
-                <text class="showcase-item-text">@Model.Showcase[i].Game.Name</text>
-                <text class="showcase-item-price">10.99$</text>
-                <text class="showcase-item-discount">100%</text>
-            </div>
+    <style>
+        .showcase-wrapper {
         }
+
+            .showcase-wrapper .button-next {
+                display: inline-block;
+                background:rgba(0,0,0,0.6);
+                padding:20px 5px 20px 5px;
+                margin: -4px;
+                font-size: 20px;
+                color:white;
+                text-decoration: none;
+                border-radius:2px;
+            }
+
+                .showcase-wrapper .button-next:hover {
+                    background: rgba(0,0,0,0.7);
+                    cursor: pointer;
+                }
+
+        .showcase-item {
+            display: inline-grid;
+            grid-template-rows: 1fr 1fr;
+            grid-template-columns: max-content max-content max-content;
+            cursor: pointer;
+        }
+
+            .showcase-item .image-wrapper {
+                grid-column: 2;
+                grid-row: 1/-1;
+            }
+
+                .showcase-item .image-wrapper .image {
+                }
+
+
+            .showcase-item .info-wrapper {
+                grid-column: 2;
+                grid-row: 2;
+                align-self: flex-end;
+                background-color: rgba(0,0,0,0.6);
+                color: rgba(255,255,255,0.6);
+                display: grid;
+                grid-template-columns: 1fr max-content max-content;
+                width: 100%;
+            }
+
+                .showcase-item .info-wrapper .text {
+                    grid-column: 1;
+                    padding: 4px;
+                }
+
+                    .showcase-item:hover .info-wrapper .text {
+                        color:rgba(255,255,255,1);
+                    }
+
+                .showcase-item .info-wrapper .price {
+                    grid-column: 3;
+                    grid-row: 1;
+                    padding: 4px;
+                    margin-right: 5px;
+                }
+
+                    .showcase-item:hover .info-wrapper .price {
+                        color: rgba(255,255,255,1);
+                    }
+
+                .showcase-item .info-wrapper .discount {
+                    grid-column: 2;
+                    grid-row: 1;
+                    padding: 4px;
+                    margin-right: 5px;
+                    background-color: rgb(144, 255, 144,0.7);
+                    color: rgba(0,0,0,0.6);
+                }
+                    .showcase-item:hover .info-wrapper .discount {
+                        background-color: rgb(144, 255, 144,1);
+                        color: rgba(0,0,0,1);
+                    }
+    </style>
+    <h1 class="section-header">Featured</h1>
+    <div class="showcase-wrapper row" onclick="window.location.href = '/game/'">
+        <a id=" button-left" class="button-next"><</a>
+        <div class="showcase-item">
+            <div class="image-wrapper"><img class="image" src="@Model.Showcase[1].Picture.Directory" /></div>
+            <div class="info-wrapper">
+                <text class="text">@Model.Showcase[1].Game.Name</text>
+                <text class="price">10.99$</text>
+                <text class="discount">100%</text>
+            </div>
+        </div>
+        <a id="button-right" class="button-next">></a>
+
+        <div style="float:right;">
+            Zona papildomom funkcijom
+        </div>
     </div>
+    <!-- game list prototype is done------------------------------------------------------------------------------------------------------------------------------>
+    <h3 class="section-header">Find what you like</h3>
     <div class="game-list-wrapper row">
-        <h3 class="section-header">Find what you like</h3>
         <ul class="nav nav-tabs">
             <li id="pupularButton" class="active"><a onclick="selectTab('pupularButton', 'popularTab')">Popular</a></li>
-            <li id="newestButton"  class=""><a onclick="selectTab('newestButton','newestTab')">Newest</a></li>
-            <li id="specialsButton"class=""><a onclick="selectTab('specialsButton','specialsTab')">Specials</a></li>
+            <li id="newestButton" class=""><a onclick="selectTab('newestButton','newestTab')">Newest</a></li>
+            <li id="specialsButton" class=""><a onclick="selectTab('specialsButton','specialsTab')">Specials</a></li>
         </ul>
         <div class="game-list">
             <div id="popularTab">
                 <style>
+                    .game-list-wrapper {
+                    }
+
+                    .game-list {
+                        margin-top: 5px;
+                    }
+
                     .game-list-item {
                         display: grid;
                         grid-template-columns: max-content 1fr max-content;
-                        margin: 0px 3px 5px;px 3px;
-                        padding:0px 5px 5px 5px;
+                        margin: 0px 3px 5px 3px;
+                        padding: 2px 5px 5px 5px;
                         border-bottom: 1px solid rgb(204,204,204,0.7);
+                    }
+
+                    .game-list-item:hover {
+                        background-color: rgb(245,245,245);
                     }
 
                         .game-list-item .icon-wrapper {
@@ -134,20 +157,26 @@
                             .game-list-item .icon-wrapper .icon {
                                 width: 100%;
                                 height: 100%;
+                                cursor:pointer;
                             }
 
-                       .game-list-item .info-wrapper {
+                        .game-list-item .info-wrapper {
                             /*grid-area: info;*/
                             display: grid;
                             grid-template-rows: max-content auto max-content;
                             margin-left: 10px;
                             padding-bottom: 2px;
-                            white-space:nowrap;
+                            white-space: nowrap;
                             overflow: hidden;
                         }
 
                             .game-list-item .info-wrapper .title {
                                 font-size: 20px;
+                            }
+
+                            .game-list-item .info-wrapper .title:hover {
+                                text-decoration: underline;
+                                cursor:pointer;
                             }
 
                             .game-list-item .info-wrapper .description {
@@ -182,7 +211,7 @@
                             }
 
                             .game-list-item .cart-wrapper .discount {
-                                grid-row : 1;
+                                grid-row: 1;
                                 grid-column: 1;
                                 margin-right: 2px;
                                 background-color: lightgreen;
@@ -193,17 +222,16 @@
                                 grid-row: 2;
                                 grid-column: 1/-1;
                             }
-
                 </style>
-                
+
                 @for (int i = 0; i < 3; i++)
                 {
                     <div class="game-list-item">
                         <div class="icon-wrapper">
-                            <img class="icon" src=@(Model.Pupular[0].Picture.Directory)>
+                            <img class="icon" onclick="window.location.href = '/game/'" src=@(Model.Pupular[0].Picture.Directory)>
                         </div>
                         <div class="info-wrapper">
-                            <div class="title">@(Model.Pupular[0].Game.Name)</div>
+                            <div class="title" onclick="window.location.href = '/game/'">@(Model.Pupular[0].Game.Name)</div>
                             <div class="description">@(Model.Pupular[0].Game.Description) popular tab</div>
                             <div class="tags">
                                 <a class="tag">Tag 1</a>
@@ -224,10 +252,10 @@
                 {
                     <div class="game-list-item">
                         <div class="icon-wrapper">
-                            <img class="icon" src=@(Model.Pupular[0].Picture.Directory)>
+                            <img class="icon" onclick="window.location.href = '/game/'" src=@(Model.Pupular[0].Picture.Directory)>
                         </div>
                         <div class="info-wrapper">
-                            <div class="title">@(Model.Pupular[0].Game.Name)</div>
+                            <div class="title" onclick="window.location.href = '/game/'">@(Model.Pupular[0].Game.Name)</div>
                             <div class="description">@(Model.Pupular[0].Game.Description) newest tab</div>
                             <div class="tags">
                                 <a class="tag">Tag 1</a>
@@ -248,10 +276,10 @@
                 {
                     <div class="game-list-item">
                         <div class="icon-wrapper">
-                            <img class="icon" src=@(Model.Pupular[0].Picture.Directory)>
+                            <img class="icon" onclick="window.location.href = '/game/'" src=@(Model.Pupular[0].Picture.Directory)>
                         </div>
                         <div class="info-wrapper">
-                            <div class="title">@(Model.Pupular[0].Game.Name)</div>
+                            <div class="title" onclick="window.location.href = '/game/'">@(Model.Pupular[0].Game.Name)</div>
                             <div class="description">@(Model.Pupular[0].Game.Description) special tab</div>
                             <div class="tags">
                                 <a class="tag">Tag 1</a>
@@ -269,15 +297,8 @@
             </div>
         </div>
     </div>
-    <hr/>
     <div class="row">
-        Valdymo skydelis
-        <div>
-            Paieska pagal pavadinima/Isplestine paieska
-        </div>
-        <div>
-            Krepselio quickview
-        </div>
+        <button style="text-align:center;" class="list-group-item" onclick="window.location.href = '/store/search/'">Search</button>
     </div>
 
 </div>
