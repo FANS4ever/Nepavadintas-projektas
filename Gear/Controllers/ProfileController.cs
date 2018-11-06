@@ -91,9 +91,15 @@ namespace Gear.Controllers
             public IEnumerable<User> Users { get; set; }
             public IEnumerable<Game> Games { get; set; }
         }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
     }
-
-   
-
-    
 }

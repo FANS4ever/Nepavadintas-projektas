@@ -144,9 +144,7 @@
         }
         
     </style>
-</head>
 
-<body>
     <header>
         <h1>Profile</h1>
     </header>
@@ -155,10 +153,23 @@
             
         <div class="game-list" style="grid-column:1;">
             <input type="text" class="input-sm" style="margin-left:0px;" id="myInput" placeholder="Search for names.." title="Type in a name" oninput="newSearch()">
-            <div id="game-list-item" class="list-group">
+            <div id="game-list-item" class="list-group" style="background-color:#dcdcdc;">
                 @foreach (var game in Model.games)
                 {
-                    <button class="list-group-item list-group-item-action" style="margin-bottom: 1px;">
+                    <style>
+                        .button {
+                            background-color: #dcdcdc;
+                            color:black;
+                        }
+                        .button span {
+                            color:black;
+                        }
+                            .button:hover {
+                                background-color: #b1abab !important; 
+                            }
+                        
+                    </style>
+                    <button class="list-group-item list-group-item-action button" style="margin-bottom: 1px;">
                         <span class="text-primary">@game.Name</span>
 
 
