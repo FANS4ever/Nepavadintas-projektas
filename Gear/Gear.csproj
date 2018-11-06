@@ -237,6 +237,8 @@
     <Content Include="Views\Creator\Edit.cshtml" />
     <Content Include="Views\Creator\Statistics.cshtml" />
     <Content Include="Views\Creator\Create.cshtml" />
+    <Content Include="Views\Creator\BecomingCreator.cshtml" />
+    <Content Include="Views\Creator\Discount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
