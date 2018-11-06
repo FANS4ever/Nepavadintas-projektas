@@ -23,6 +23,15 @@ namespace Gear.Controllers
             };
             return View(game);
         }
+        public ActionResult AgeValidation()
+        {
+            var game = new Game()
+            {
+                Name = "The Witcher® 3: Wild Hunt",
+                AgeRestriction = 14
+            };
+            return View(game);
+        } 
 
     }
 }

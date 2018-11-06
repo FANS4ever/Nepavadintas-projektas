@@ -13,7 +13,7 @@ namespace Gear.Models
         public string Description { get; set; }
         public string TrailerURL { get; set; }
         public double Price { get; set; }
-        public DateTime AgeRestriction { get; set; }
+        public int AgeRestriction { get; set; }
         public string DevelopmentBranch { get; set; }
         public int VersionNumber { get; set; }
         public DateTime ReleaseTime { get; set; }

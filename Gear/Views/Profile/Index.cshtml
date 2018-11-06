@@ -1,7 +1,242 @@
-﻿
+﻿@model Gear.Models.UserGame
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ProfilePageStart</h2>
-<h3>Karolis Stončius</h3>
+<html>
+<head>
+    <title> Profile </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1000px 200px;
+        }
+
+            .grid-container > columns {
+            }
+
+        .profile {
+            background: #edecec;
+        }
+
+        .profile-sidebar {
+            text-align: right;
+        }
+
+        .profile-user-pic {
+            text-align: center;
+        }
+
+        .profile-user-title {
+            padding-left: 10px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .profile-user-name {
+        }
+
+        .btn-primary, .btn-primary:active, .btn-primary:visited {
+            background-color: #dcdcdc !important;
+            border-color: #dcdcdc !important;
+            color: #000000 !important;
+            font-weight: bold;
+        }
+
+            .btn-primary:hover {
+                background-color: #b1abab !important;
+            }
+
+
+        .btn {
+            border: none;
+            background-color: inherit;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            width: 300px;
+            text-align: left;
+        }
+        .btn-game {
+            border: none;
+            background-color: inherit;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            width: 100%;
+            text-align: left;
+        }
+
+        
+
+        #myInput {
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            
+            font-size: 18px;
+            padding: 12px 20px 12px 2px;
+            border: none;
+            margin-bottom: 12px;
+            margin-left: 15px;
+        }
+
+        #myUL {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            
+        }
+
+            #myUL li a {
+                background: #edecec;
+                text-decoration: none;
+                font-size: 18px;
+                color: black;
+                display: block;
+                width: 300px;
+                padding: 10px;
+            }
+
+                #myUL li a:hover:not(.header) {
+                    background-color: #b1b0b0;
+                }
+
+        .popup {
+            
+            display: flex;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            transform: translate(0px,-50px);
+            margin-top: 5px;
+        }
+            .popup:checked {
+                visibility: visible;
+            }
+            /* The actual popup */
+            .popup .popuptext {
+                visibility: hidden;
+                width: 160px;
+                background-color: #edecec;
+                
+                text-align: center;
+               
+                padding: 8px;
+                
+
+
+                
+            }
+            /* Toggle this class - hide and show the popup */
+            .popup .show {
+                visibility: visible;
+                -webkit-animation: fadeIn 1s;
+                animation: fadeIn 1s;
+            }
+        .radio-input {
+            visibility: hidden;
+        }
+        .radio-input:checked + label .popup .popuptext {
+            visibility: visible;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Profile</h1>
+    </header>
+
+    <div class="grid-container">
+        <columns>
+            <input type="text" id="myInput" onkeyup="Search()" placeholder="Search for names.." title="Type in a name" >
+
+            <ul id="myUL">              
+                @foreach (var game in Model.games)
+                {
+                   
+                <li>
+                    <input class="radio-input" type="radio" name="games" id="@game.Id" />
+                    <label for="@game.Id" style="height: 50px">
+                        <a class="btn-game">@game.Name</a>
+                        <div class="popup" style="transform: translate(299px,-50px); width: 150px; visibility: hidden">
+                            <span class="popuptext" id="myPopup" style="padding-bottom: 11px">
+                                @game.Name <br />
+                                Bought: @game.Description <br />
+                            </span>
+                        </div>
+                    </label>
+                </li>
+                }
+                
+            </ul>
+
+        </columns>
+
+        <columns>
+            <div class=" profile">
+
+                <div class="profile-sidebar">
+                    <div class="profile-user-pic">
+                        <img src="@Url.Content(Model.user.Avatar)" class="img-fluid img-circle" alt="Avatar" style="width: 200px; height: 200px">
+                    </div>
+                    <div class="profile-user-title">
+                        <div class="profile-user-username">
+                            @Model.user.Username
+                        </div>
+                        <div class="profile-user-name">
+                            @Model.user.Name @Model.user.Surname
+                        </div>
+                        <div class="profile-user-email">
+                            @Model.user.Email
+                        </div>
+                    </div>
+                    <div class="btn-group-vertical button">
+
+
+                        <button role="button" onclick="window.location.href= '/Profile/Edit';" class="btn btn-primary" style="width: 200px !important">Edit profile</button>
+                        <button class="btn btn-primary" style="width: 200px !important">Facebook login</button>
+                        <button role="button" onclick="window.location.href= '/Profile/ChatRoom';" class="btn btn-primary" style="width: 200px !important">Chat room</button>
+                        <button class="btn btn-primary" style="width: 200px !important">Shopping cart</button>
+                        <button class="btn btn-primary" style="width: 200px !important">Sign out</button>
+                    </div>
+                    <div class="profile-use-menu">
+
+                    </div>
+
+                </div>
+            </div>
+        </columns>
+    </div>
+
+
+    <script>
+        function Search() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

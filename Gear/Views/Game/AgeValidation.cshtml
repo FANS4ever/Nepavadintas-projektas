@@ -1,0 +1,100 @@
+﻿@model Gear.Models.Game
+@{
+    ViewBag.Title = "AgeValidation";
+}
+
+<style>
+    .image-showcase {
+        height: auto;
+        width: 460px;
+        margin-bottom: 5px;
+    }
+
+    .warning {
+        font-weight: bold;
+        font-size: 14pt;
+        width: 460px;
+    }
+</style>
+
+<<script type="text/javascript">
+
+    var year = 2018;
+    var month = 1;
+    var day = 1;
+
+    function setYear(newYear) {
+        year = newYear
+    }
+    function setMonth(newMonth) {
+        month = newMonth
+    }
+    function setDay(newDay) {
+        day = newDay
+    }
+
+
+
+    function ageValidation() {
+        var today = new Date();
+        if (today.getFullYear() - year > @Model.AgeRestriction) {
+
+            location.href = '@Url.Action("Index", "Game")'
+        }
+        else if (today.getFullYear() - year >= @Model.AgeRestriction && month < today.getMonth() + 1)
+        {
+             location.href = '@Url.Action("Index", "Game")'
+        }
+
+        else if (today.getFullYear() - year >= @Model.AgeRestriction && month <= today.getMonth() + 1 && day <= today.getDate())
+        {
+             location.href = '@Url.Action("Index", "Game")'
+        }
+        else {
+            alert("You are too young for this game");
+            location.href = '@Url.Action("Index", "Store")'
+
+        }
+    }
+</script>
+
+<center>
+    <h2>@Model.Name</h2>
+    <img class="image-showcase" src="~/Content/images/witcher.jpg" alt="witcher.jpg" title="Witcher"><br><br>
+
+    <div class="warning">
+        <span>This Game may contain content not appropriate for all ages, or may not be appropriate for viewing at work. Please validate your age.</span><br><br>
+    </div>
+
+    <select onchange="setDay(this.value)">
+        @for (int i = 1; i < 32; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+    <select onchange="setMonth(this.value)">
+        <option value="1">January</option>
+        <option value="2">February</option>
+        <option value="3">March</option>
+        <option value="4">April</option>
+        <option value="5">May</option>
+        <option value="6">June</option>
+        <option value="7">July</option>
+        <option value="8">August</option>
+        <option value="9">September</option>
+        <option value="10">October</option>
+        <option value="11">November</option>
+        <option value="12">December</option>
+    </select>
+    <select onchange="setYear(this.value)">
+        @for (int i = 2018; i > 1899; i--)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+    <br><br>
+    <input id="viewPage" type="button" value="View page" onclick="ageValidation()" />
+    <input id="cancel" type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Store")'" />
+
+</center>
+

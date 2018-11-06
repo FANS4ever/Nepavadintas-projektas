@@ -84,23 +84,31 @@
         grid-column: 1/3;
     }
 
+    .comment-grid {
+        display: grid;
+        max-width: 700px;
+        grid-template-columns: 9% 91%;
+    }
+
     .comment-write {
         grid-column: 1;
         max-width: 700px;
         width: 700px;
         height: 150px;
         resize: none;
+        margin-top: 10px;
     }
 
     .comment-display {
-        grid-column: 1;
-        max-width: 700px;
-        border: none;
+        grid-column: 2;
     }
 
     .user-profile-image {
+        grid-column: 1;
+        grid-row: 1 / span 3;
         border-radius: 50%;
-        width: 200px
+        width: 50px;
+        height: 50px;
     }
 
     .post-button {
@@ -111,19 +119,7 @@
         justify-self: flex-end;
     }
 
-    fieldset, label {
-        margin: 0;
-        padding: 0;
-    }
 
-    body {
-        margin: 20px;
-    }
-
-    h1 {
-        font-size: 1.5em;
-        margin: 10px;
-    }
 
     /****** Style Star Rating Widget *****/
 
@@ -146,11 +142,6 @@
             content: "\f005";
         }
 
-        /*.rating > .half:before {
-            content: "\f089";
-            position: absolute;
-        }*/
-
         .rating > label {
             color: #ddd;
             float: right;
@@ -170,7 +161,172 @@
             .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
             .rating > input:checked ~ label:hover ~ label {
                 color: #FFED85;
-            } 
+            }
+
+
+    .comment-rating {
+        grid-column: 2;
+        border: none;
+        height: 25px;
+    }
+
+        .comment-rating > label:before {
+            font-size: 1.25em;
+            font-family: FontAwesome;
+            display: inline-block;
+            content: "\f005";
+        }
+
+    .comment-rating-empty {
+        color: #ddd;
+    }
+
+    .comment-rating-full {
+        color: #FFD700;
+    }
+
+
+    .rating-review {
+        grid-column: 2;
+        border: none;
+        height: 25px;
+        margin-top: -5px;
+    }
+
+        .rating-review > label:before {
+            font-size: 1.25em;
+            font-family: FontAwesome;
+            display: inline-block;
+            content: "\f005";
+        }
+
+    .rating-review-empty {
+        color: #ddd;
+    }
+
+    .rating-review-full {
+        color: #FFD700;
+    }
+
+    .rating-text {
+        grid-column: 1;
+        grid-row: 1 / span 6;
+        margin-top: 20px;
+    }
+
+    .rating-grid {
+        grid-column: 1;
+        max-width: 700px;
+        display: grid;
+        grid-template-columns: 20% 80%;
+        margin-top: -20px;
+    }
+
+    .reply-button {
+        grid-column: 2;
+        background-color: Transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        outline: none;
+        width: 60px;
+        font-weight: bold;
+        color: #4f4f4f;
+        margin-left: -11px;
+        margin-top: -3px;
+    }
+
+        .reply-button:hover {
+            grid-column: 2;
+            background-color: Transparent;
+            background-repeat: no-repeat;
+            border: none;
+            cursor: pointer;
+            overflow: hidden;
+            outline: none;
+            width: 60px;
+            font-weight: bold;
+            color: black;
+        }
+
+    .date {
+        grid-column: 2;
+        color: #4f4f4f;
+        font-weight: bold;
+        font-size: 9pt;
+    }
+
+
+    .section-header {
+        text-transform: uppercase;
+    }
+
+    .showcase {
+        display: inline-block;
+        /*Fit content*/
+        height: auto;
+        max-width: 700px;
+        /*Make scroll menu*/
+        overflow: auto;
+        white-space: nowrap;
+        /*Add margins*/
+        margin-top: 10px;
+        margin-bottom: 15px;
+        margin-left: 5px;
+        /*fix whitespaces*/
+        padding-right: 16px;
+    }
+
+    .showcase-item {
+        display: inline-grid;
+        width: 250px;
+        /*Remove whitespace*/
+    }
+
+    .showcase-item-image {
+        grid-row: 1;
+        grid-column: 1;
+        width: 250px;
+        height: auto;
+    }
+
+    .showcase-item-text {
+        grid-row: 1;
+        grid-column: 1;
+        width: 100%;
+        align-self: flex-end;
+        background-color: rgb(224,224,224,0.7);
+    }
+
+    .showcase-item-price {
+        grid-row: 1;
+        grid-column: 1;
+        align-self: flex-end;
+        justify-self: flex-end;
+        padding: 0px 3px 0px 3px;
+        background-color: rgb(88,88,88,0.7);
+        color: mediumturquoise;
+    }
+
+    .showcase-item-discount {
+        grid-row: 1;
+        grid-column: 1;
+        align-self: flex-start;
+        justify-self: flex-end;
+        padding: 0px 3px 0px 3px;
+        background-color: limegreen;
+        color: lightgreen;
+        opacity: 0.9;
+        border-bottom-left-radius: 8px;
+    }
+
+    .line {
+        grid-column: 2;
+        border-bottom: 1px solid gray;
+        max-width: 700px;
+        margin-top: 8px;
+    }
 
 </style>
 
@@ -192,6 +348,14 @@
         } else {
             return 'error';
         }
+    }
+
+    function noteForBookmark() {
+
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('name', 'note');
+        form.appendChild(input);
     }
 
 </script>
@@ -226,26 +390,97 @@
             <span class="info-text"> Tags:</span><br>
         </div>
         <div class="cart-button-wrapper">
-            <span>30€</span>
+            <span>10.99€</span>
             <input class="cart-button" id="add-to-cart" type="button" value="Add to Cart" />
+            <input class="cart-button" id="bookmark" type="button" value="Bookmark" onclick="noteForBookmark()" />
         </div>
+
+        
+        @*justify-self: flex-end;*@
         <div class="info-extensive">
             <h1>About Game:</h1>
             <span>@Model.Description</span><br><br>
         </div>
+    </div>
 
-        <h1>Reviews:</h1><br><br>
-        <span class="info-text"> 5 star: </span><br>
-        <span class="info-text"> 4 star: </span><br>
-        <span class="info-text"> 3 star: </span><br>
-        <span class="info-text"> 2 star: </span><br>
-        <span class="info-text"> 1 star: </span><br>
-        <span class="info-text"> Average score:</span><br>
-        <span class="info-text"> Reviews:</span><br><br>
+    <div style="grid-column: 1;">
+        <h1>Recomended games:</h1>
+        <div class="showcase row">
+            @for (int i = 0; i < 5; i++)
+            {
+                <div class="showcase-item">
+                    <img class="showcase-item-image" src="~/Content/images/witcher.jpg" />
+                    <text class="showcase-item-text">@Model.Name</text>
+                    <text class="showcase-item-price">10.99$</text>
+                    <text class="showcase-item-discount">100%</text>
+                </div>
+            }
+        </div>
     </div>
 
 
-    <textarea class="comment-write"></textarea>
+    <h1 style="grid-column: 1;">Reviews:</h1>
+    <div class="rating-grid">
+
+        <center class="rating-text">
+            <font size="40">4.75</font>
+            <span>74896456 reviews</span>
+        </center><br>
+        <div class="rating-review">
+            <label class="rating-review-full" for="star1" title="1 stars"> </label>
+            <label class="rating-review-full" for="star2" title="2 stars"> </label>
+            <label class="rating-review-full" for="star3" title="3 stars"> </label>
+            <label class="rating-review-full" for="star4" title="4 stars"> </label>
+            <label class="rating-review-full" for="star5" title="5 stars"> </label>
+
+            <span>7367378</span>
+
+        </div>
+
+        <div class="rating-review">
+            <label class="rating-review-full" for="star1" title="1 stars"> </label>
+            <label class="rating-review-full" for="star2" title="2 stars"> </label>
+            <label class="rating-review-full" for="star3" title="3 stars"> </label>
+            <label class="rating-review-full" for="star4" title="4 stars"> </label>
+            <label class="rating-review-empty" for="star5" title="5 stars"> </label>
+            <span>24524</span>
+        </div>
+
+
+
+
+        <div class="rating-review">
+            <label class="rating-review-full" for="star1" title="1 stars"> </label>
+            <label class="rating-review-full" for="star2" title="2 stars"> </label>
+            <label class="rating-review-full" for="star3" title="3 stars"> </label>
+            <label class="rating-review-empty" for="star4" title="4 stars"> </label>
+            <label class="rating-review-empty" for="star5" title="5 stars"> </label>
+            <span>78325</span>
+        </div>
+
+        <div class="rating-review">
+            <label class="rating-review-full" for="star1" title="1 stars"> </label>
+            <label class="rating-review-full" for="star2" title="2 stars"> </label>
+            <label class="rating-review-empty" for="star3" title="3 stars"> </label>
+            <label class="rating-review-empty" for="star4" title="4 stars"> </label>
+            <label class="rating-review-empty" for="star5" title="5 stars"> </label>
+            <span>275272</span>
+        </div>
+
+        <div class="rating-review">
+            <label class="rating-review-full" for="star1" title="1 stars"> </label>
+            <label class="rating-review-empty" for="star2" title="2 stars"> </label>
+            <label class="rating-review-empty" for="star3" title="3 stars"> </label>
+            <label class="rating-review-empty" for="star4" title="4 stars"> </label>
+            <label class="rating-review-empty" for="star5" title="5 stars"> </label>
+            <span>54645</span>
+        </div>
+
+
+    </div>
+
+
+    <textarea class="comment-write" placeholder="start writing review here"></textarea>
     <input class="post-button" id="post" type="button" value="Post" />
     <fieldset class="rating">
         <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="5 stars"></label>
@@ -255,10 +490,49 @@
         <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="1 star"></label>
     </fieldset>
 
-    <div class="info-wrapper">
-        <img class="image-showcase" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
-        <span class="comment-display">Cia yra komentaras</span>
+    <div class="comment-grid">
+        <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
+
+        <div class="comment-rating">
+            <b><span class="comment-display"> Vartotojas 1</span></b>
+
+            <label class="comment-rating-full" for="star1" title="1 stars"> </label>
+            <label class="comment-rating-full" for="star2" title="2 stars"> </label>
+            <label class="comment-rating-full" for="star3" title="3 stars"> </label>
+            <label class="comment-rating-full" for="star4" title="4 stars"> </label>
+            <label class="comment-rating-empty" for="star5" title="5 stars"> </label>
+        </div>
+
+        <span class="date"> 2018-10-29 </span>
+        <span class="comment-display">Cia yra labai labai labai labai labai labai labai labai labai labai labai labai ilgas ilgas pirmo vartotojo komentaras</span>
+
+        <div class="line"> </div>
+        <span class="date"> Average score of review:  3</span>
+        <input class="reply-button" id="reply" type="button" value="Reply" /><br>
     </div>
+
+    <br>
+
+    <div class="comment-grid" style="margin-left: 50px;">
+        <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
+
+        <div class="comment-rating">
+            <b><span class="comment-display"> Vartotojas 2</span></b>
+
+            <label class="comment-rating-full" for="star1" title="1 stars"> </label>
+            <label class="comment-rating-full" for="star2" title="2 stars"> </label>
+            <label class="comment-rating-full" for="star3" title="3 stars"> </label>
+            <label class="comment-rating-empty" for="star4" title="4 stars"> </label>
+            <label class="comment-rating-empty" for="star5" title="5 stars"> </label>
+        </div>
+
+        <span class="date"> 2018-10-30 </span>
+        <span class="comment-display">Cia yra atsakymas i labai labai labai labai labai labai labai labai labai labai labai labai ilga pirmo vartotojo komentara</span>
+        <div class="line"> </div>
+        <span class="date"> Average score of review:  0</span>
+        <input class="reply-button" id="reply" type="button" value="Reply" onclick="noteForBookmark()" />
+    </div>
+
 
 </div>
 
@@ -266,8 +540,3 @@
 <div class="content-tail">
 
 </div>
-
-
-
-
-
