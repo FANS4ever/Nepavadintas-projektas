@@ -1,8 +1,215 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
 
-<h2>CreatorPageStart</h2>
-<h3>Gabrielius Ulejevas</h3>
+    img {
+        width: 256px;
+        height: 128px;
+    }
 
+    p {
+        padding: 15px;
+    }
+
+    .overlay {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,.85);
+        z-index: 10000;
+    }
+
+    .popup {
+        width: 98%;
+        padding: 15px;
+        left: 0;
+        margin-left: 1%;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background: white;
+        position: absolute;
+        top: -100%;
+        box-shadow: 5px 5px 5px #000;
+        z-index: 10001;
+    }
+
+    @@media (min-width: 768px) {
+        .popup {
+            width: 66.66666666%;
+            margin-left: 16.666666%;
+        }
+    }
+
+    @@media (min-width: 992px) {
+        .popup {
+            width: 50%;
+            margin-left: 25%;
+        }
+    }
+
+    @@media (min-width: 1200px) {
+        .popup {
+            width: 33.33333%;
+            margin-left: 33.33333%;
+        }
+
+        .l button {
+            background-color: inherit;
+            float: left;
+            border: 1px solid black;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+            color: black;
+            width: 50%;
+            height: 64px;
+            font-weight: bold;
+        }
+    }
+</style>
+<h3>Published games</h3>
+
+<table style="width:100%">
+    <tr>
+        <th width="256px">
+            <img src="~/Content/images/witcher.jpg" alt="Witcher">
+        </th>
+        <th>
+            <div align="center">
+                <h1 style="font-size:3vw;">The Witcher 3: Wild Hunt</h1>
+            </div>
+        </th>
+        <th width="256px">
+            <div align="center">
+                <div class="l">
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Creator")'">Edit</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Statistics", "Creator")'">Statistics</button>
+                </div>
+                <div class="l">
+                    <button type="button" class="btn btn-primary" onclick="showDiscount('');">Discounts</button>
+                    <button type="button" class="btn btn-primary" onclick="showPrompt('Do you realy want to remove the game?');">Remove</button>
+                </div>
+            </div>
+        </th>
+    </tr>
+</table>
+<p>
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Creator")'">Publish a new game</button>
+</p>
+<p id="demo"></p>
+
+<!-- Code for confirmation window -->
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+    function showPrompt(msg) {
+        // CREATE A Promise TO RETURN
+        var p = new Promise(function (resolve, reject) {
+            ;
+
+            var dialog = $('<div/>', { class: 'popup' })
+                .append(
+                    $('<p/>').html(msg)
+                )
+                .append(
+                    $('<div/>', { class: 'text-right' })
+                        .append($('<button/>', { class: 'btn btn-cancel' }).html('Cancel').on('click', function () {
+                            $('.overlay').remove();
+                            // RESOLVE Promise TO false
+                            resolve(false);
+                        }))
+                        .append($('<button/>', { class: 'btn btn-primary' }).html('Ok').on('click', function () {
+                            $('.overlay').remove();
+                            // RESOLVE Promise TO true
+                            resolve(true);
+                        }))
+                );
+
+            var overlay = $('<div/>', { class: 'overlay' })
+                .append(dialog);
+
+            $('body').append(overlay);
+            $(dialog).animate({ top: '15%' }, 1000);
+        });
+
+        // RETURN THE Promise
+        return p;
+    }
+
+
+    $(function () {
+        // HANDLE open-dialog CLICK
+        $('.open-dialog').on('click', function (e) {
+            // PREVENT DEFAULT BEHAVIOUR FOR <a/>
+            e.preventDefault();
+
+            // SAVE PROMISE RETURN
+            var res = showPrompt('Do you like our confirmation?');
+            res.then(function (ret) {
+                ret ? alert('Ok clicked') : alert('Cancel clicked');
+            })
+        });
+    });
+</script>
+<script>
+    function showDiscount(msg) {
+        // CREATE A Promise TO RETURN
+        var p = new Promise(function (resolve, reject) {
+            ;
+
+            var dialog = $('<div/>', { class: 'popup' })
+                .append(
+                $('<p/>').html('How much you would like to discount? <br> <input type="text" name="version">')
+                )
+                .append(
+                    $('<div/>', { class: 'text-right' })
+                        .append($('<button/>', { class: 'btn btn-cancel' }).html('Cancel').on('click', function () {
+                            $('.overlay').remove();
+                            // RESOLVE Promise TO false
+                            resolve(false);
+                        }))
+                        .append($('<button/>', { class: 'btn btn-primary' }).html('Ok').on('click', function () {
+                            $('.overlay').remove();
+                            // RESOLVE Promise TO true
+                            resolve(true);
+                        }))
+                );
+
+            var overlay = $('<div/>', { class: 'overlay' })
+                .append(dialog);
+
+            $('body').append(overlay);
+            $(dialog).animate({ top: '15%' }, 1000);
+        });
+
+        // RETURN THE Promise
+        return p;
+    }
+
+
+    $(function () {
+        // HANDLE open-dialog CLICK
+        $('.open-dialog').on('click', function (e) {
+            // PREVENT DEFAULT BEHAVIOUR FOR <a/>
+            e.preventDefault();
+
+            // SAVE PROMISE RETURN
+            var res = showPrompt('Do you like our confirmation?');
+            res.then(function (ret) {
+                ret ? alert('Ok clicked') : alert('Cancel clicked');
+            })
+        });
+    });
+</script>
