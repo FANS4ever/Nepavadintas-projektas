@@ -27,15 +27,15 @@ namespace Gear.Controllers
         {
             double count = 1000, y = 100;
             Random random = new Random();
-            List<DataPoint> dataPoints = new List<DataPoint>();
+            //List<DataPoint> dataPoints = new List<DataPoint>();
 
             for (int i = 0; i < count; i++)
             {
                 y += random.Next(-10, 11);
-                dataPoints.Add(new DataPoint(i, y));
+                //dataPoints.Add(new DataPoint(i, y));
             }
 
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            //ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
             return View(@"~/Views/Creator/Statistics.cshtml");
         }
