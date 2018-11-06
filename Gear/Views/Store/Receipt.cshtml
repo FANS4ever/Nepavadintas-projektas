@@ -4,7 +4,7 @@
 }
 
 
-<h2>Payment</h2>
+<h2>Receipt</h2>
 <div>
     <div>
         <table class="table table-hover table-striped">
@@ -25,12 +25,10 @@
                 </tr>
                 <tr>
                     <td>
-                        Game name
+                        <a onclick="window.location.href = '/game/'">Game name</a>
                     </td>
                     <td>
-                        <input type="text" />
-                        <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-up"></span></button>
-                        <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                        Amount
                     </td>
                     <td>
                         Unit Price
@@ -38,12 +36,9 @@
                     <td>
                         Total Price
                     </td>
-                    <td>
-                        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
-                    </td>
                 </tr>
                 <tr>
-                    <th colspan="4" style="text-align:right;">
+                    <th colspan="3" style="text-align:right;">
                         Total
                     </th>
                     <td>
@@ -52,11 +47,14 @@
                 </tr>
             </tbody>
         </table>
-        <div style="display:flex; justify-content:flex-end;">
-            <select>
-                <option>Payment Type</option>
-            </select>
-            <input type="button" onclick="window.location.href = '/store/receipt/'" value="Checkout" />
+        <div>
+            Payment method
+            <br />
+            Payment status
+            <br/>
+            Amount paid
+            <br />
+            Amount owed
         </div>
         <div />
     </div>

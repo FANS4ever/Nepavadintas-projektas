@@ -82,5 +82,10 @@ namespace Gear.Controllers
         {
             return View();
         }
+
+        public ActionResult Receipt()
+        {
+            return View();
+        }
     }
 }
