@@ -328,6 +328,53 @@
         margin-top: 8px;
     }
 
+    .dropbtn {
+        background: inherit;
+        color: #4f4f4f;
+        padding: 0px;
+        font-size: 16pt;
+        border: none;
+        cursor: pointer;
+        width: 10px;
+        height: 10px;
+        outline: 0;
+    }
+
+        .dropbtn:hover, .dropbtn:focus {
+            color:black;
+        }
+
+    .dropdown {
+        float: right;
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        right: 0;
+        z-index: 1;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+    .dropdown a:hover {
+        background-color: #ddd;
+    }
+
+    .show {
+        display: block;
+    }
 </style>
 
 <script type="text/javascript">
@@ -395,7 +442,7 @@
             <input class="cart-button" id="bookmark" type="button" value="Bookmark" onclick="noteForBookmark()" />
         </div>
 
-        
+
         @*justify-self: flex-end;*@
         <div class="info-extensive">
             <h1>About Game:</h1>
@@ -407,7 +454,7 @@
         <h1>Recomended games:</h1>
         <div class="showcase row">
             @for (int i = 0; i < 5; i++)
-            {  
+            {
                 <div class="showcase-item" onclick="window.location.href = '/game/AgeValidation'">
                     <img class="showcase-item-image" src="~/Content/images/witcher.jpg" />
                     <text class="showcase-item-text">@Model.Name</text>
@@ -495,6 +542,14 @@
 
         <div class="comment-rating">
             <b><span class="comment-display"> Vartotojas 1</span></b>
+            <div class="dropdown">
+                <button onclick="dropDown()" class="dropbtn">…</button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="#home">Important</a>
+                    <a href="#about">Warn</a>
+                    <a href="#contact">Remove</a>
+                </div>
+            </div>
 
             <label class="comment-rating-full" for="star1" title="1 stars"> </label>
             <label class="comment-rating-full" for="star2" title="2 stars"> </label>
@@ -518,6 +573,14 @@
 
         <div class="comment-rating">
             <b><span class="comment-display"> Vartotojas 2</span></b>
+            <div class="dropdown">
+            <button onclick="dropDown()" class="dropbtn">…</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="#home">Important</a>
+                <a href="#about">Warn</a>
+                <a href="#contact">Remove</a>
+            </div>
+        </div>
 
             <label class="comment-rating-full" for="star1" title="1 stars"> </label>
             <label class="comment-rating-full" for="star2" title="2 stars"> </label>
@@ -540,3 +603,27 @@
 <div class="content-tail">
 
 </div>
+
+<!--Sriptas dropdownui-->
+<script>
+    /* When the user clicks on the button,
+    toggle between hiding and showing the dropdown content */
+    function dropDown() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+</script>
