@@ -5,14 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<html>
-<head>
-    <title> Profile </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         .grid-container {
             display: grid;
-            grid-template-columns: 1000px 200px;
+            grid-template-columns:max-content 1fr max-content;
         }
 
             .grid-container > columns {
@@ -154,89 +150,89 @@
     <header>
         <h1>Profile</h1>
     </header>
-
+    <hr />
     <div class="grid-container">
-        <columns>
-            <input type="text" id="myInput" onkeyup="Search()" placeholder="Search for names.." title="Type in a name" >
-
-            <ul id="myUL">              
+            
+        <div class="game-list" style="grid-column:1;">
+            <input type="text" class="input-sm" style="margin-left:0px;" id="myInput" placeholder="Search for names.." title="Type in a name" oninput="newSearch()">
+            <div id="game-list-item" class="list-group">
                 @foreach (var game in Model.games)
                 {
-                   
-                <li>
-                    <input class="radio-input" type="radio" name="games" id="@game.Id" />
-                    <label for="@game.Id" style="height: 50px">
-                        <a class="btn-game">@game.Name</a>
-                        <div class="popup" style="transform: translate(299px,-50px); width: 150px; visibility: hidden">
-                            <span class="popuptext" id="myPopup" style="padding-bottom: 11px">
-                                @game.Name <br />
-                                Bought: @game.Description <br />
-                            </span>
-                        </div>
-                    </label>
-                </li>
+                    <button class="list-group-item list-group-item-action" style="margin-bottom: 1px;">
+                        <span class="text-primary">@game.Name</span>
+
+
+                        <!--<input class="radio-input" type="radio" name="games" id="@game.Id" />
+                        <label for="@game.Id" style="height: 50px">
+                            <a class="btn-game">@game.Name</a>
+                            <div class="popup" style="transform: translate(299px,-50px); width: 150px; visibility: hidden">
+                                <span class="popuptext" id="myPopup" style="padding-bottom: 11px">
+                                    @game.Name <br />
+                                    Bought: @game.Description <br />
+                                </span>
+                            </div>
+                        </label>-->
+                    </button>
                 }
-                
-            </ul>
+            </div>
+        </div>
 
-        </columns>
+        <div class=" profile" style="grid-column:3;">
 
-        <columns>
-            <div class=" profile">
-
-                <div class="profile-sidebar">
-                    <div class="profile-user-pic">
-                        <img src="@Url.Content(Model.user.Avatar)" class="img-fluid img-circle" alt="Avatar" style="width: 200px; height: 200px">
+            <div class="profile-sidebar">
+                <div class="profile-user-pic">
+                    <img src="@Url.Content(Model.user.Avatar)" class="img-fluid img-circle" alt="Avatar" style="width: 200px; height: 200px">
+                </div>
+                <div class="profile-user-title">
+                    <div class="profile-user-username">
+                        @Model.user.Username
                     </div>
-                    <div class="profile-user-title">
-                        <div class="profile-user-username">
-                            @Model.user.Username
-                        </div>
-                        <div class="profile-user-name">
-                            @Model.user.Name @Model.user.Surname
-                        </div>
-                        <div class="profile-user-email">
-                            @Model.user.Email
-                        </div>
+                    <div class="profile-user-name">
+                        @Model.user.Name @Model.user.Surname
                     </div>
-                    <div class="btn-group-vertical button">
+                    <div class="profile-user-email">
+                        @Model.user.Email
+                    </div>
+                </div>
+                <div class="btn-group-vertical button">
 
 
-                        <button role="button" onclick="window.location.href= '/Profile/Edit';" class="btn btn-primary" style="width: 200px !important">Edit profile</button>
-                        <button class="btn btn-primary" style="width: 200px !important">Facebook login</button>
-                        <button role="button" onclick="window.location.href= '/Profile/ChatRoom';" class="btn btn-primary" style="width: 200px !important">Chat room</button>
-                        <button class="btn btn-primary" style="width: 200px !important">Shopping cart</button>
-                        <button class="btn btn-primary" style="width: 200px !important">Sign out</button>
-                    </div>
-                    <div class="profile-use-menu">
-
-                    </div>
+                    <button role="button" onclick="window.location.href= '/Profile/Edit';" class="btn btn-primary" style="width: 200px !important">Edit profile</button>
+                    <button class="btn btn-primary" style="width: 200px !important">Facebook login</button>
+                    <button role="button" onclick="window.location.href= '/Profile/ChatRoom';" class="btn btn-primary" style="width: 200px !important">Chat room</button>
+                    <button class="btn btn-primary" style="width: 200px !important">Shopping cart</button>
+                    <button class="btn btn-primary" style="width: 200px !important">Sign out</button>
+                </div>
+                <div class="profile-use-menu">
 
                 </div>
+
             </div>
-        </columns>
+        </div>
+
     </div>
 
 
     <script>
-        function Search() {
-            var input, filter, ul, li, a, i;
+        function newSearch() {
+            console.log("searching");
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
-            ul = document.getElementById("myUL");
-            li = ul.getElementsByTagName("li");
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("a")[0];
-                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
-                } else {
-                    li[i].style.display = "none";
+
+            listitem = document.getElementById("game-list-item");
+            buttons = listitem.getElementsByTagName("button");
+
+            for (var i = 0; i < buttons.length; i++) {
+                text = $(buttons[i].getElementsByTagName("span")).text();
+
+                if (text.toUpperCase().indexOf(filter) > -1) {
+                    buttons[i].style.display = "";
                 }
+                else {
+                    buttons[i].style.display = "none";
+                }
+
+                //console.log(listitem[i].getElementByTagName("button").getElementsByTagName("span"));
             }
         }
-
     </script>
-
-</body>
-
-</html>
