@@ -2,13 +2,17 @@
 @{
     ViewBag.Title = "BecomingCreator";
 }
+<style>
+    input{
+        margin-top: 2px;
+        display:block;
+        justify-self:center;
+    }
+</style>
 
 
-
-<form>
-    <h3>Developer name:</h3>
-    <input type="text" name="gamename">
-    <h4>Website</h4>
-    <input type="text" name="gamename">
-    <input type="submit" value="Become a developer">
+<form style="margin-top:5px; display:grid;">
+    <input class="form-control" type="text" name="gamename" placeholder="Developer Studio"/>
+    <input class="form-control" type="text" name="gamename"placeholder="Developer Websiate" />
+    <input class="btn btn-block" type="button" value="Become a creator" onclick="window.location.href ='/creator/'"/>
 </form>
