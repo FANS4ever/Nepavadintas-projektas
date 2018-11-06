@@ -407,8 +407,8 @@
         <h1>Recomended games:</h1>
         <div class="showcase row">
             @for (int i = 0; i < 5; i++)
-            {
-                <div class="showcase-item">
+            {  
+                <div class="showcase-item" onclick="window.location.href = '/game/AgeValidation'">
                     <img class="showcase-item-image" src="~/Content/images/witcher.jpg" />
                     <text class="showcase-item-text">@Model.Name</text>
                     <text class="showcase-item-price">10.99$</text>
