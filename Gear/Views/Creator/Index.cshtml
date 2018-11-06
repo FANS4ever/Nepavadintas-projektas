@@ -1,8 +1,8 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
     table, th, td {
         border: 1px solid black;
@@ -79,6 +79,7 @@
         }
     }
 </style>
+
 <h3>Published games</h3>
 
 <table style="width:100%">
@@ -110,9 +111,8 @@
 </p>
 <p id="demo"></p>
 
-<!-- Code for confirmation window -->
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!-- Code for confirmation window-->
+
 <script>
     function showPrompt(msg) {
         // CREATE A Promise TO RETURN
@@ -171,7 +171,7 @@
 
             var dialog = $('<div/>', { class: 'popup' })
                 .append(
-                $('<p/>').html('How much you would like to discount? <br> <input type="text" name="version">')
+                    $('<p/>').html('How much you would like to discount? <br> <input type="text" name="version">')
                 )
                 .append(
                     $('<div/>', { class: 'text-right' })
