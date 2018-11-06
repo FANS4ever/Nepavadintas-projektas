@@ -43,5 +43,9 @@ namespace Gear.Controllers
         {
             return View(@"~/Views/Creator/Create.cshtml");
         }
+        public ActionResult BecomingCreator()
+        {
+            return View(@"~/Views/Creator/BecomingCreator.cshtml");
+        }
     }
 }
