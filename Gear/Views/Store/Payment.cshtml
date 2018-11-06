@@ -3,5 +3,60 @@
     ViewBag.Title = "Payment";
 }
 
-<h2>StorePaymentStart</h2>
 
+<h2>Payment</h2>
+<div>
+    <div>
+        <table class="table table-hover table-striped">
+            <tbody>
+                <tr>
+                    <th>
+                        Item
+                    </th>
+                    <th>
+                        Amount
+                    </th>
+                    <th>
+                        Unit Price
+                    </th>
+                    <th colspan="2">
+                        Price
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Game name
+                    </td>
+                    <td>
+                        <input type="text" />
+                        <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                        <button class="btn btn-default btn-sm"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                    </td>
+                    <td>
+                        Unit Price
+                    </td>
+                    <td>
+                        Total Price
+                    </td>
+                    <td>
+                        <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></button>
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="4" style="text-align:right;">
+                        Total
+                    </th>
+                    <td>
+                        Num
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="display:flex; justify-content:flex-end;">
+            <select>
+                <option>Payment Type</option>
+            </select>
+            <input type="button" value="Checkout" />
+        </div>
+        <div />
+    </div>
