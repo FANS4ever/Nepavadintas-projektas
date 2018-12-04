@@ -152,6 +152,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="Models\TwitchChanel.cs" />
+    <Compile Include="Models\TwitchStreamers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

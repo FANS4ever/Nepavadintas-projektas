@@ -12,6 +12,7 @@ namespace Gear.Models
         public string Icon { get; set; }
         public string Description { get; set; }
         public string TrailerURL { get; set; }
+        public string Streamer { get; set; }
         public double Price { get; set; }
         public int AgeRestriction { get; set; }
         public string DevelopmentBranch { get; set; }
