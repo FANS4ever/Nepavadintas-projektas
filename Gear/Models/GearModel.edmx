@@ -1,0 +1,1941 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GearDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="EditDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Cart_Id" Type="int" Nullable="false" />
+          <Property Name="Game_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChatRoom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Content" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Blocked" Type="smallint" Nullable="false" />
+          <Property Name="Game_Id" Type="int" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommentRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="Comment_Id" Type="int" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommentWarning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Content" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Comment_Id" Type="int" Nullable="false" />
+          <Property Name="Developer_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="ISO2" Type="varchar" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Developer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Website" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="Developer_has_User">
+          <Key>
+            <PropertyRef Name="Developer_Id" />
+            <PropertyRef Name="User_Username" />
+          </Key>
+          <Property Name="Developer_Id" Type="int" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StartDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="ExpireDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Modifier" Type="float" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Hidden" Type="smallint" Nullable="false" />
+          <Property Name="Game_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="ReleaseDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="VersionBranch" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="VersionNumber" Type="float" Nullable="false" />
+          <Property Name="Dir" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Available" Type="smallint" Nullable="false" />
+          <Property Name="Developer_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Game_has_Genre">
+          <Key>
+            <PropertyRef Name="Game_Id" />
+            <PropertyRef Name="Genre_Id" />
+          </Key>
+          <Property Name="Game_Id" Type="int" Nullable="false" />
+          <Property Name="Genre_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameCode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="ExpireDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Uses" Type="int" Nullable="false" />
+          <Property Name="Game_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GameRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Rating" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Game_Id" Type="int" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Genre_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LibraryGame">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="LastOpen" Type="datetime2" Precision="0" />
+          <Property Name="PlayTime" Type="time" Precision="0" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Game_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Mark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="45" />
+          <Property Name="Game_Id" Type="int" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Contents" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Seen" Type="smallint" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ChatRoom_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Total" Type="float" Nullable="false" />
+          <Property Name="PaymentType_Id" Type="int" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Receipt_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="45" />
+          <Property Name="Website" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="Rank">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="Total" Type="float" Nullable="false" />
+          <Property Name="Cart_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="45" />
+          <Property Name="Surname" Type="varchar" MaxLength="45" />
+          <Property Name="Email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Birthday" Type="datetime2" Precision="0" />
+          <Property Name="Blocked" Type="smallint" Nullable="false" />
+          <Property Name="Country_Code" Type="int" Nullable="false" />
+          <Property Name="Rank_Name" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_has_ChatRoom">
+          <Key>
+            <PropertyRef Name="User_Username" />
+            <PropertyRef Name="ChatRoom_Id" />
+          </Key>
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ChatRoom_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amount" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Game_Id" Type="int" Nullable="false" />
+          <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_Cart_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CartItem_Cart1">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="1" />
+          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="Cart_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CartItem_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Comment_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Comment_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CommentRating_Comment1">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="CommentRating" Type="Self.CommentRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentRating">
+              <PropertyRef Name="Comment_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CommentRating_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="CommentRating" Type="Self.CommentRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="CommentRating">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CommentWarning_Comment1">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="CommentWarning" Type="Self.CommentWarning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentWarning">
+              <PropertyRef Name="Comment_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CommentWarning_Developer1">
+          <End Role="Developer" Type="Self.Developer" Multiplicity="1" />
+          <End Role="CommentWarning" Type="Self.CommentWarning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Developer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentWarning">
+              <PropertyRef Name="Developer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Developer_has_User_Developer1">
+          <End Role="Developer" Type="Self.Developer" Multiplicity="1" />
+          <End Role="Developer_has_User" Type="Self.Developer_has_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Developer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Developer_has_User">
+              <PropertyRef Name="Developer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Developer_has_User_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Developer_has_User" Type="Self.Developer_has_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Developer_has_User">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Discount_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Game_Developer1">
+          <End Role="Developer" Type="Self.Developer" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Developer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="Developer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Game_has_Genre_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Game_has_Genre" Type="Self.Game_has_Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Game_has_Genre">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Game_has_Genre_Genre1">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Game_has_Genre" Type="Self.Game_has_Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Game_has_Genre">
+              <PropertyRef Name="Genre_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GameCode_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="GameCode" Type="Self.GameCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameCode">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GameRating_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="GameRating" Type="Self.GameRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameRating">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GameRating_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="GameRating" Type="Self.GameRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="GameRating">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Genre_Genre1">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Genre1" Type="Self.Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Genre1">
+              <PropertyRef Name="Genre_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LibraryGame_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="LibraryGame" Type="Self.LibraryGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LibraryGame">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LibraryGame_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="LibraryGame" Type="Self.LibraryGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="LibraryGame">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Mark_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Mark" Type="Self.Mark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mark">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Mark_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Mark" Type="Self.Mark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Mark">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Message_ChatRoom1">
+          <End Role="ChatRoom" Type="Self.ChatRoom" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChatRoom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="ChatRoom_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Message_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_PaymentType1">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Receipt1">
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Receipt_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Receipt_Cart1">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="Cart_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_Country1">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Country_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_has_ChatRoom_ChatRoom1">
+          <End Role="ChatRoom" Type="Self.ChatRoom" Multiplicity="1" />
+          <End Role="User_has_ChatRoom" Type="Self.User_has_ChatRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChatRoom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_has_ChatRoom">
+              <PropertyRef Name="ChatRoom_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_has_ChatRoom_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_has_ChatRoom" Type="Self.User_has_ChatRoom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="User_has_ChatRoom">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_Rank1">
+          <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rank">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Rank_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Visit_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Visit_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GearDBModelStoreContainer">
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartItem" EntityType="Self.CartItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ChatRoom" EntityType="Self.ChatRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommentRating" EntityType="Self.CommentRating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommentWarning" EntityType="Self.CommentWarning" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Developer" EntityType="Self.Developer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Developer_has_User" EntityType="Self.Developer_has_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Discount" EntityType="Self.Discount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Game_has_Genre" EntityType="Self.Game_has_Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameCode" EntityType="Self.GameCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameRating" EntityType="Self.GameRating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Genre" EntityType="Self.Genre" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LibraryGame" EntityType="Self.LibraryGame" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Mark" EntityType="Self.Mark" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rank" EntityType="Self.Rank" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_has_ChatRoom" EntityType="Self.User_has_ChatRoom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Visit" EntityType="Self.Visit" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Cart_User1" Association="Self.fk_Cart_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CartItem_Cart1" Association="Self.fk_CartItem_Cart1">
+            <End Role="Cart" EntitySet="Cart" />
+            <End Role="CartItem" EntitySet="CartItem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CartItem_Game1" Association="Self.fk_CartItem_Game1">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="CartItem" EntitySet="CartItem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Comment_Game1" Association="Self.fk_Comment_Game1">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Comment_User1" Association="Self.fk_Comment_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CommentRating_Comment1" Association="Self.fk_CommentRating_Comment1">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="CommentRating" EntitySet="CommentRating" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CommentRating_User1" Association="Self.fk_CommentRating_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="CommentRating" EntitySet="CommentRating" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CommentWarning_Comment1" Association="Self.fk_CommentWarning_Comment1">
+            <End Role="Comment" EntitySet="Comment" />
+            <End Role="CommentWarning" EntitySet="CommentWarning" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CommentWarning_Developer1" Association="Self.fk_CommentWarning_Developer1">
+            <End Role="Developer" EntitySet="Developer" />
+            <End Role="CommentWarning" EntitySet="CommentWarning" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Developer_has_User_Developer1" Association="Self.fk_Developer_has_User_Developer1">
+            <End Role="Developer" EntitySet="Developer" />
+            <End Role="Developer_has_User" EntitySet="Developer_has_User" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Developer_has_User_User1" Association="Self.fk_Developer_has_User_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Developer_has_User" EntitySet="Developer_has_User" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Discount_Game1" Association="Self.fk_Discount_Game1">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Discount" EntitySet="Discount" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Game_Developer1" Association="Self.fk_Game_Developer1">
+            <End Role="Developer" EntitySet="Developer" />
+            <End Role="Game" EntitySet="Game" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Game_has_Genre_Game1" Association="Self.fk_Game_has_Genre_Game1">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Game_has_Genre" EntitySet="Game_has_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Game_has_Genre_Genre1" Association="Self.fk_Game_has_Genre_Genre1">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Game_has_Genre" EntitySet="Game_has_Genre" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GameCode_Game1" Association="Self.fk_GameCode_Game1">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="GameCode" EntitySet="GameCode" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GameRating_Game1" Association="Self.fk_GameRating_Game1">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="GameRating" EntitySet="GameRating" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GameRating_User1" Association="Self.fk_GameRating_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="GameRating" EntitySet="GameRating" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Genre_Genre1" Association="Self.fk_Genre_Genre1">
+            <End Role="Genre" EntitySet="Genre" />
+            <End Role="Genre1" EntitySet="Genre" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LibraryGame_Game1" Association="Self.fk_LibraryGame_Game1">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="LibraryGame" EntitySet="LibraryGame" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LibraryGame_User1" Association="Self.fk_LibraryGame_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="LibraryGame" EntitySet="LibraryGame" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Mark_Game1" Association="Self.fk_Mark_Game1">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Mark" EntitySet="Mark" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Mark_User1" Association="Self.fk_Mark_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Mark" EntitySet="Mark" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Message_ChatRoom1" Association="Self.fk_Message_ChatRoom1">
+            <End Role="ChatRoom" EntitySet="ChatRoom" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Message_User1" Association="Self.fk_Message_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_PaymentType1" Association="Self.fk_Payment_PaymentType1">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Receipt1" Association="Self.fk_Payment_Receipt1">
+            <End Role="Receipt" EntitySet="Receipt" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_User1" Association="Self.fk_Payment_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Receipt_Cart1" Association="Self.fk_Receipt_Cart1">
+            <End Role="Cart" EntitySet="Cart" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_Country1" Association="Self.fk_User_Country1">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_has_ChatRoom_ChatRoom1" Association="Self.fk_User_has_ChatRoom_ChatRoom1">
+            <End Role="ChatRoom" EntitySet="ChatRoom" />
+            <End Role="User_has_ChatRoom" EntitySet="User_has_ChatRoom" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_has_ChatRoom_User1" Association="Self.fk_User_has_ChatRoom_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_has_ChatRoom" EntitySet="User_has_ChatRoom" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_Rank1" Association="Self.fk_User_Rank1">
+            <End Role="Rank" EntitySet="Rank" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Visit_Game1" Association="Self.fk_Visit_Game1">
+            <End Role="Game" EntitySet="Game" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Visit_User1" Association="Self.fk_Visit_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Visit" EntitySet="Visit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GearDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="EditDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.fk_Cart_User1" FromRole="Cart" ToRole="User" />
+          <NavigationProperty Name="CartItems" Relationship="Self.fk_CartItem_Cart1" FromRole="Cart" ToRole="CartItem" />
+          <NavigationProperty Name="Receipts" Relationship="Self.fk_Receipt_Cart1" FromRole="Cart" ToRole="Receipt" />
+        </EntityType>
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Cart_Id" Type="Int32" Nullable="false" />
+          <Property Name="Game_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cart" Relationship="Self.fk_CartItem_Cart1" FromRole="CartItem" ToRole="Cart" />
+          <NavigationProperty Name="Game" Relationship="Self.fk_CartItem_Game1" FromRole="CartItem" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="ChatRoom">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Messages" Relationship="Self.fk_Message_ChatRoom1" FromRole="ChatRoom" ToRole="Message" />
+          <NavigationProperty Name="Users" Relationship="Self.User_has_ChatRoom" FromRole="ChatRoom" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Content" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Blocked" Type="Int16" Nullable="false" />
+          <Property Name="Game_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.fk_Comment_Game1" FromRole="Comment" ToRole="Game" />
+          <NavigationProperty Name="User" Relationship="Self.fk_Comment_User1" FromRole="Comment" ToRole="User" />
+          <NavigationProperty Name="CommentRatings" Relationship="Self.fk_CommentRating_Comment1" FromRole="Comment" ToRole="CommentRating" />
+          <NavigationProperty Name="CommentWarnings" Relationship="Self.fk_CommentWarning_Comment1" FromRole="Comment" ToRole="CommentWarning" />
+        </EntityType>
+        <EntityType Name="CommentRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Rating" Type="Int32" Nullable="false" />
+          <Property Name="Comment_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.fk_CommentRating_Comment1" FromRole="CommentRating" ToRole="Comment" />
+          <NavigationProperty Name="User" Relationship="Self.fk_CommentRating_User1" FromRole="CommentRating" ToRole="User" />
+        </EntityType>
+        <EntityType Name="CommentWarning">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Content" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Comment_Id" Type="Int32" Nullable="false" />
+          <Property Name="Developer_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comment" Relationship="Self.fk_CommentWarning_Comment1" FromRole="CommentWarning" ToRole="Comment" />
+          <NavigationProperty Name="Developer" Relationship="Self.fk_CommentWarning_Developer1" FromRole="CommentWarning" ToRole="Developer" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Code" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ISO2" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.fk_User_Country1" FromRole="Country" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Developer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Website" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CommentWarnings" Relationship="Self.fk_CommentWarning_Developer1" FromRole="Developer" ToRole="CommentWarning" />
+          <NavigationProperty Name="Games" Relationship="Self.fk_Game_Developer1" FromRole="Developer" ToRole="Game" />
+          <NavigationProperty Name="Users" Relationship="Self.Developer_has_User" FromRole="Developer" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Discount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExpireDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Modifier" Type="Double" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Hidden" Type="Int16" Nullable="false" />
+          <Property Name="Game_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.fk_Discount_Game1" FromRole="Discount" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="Game">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="ReleaseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="VersionBranch" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VersionNumber" Type="Double" Nullable="false" />
+          <Property Name="Dir" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Available" Type="Int16" Nullable="false" />
+          <Property Name="Developer_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CartItems" Relationship="Self.fk_CartItem_Game1" FromRole="Game" ToRole="CartItem" />
+          <NavigationProperty Name="Comments" Relationship="Self.fk_Comment_Game1" FromRole="Game" ToRole="Comment" />
+          <NavigationProperty Name="Developer" Relationship="Self.fk_Game_Developer1" FromRole="Game" ToRole="Developer" />
+          <NavigationProperty Name="Discounts" Relationship="Self.fk_Discount_Game1" FromRole="Game" ToRole="Discount" />
+          <NavigationProperty Name="GameCodes" Relationship="Self.fk_GameCode_Game1" FromRole="Game" ToRole="GameCode" />
+          <NavigationProperty Name="GameRatings" Relationship="Self.fk_GameRating_Game1" FromRole="Game" ToRole="GameRating" />
+          <NavigationProperty Name="LibraryGames" Relationship="Self.fk_LibraryGame_Game1" FromRole="Game" ToRole="LibraryGame" />
+          <NavigationProperty Name="Marks" Relationship="Self.fk_Mark_Game1" FromRole="Game" ToRole="Mark" />
+          <NavigationProperty Name="Visits" Relationship="Self.fk_Visit_Game1" FromRole="Game" ToRole="Visit" />
+          <NavigationProperty Name="Genres" Relationship="Self.Game_has_Genre" FromRole="Game" ToRole="Genre" />
+        </EntityType>
+        <EntityType Name="GameCode">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExpireDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Code" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Uses" Type="Int32" Nullable="false" />
+          <Property Name="Game_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.fk_GameCode_Game1" FromRole="GameCode" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="GameRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Rating" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Game_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.fk_GameRating_Game1" FromRole="GameRating" ToRole="Game" />
+          <NavigationProperty Name="User" Relationship="Self.fk_GameRating_User1" FromRole="GameRating" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Genre_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Genre1" Relationship="Self.fk_Genre_Genre1" FromRole="Genre" ToRole="Genre1" />
+          <NavigationProperty Name="Genre2" Relationship="Self.fk_Genre_Genre1" FromRole="Genre1" ToRole="Genre" />
+          <NavigationProperty Name="Games" Relationship="Self.Game_has_Genre" FromRole="Genre" ToRole="Game" />
+        </EntityType>
+        <EntityType Name="LibraryGame">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LastOpen" Type="DateTime" Precision="0" />
+          <Property Name="PlayTime" Type="Time" Precision="0" />
+          <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Game_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.fk_LibraryGame_Game1" FromRole="LibraryGame" ToRole="Game" />
+          <NavigationProperty Name="User" Relationship="Self.fk_LibraryGame_User1" FromRole="LibraryGame" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Mark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Game_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.fk_Mark_Game1" FromRole="Mark" ToRole="Game" />
+          <NavigationProperty Name="User" Relationship="Self.fk_Mark_User1" FromRole="Mark" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Contents" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Seen" Type="Int16" Nullable="false" />
+          <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ChatRoom_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ChatRoom" Relationship="Self.fk_Message_ChatRoom1" FromRole="Message" ToRole="ChatRoom" />
+          <NavigationProperty Name="User" Relationship="Self.fk_Message_User1" FromRole="Message" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Total" Type="Double" Nullable="false" />
+          <Property Name="PaymentType_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Receipt_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="PaymentType" Relationship="Self.fk_Payment_PaymentType1" FromRole="Payment" ToRole="PaymentType" />
+          <NavigationProperty Name="Receipt" Relationship="Self.fk_Payment_Receipt1" FromRole="Payment" ToRole="Receipt" />
+          <NavigationProperty Name="User" Relationship="Self.fk_Payment_User1" FromRole="Payment" ToRole="User" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Website" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Payments" Relationship="Self.fk_Payment_PaymentType1" FromRole="PaymentType" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Rank">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="Self.fk_User_Rank1" FromRole="Rank" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Total" Type="Double" Nullable="false" />
+          <Property Name="Cart_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cart" Relationship="Self.fk_Receipt_Cart1" FromRole="Receipt" ToRole="Cart" />
+          <NavigationProperty Name="Payments" Relationship="Self.fk_Payment_Receipt1" FromRole="Receipt" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="Blocked" Type="Int16" Nullable="false" />
+          <Property Name="Country_Code" Type="Int32" Nullable="false" />
+          <Property Name="Rank_Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Carts" Relationship="Self.fk_Cart_User1" FromRole="User" ToRole="Cart" />
+          <NavigationProperty Name="Comments" Relationship="Self.fk_Comment_User1" FromRole="User" ToRole="Comment" />
+          <NavigationProperty Name="CommentRatings" Relationship="Self.fk_CommentRating_User1" FromRole="User" ToRole="CommentRating" />
+          <NavigationProperty Name="Country" Relationship="Self.fk_User_Country1" FromRole="User" ToRole="Country" />
+          <NavigationProperty Name="GameRatings" Relationship="Self.fk_GameRating_User1" FromRole="User" ToRole="GameRating" />
+          <NavigationProperty Name="LibraryGames" Relationship="Self.fk_LibraryGame_User1" FromRole="User" ToRole="LibraryGame" />
+          <NavigationProperty Name="Marks" Relationship="Self.fk_Mark_User1" FromRole="User" ToRole="Mark" />
+          <NavigationProperty Name="Messages" Relationship="Self.fk_Message_User1" FromRole="User" ToRole="Message" />
+          <NavigationProperty Name="Payments" Relationship="Self.fk_Payment_User1" FromRole="User" ToRole="Payment" />
+          <NavigationProperty Name="Rank" Relationship="Self.fk_User_Rank1" FromRole="User" ToRole="Rank" />
+          <NavigationProperty Name="Visits" Relationship="Self.fk_Visit_User1" FromRole="User" ToRole="Visit" />
+          <NavigationProperty Name="Developers" Relationship="Self.Developer_has_User" FromRole="User" ToRole="Developer" />
+          <NavigationProperty Name="ChatRooms" Relationship="Self.User_has_ChatRoom" FromRole="User" ToRole="ChatRoom" />
+        </EntityType>
+        <EntityType Name="Visit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Game_Id" Type="Int32" Nullable="false" />
+          <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Game" Relationship="Self.fk_Visit_Game1" FromRole="Visit" ToRole="Game" />
+          <NavigationProperty Name="User" Relationship="Self.fk_Visit_User1" FromRole="Visit" ToRole="User" />
+        </EntityType>
+        <Association Name="fk_Cart_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CartItem_Cart1">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="1" />
+          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="Cart_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Receipt_Cart1">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="Cart_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CartItem_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Message_ChatRoom1">
+          <End Role="ChatRoom" Type="Self.ChatRoom" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChatRoom">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="ChatRoom_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Comment_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Comment_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CommentRating_Comment1">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="CommentRating" Type="Self.CommentRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentRating">
+              <PropertyRef Name="Comment_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CommentWarning_Comment1">
+          <End Role="Comment" Type="Self.Comment" Multiplicity="1" />
+          <End Role="CommentWarning" Type="Self.CommentWarning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Comment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentWarning">
+              <PropertyRef Name="Comment_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CommentRating_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="CommentRating" Type="Self.CommentRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="CommentRating">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CommentWarning_Developer1">
+          <End Role="Developer" Type="Self.Developer" Multiplicity="1" />
+          <End Role="CommentWarning" Type="Self.CommentWarning" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Developer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentWarning">
+              <PropertyRef Name="Developer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_Country1">
+          <End Role="Country" Type="Self.Country" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Code" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Country_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Game_Developer1">
+          <End Role="Developer" Type="Self.Developer" Multiplicity="1" />
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Developer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Game">
+              <PropertyRef Name="Developer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Discount_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Discount" Type="Self.Discount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Discount">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GameCode_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="GameCode" Type="Self.GameCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameCode">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GameRating_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="GameRating" Type="Self.GameRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameRating">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LibraryGame_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="LibraryGame" Type="Self.LibraryGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LibraryGame">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Mark_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Mark" Type="Self.Mark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Mark">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Visit_Game1">
+          <End Role="Game" Type="Self.Game" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Game">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GameRating_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="GameRating" Type="Self.GameRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="GameRating">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Genre_Genre1">
+          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Genre1" Type="Self.Genre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genre">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Genre1">
+              <PropertyRef Name="Genre_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LibraryGame_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="LibraryGame" Type="Self.LibraryGame" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="LibraryGame">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Mark_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Mark" Type="Self.Mark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Mark">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Message_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_PaymentType1">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="PaymentType_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Receipt1">
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Receipt">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Receipt_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_User_Rank1">
+          <End Role="Rank" Type="Self.Rank" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rank">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Rank_Name" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Visit_User1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Visit" Type="Self.Visit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="Visit">
+              <PropertyRef Name="User_Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Developer_has_User">
+          <End Role="Developer" Type="Self.Developer" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <Association Name="Game_has_Genre">
+          <End Role="Game" Type="Self.Game" Multiplicity="*" />
+          <End Role="Genre" Type="Self.Genre" Multiplicity="*" />
+        </Association>
+        <Association Name="User_has_ChatRoom">
+          <End Role="ChatRoom" Type="Self.ChatRoom" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="GearDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Carts" EntityType="Self.Cart" />
+          <EntitySet Name="CartItems" EntityType="Self.CartItem" />
+          <EntitySet Name="ChatRooms" EntityType="Self.ChatRoom" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="CommentRatings" EntityType="Self.CommentRating" />
+          <EntitySet Name="CommentWarnings" EntityType="Self.CommentWarning" />
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <EntitySet Name="Developers" EntityType="Self.Developer" />
+          <EntitySet Name="Discounts" EntityType="Self.Discount" />
+          <EntitySet Name="Games" EntityType="Self.Game" />
+          <EntitySet Name="GameCodes" EntityType="Self.GameCode" />
+          <EntitySet Name="GameRatings" EntityType="Self.GameRating" />
+          <EntitySet Name="Genres" EntityType="Self.Genre" />
+          <EntitySet Name="LibraryGames" EntityType="Self.LibraryGame" />
+          <EntitySet Name="Marks" EntityType="Self.Mark" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="PaymentTypes" EntityType="Self.PaymentType" />
+          <EntitySet Name="Ranks" EntityType="Self.Rank" />
+          <EntitySet Name="Receipts" EntityType="Self.Receipt" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Visits" EntityType="Self.Visit" />
+          <AssociationSet Name="fk_Cart_User1" Association="Self.fk_Cart_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CartItem_Cart1" Association="Self.fk_CartItem_Cart1">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="CartItem" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Receipt_Cart1" Association="Self.fk_Receipt_Cart1">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CartItem_Game1" Association="Self.fk_CartItem_Game1">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="CartItem" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Message_ChatRoom1" Association="Self.fk_Message_ChatRoom1">
+            <End Role="ChatRoom" EntitySet="ChatRooms" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Comment_Game1" Association="Self.fk_Comment_Game1">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Comment_User1" Association="Self.fk_Comment_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CommentRating_Comment1" Association="Self.fk_CommentRating_Comment1">
+            <End Role="Comment" EntitySet="Comments" />
+            <End Role="CommentRating" EntitySet="CommentRatings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CommentWarning_Comment1" Association="Self.fk_CommentWarning_Comment1">
+            <End Role="Comment" EntitySet="Comments" />
+            <End Role="CommentWarning" EntitySet="CommentWarnings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CommentRating_User1" Association="Self.fk_CommentRating_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="CommentRating" EntitySet="CommentRatings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CommentWarning_Developer1" Association="Self.fk_CommentWarning_Developer1">
+            <End Role="Developer" EntitySet="Developers" />
+            <End Role="CommentWarning" EntitySet="CommentWarnings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_Country1" Association="Self.fk_User_Country1">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Game_Developer1" Association="Self.fk_Game_Developer1">
+            <End Role="Developer" EntitySet="Developers" />
+            <End Role="Game" EntitySet="Games" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Discount_Game1" Association="Self.fk_Discount_Game1">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Discount" EntitySet="Discounts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GameCode_Game1" Association="Self.fk_GameCode_Game1">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="GameCode" EntitySet="GameCodes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GameRating_Game1" Association="Self.fk_GameRating_Game1">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="GameRating" EntitySet="GameRatings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LibraryGame_Game1" Association="Self.fk_LibraryGame_Game1">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="LibraryGame" EntitySet="LibraryGames" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Mark_Game1" Association="Self.fk_Mark_Game1">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Mark" EntitySet="Marks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Visit_Game1" Association="Self.fk_Visit_Game1">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GameRating_User1" Association="Self.fk_GameRating_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="GameRating" EntitySet="GameRatings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Genre_Genre1" Association="Self.fk_Genre_Genre1">
+            <End Role="Genre" EntitySet="Genres" />
+            <End Role="Genre1" EntitySet="Genres" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LibraryGame_User1" Association="Self.fk_LibraryGame_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="LibraryGame" EntitySet="LibraryGames" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Mark_User1" Association="Self.fk_Mark_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Mark" EntitySet="Marks" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Message_User1" Association="Self.fk_Message_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_PaymentType1" Association="Self.fk_Payment_PaymentType1">
+            <End Role="PaymentType" EntitySet="PaymentTypes" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Receipt1" Association="Self.fk_Payment_Receipt1">
+            <End Role="Receipt" EntitySet="Receipts" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_User1" Association="Self.fk_Payment_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_User_Rank1" Association="Self.fk_User_Rank1">
+            <End Role="Rank" EntitySet="Ranks" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Visit_User1" Association="Self.fk_Visit_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Visit" EntitySet="Visits" />
+          </AssociationSet>
+          <AssociationSet Name="Developer_has_User" Association="Self.Developer_has_User">
+            <End Role="Developer" EntitySet="Developers" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Game_has_Genre" Association="Self.Game_has_Genre">
+            <End Role="Game" EntitySet="Games" />
+            <End Role="Genre" EntitySet="Genres" />
+          </AssociationSet>
+          <AssociationSet Name="User_has_ChatRoom" Association="Self.User_has_ChatRoom">
+            <End Role="ChatRoom" EntitySet="ChatRooms" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GearDBModelStoreContainer" CdmEntityContainer="GearDBEntities">
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="GearDBModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartItems">
+            <EntityTypeMapping TypeName="GearDBModel.CartItem">
+              <MappingFragment StoreEntitySet="CartItem">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Cart_Id" ColumnName="Cart_Id" />
+                <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChatRooms">
+            <EntityTypeMapping TypeName="GearDBModel.ChatRoom">
+              <MappingFragment StoreEntitySet="ChatRoom">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="GearDBModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Blocked" ColumnName="Blocked" />
+                <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommentRatings">
+            <EntityTypeMapping TypeName="GearDBModel.CommentRating">
+              <MappingFragment StoreEntitySet="CommentRating">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Comment_Id" ColumnName="Comment_Id" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommentWarnings">
+            <EntityTypeMapping TypeName="GearDBModel.CommentWarning">
+              <MappingFragment StoreEntitySet="CommentWarning">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Comment_Id" ColumnName="Comment_Id" />
+                <ScalarProperty Name="Developer_Id" ColumnName="Developer_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="GearDBModel.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ISO2" ColumnName="ISO2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Developers">
+            <EntityTypeMapping TypeName="GearDBModel.Developer">
+              <MappingFragment StoreEntitySet="Developer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Discounts">
+            <EntityTypeMapping TypeName="GearDBModel.Discount">
+              <MappingFragment StoreEntitySet="Discount">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Hidden" ColumnName="Hidden" />
+                <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Games">
+            <EntityTypeMapping TypeName="GearDBModel.Game">
+              <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ReleaseDate" ColumnName="ReleaseDate" />
+                <ScalarProperty Name="VersionBranch" ColumnName="VersionBranch" />
+                <ScalarProperty Name="VersionNumber" ColumnName="VersionNumber" />
+                <ScalarProperty Name="Dir" ColumnName="Dir" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="Developer_Id" ColumnName="Developer_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameCodes">
+            <EntityTypeMapping TypeName="GearDBModel.GameCode">
+              <MappingFragment StoreEntitySet="GameCode">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ExpireDate" ColumnName="ExpireDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Uses" ColumnName="Uses" />
+                <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameRatings">
+            <EntityTypeMapping TypeName="GearDBModel.GameRating">
+              <MappingFragment StoreEntitySet="GameRating">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="GearDBModel.Genre">
+              <MappingFragment StoreEntitySet="Genre">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Genre_Id" ColumnName="Genre_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LibraryGames">
+            <EntityTypeMapping TypeName="GearDBModel.LibraryGame">
+              <MappingFragment StoreEntitySet="LibraryGame">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastOpen" ColumnName="LastOpen" />
+                <ScalarProperty Name="PlayTime" ColumnName="PlayTime" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+                <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marks">
+            <EntityTypeMapping TypeName="GearDBModel.Mark">
+              <MappingFragment StoreEntitySet="Mark">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="GearDBModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Contents" ColumnName="Contents" />
+                <ScalarProperty Name="Seen" ColumnName="Seen" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+                <ScalarProperty Name="ChatRoom_Id" ColumnName="ChatRoom_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="GearDBModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="PaymentType_Id" ColumnName="PaymentType_Id" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+                <ScalarProperty Name="Receipt_Id" ColumnName="Receipt_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentTypes">
+            <EntityTypeMapping TypeName="GearDBModel.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentType">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ranks">
+            <EntityTypeMapping TypeName="GearDBModel.Rank">
+              <MappingFragment StoreEntitySet="Rank">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receipts">
+            <EntityTypeMapping TypeName="GearDBModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipt">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Cart_Id" ColumnName="Cart_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="GearDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Blocked" ColumnName="Blocked" />
+                <ScalarProperty Name="Country_Code" ColumnName="Country_Code" />
+                <ScalarProperty Name="Rank_Name" ColumnName="Rank_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Visits">
+            <EntityTypeMapping TypeName="GearDBModel.Visit">
+              <MappingFragment StoreEntitySet="Visit">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+                <ScalarProperty Name="User_Username" ColumnName="User_Username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Developer_has_User" TypeName="GearDBModel.Developer_has_User" StoreEntitySet="Developer_has_User">
+            <EndProperty Name="Developer">
+              <ScalarProperty Name="Id" ColumnName="Developer_Id" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="Username" ColumnName="User_Username" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Game_has_Genre" TypeName="GearDBModel.Game_has_Genre" StoreEntitySet="Game_has_Genre">
+            <EndProperty Name="Game">
+              <ScalarProperty Name="Id" ColumnName="Game_Id" />
+            </EndProperty>
+            <EndProperty Name="Genre">
+              <ScalarProperty Name="Id" ColumnName="Genre_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="User_has_ChatRoom" TypeName="GearDBModel.User_has_ChatRoom" StoreEntitySet="User_has_ChatRoom">
+            <EndProperty Name="ChatRoom">
+              <ScalarProperty Name="Id" ColumnName="ChatRoom_Id" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="Username" ColumnName="User_Username" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

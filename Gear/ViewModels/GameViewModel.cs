@@ -7,7 +7,7 @@ namespace Gear.ViewModels
 {
     public class GameViewModel
     {
-        public Gear.Models.Game Game { get; set; }
-        public Gear.Models.Picture Picture { get; set; }
+        //public Gear.Models.Game Game { get; set; }
+        //public Gear.Models.Picture Picture { get; set; }
     }
 }
