@@ -31,7 +31,8 @@ namespace Gear.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ShortDescription { get; set; }
+        public string TrailerURL { get; set; }
+        public string Streamer { get; set; }
         public double Price { get; set; }
         public System.DateTime ReleaseDate { get; set; }
         public string VersionBranch { get; set; }
