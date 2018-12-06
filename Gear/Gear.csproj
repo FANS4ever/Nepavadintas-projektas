@@ -260,87 +260,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Files\Cart.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\CartItem.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\ChatRoom.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Comment.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\CommentRating.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\CommentWarning.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Country.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Developer.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Discount.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Game.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\GameCode.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\GameRating.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\GearModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GearModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\GearModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\GearModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>GearModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Genre.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\LibraryGame.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Mark.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Message.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Payment.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\PaymentType.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Rank.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Receipt.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\User.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Files\Visit.cs">
-      <DependentUpon>GearModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>GearDB.tt</DependentUpon>
     </Compile>
@@ -377,16 +296,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Files\GearModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GearModel.edmx</DependentUpon>
-      <LastGenOutput>GearModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Files\GearModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GearModel.edmx</DependentUpon>
-      <LastGenOutput>GearModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Models\GearDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GearDB.edmx</DependentUpon>
@@ -419,13 +328,6 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
-    <EntityDeploy Include="Files\GearModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GearModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Files\GearModel.edmx.diagram">
-      <DependentUpon>GearModel.edmx</DependentUpon>
-    </Content>
     <EntityDeploy Include="Models\GearDB.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>GearDB.Designer.cs</LastGenOutput>

@@ -71,18 +71,18 @@ namespace Gear.Controllers
         //        Email = "ltkarolissto@gmail.com",
         //        Name = "Karolis",
         //        Surname = "Stončius",
-                Avatar = "/Content/images/Avatars/avatar.jpg"
+                //Avatar = "/Content/images/Avatars/avatar.jpg"
         //    };
         //    return profile;
         //}
         //public List<Game> GetGames()
         //{
         //    List<Game> games = new List<Game>();
-            games.Add(new Game() { Name = "Civilization V", Id = 1, Description = "Turn-Based Strategy", ReleaseTime = new DateTime(2010,09,23), Icon = "/Content/images/GameIcons/Civ5.jpg" });
-            games.Add(new Game() { Name = "Arma 3", Id = 2, Description = "Simulation, FPS", ReleaseTime = new DateTime(2013, 09, 12), Icon = "/Content/images/GameIcons/Arma3.jpg" });
-            games.Add(new Game() { Name = "Team Fortress 2", Id = 3, Description = "Multiplayer, FPS", ReleaseTime = new DateTime(2007, 10, 10), Icon = "/Content/images/GameIcons/TeamFortress2.jpg" });
-            games.Add(new Game() { Name = "Warframe", Id = 4, Description = "Action", ReleaseTime = new DateTime(2013, 03, 25), Icon = "/Content/images/GameIcons/Warframe.jpg" });
-            games.Add(new Game() { Name = "Counter-strike: Global Offensive", Id = 5, Description = "FPS", ReleaseTime = new DateTime(2012, 08, 21), Icon = "/Content/images/GameIcons/CSGO.jpg" });
+            //games.Add(new Game() { Name = "Civilization V", Id = 1, Description = "Turn-Based Strategy", ReleaseTime = new DateTime(2010,09,23), Icon = "/Content/images/GameIcons/Civ5.jpg" });
+            //games.Add(new Game() { Name = "Arma 3", Id = 2, Description = "Simulation, FPS", ReleaseTime = new DateTime(2013, 09, 12), Icon = "/Content/images/GameIcons/Arma3.jpg" });
+            //games.Add(new Game() { Name = "Team Fortress 2", Id = 3, Description = "Multiplayer, FPS", ReleaseTime = new DateTime(2007, 10, 10), Icon = "/Content/images/GameIcons/TeamFortress2.jpg" });
+            //games.Add(new Game() { Name = "Warframe", Id = 4, Description = "Action", ReleaseTime = new DateTime(2013, 03, 25), Icon = "/Content/images/GameIcons/Warframe.jpg" });
+            //games.Add(new Game() { Name = "Counter-strike: Global Offensive", Id = 5, Description = "FPS", ReleaseTime = new DateTime(2012, 08, 21), Icon = "/Content/images/GameIcons/CSGO.jpg" });
         //    return games;
         //}
 

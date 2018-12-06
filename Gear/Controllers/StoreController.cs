@@ -14,7 +14,6 @@ namespace Gear.Controllers
     public class StoreController : Controller
     {
         GearDBEntities db = new GearDBEntities();
-
         // GET: Store
         public ActionResult Index()
         {
@@ -23,8 +22,7 @@ namespace Gear.Controllers
             {
                 Showcase = db.Games.ToList(),
                 Discounted = db.Discounts.Where(d => d.ExpireDate > DateTime.Now).ToList(),
-                Newest = db.Games.Where(g => g.ReleaseDate >= from)
-                                 .ToList()
+                Newest = db.Games.Where(g => g.ReleaseDate >= from).ToList()
 
             };
 
