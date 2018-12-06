@@ -5,8 +5,54 @@
         margin-top: 10px;
         justify-content:center;
     }
+    #fb-btn{
+        margin-left: 150px;
+        margin-top: 5px;
+        
+    }
 </style>
 <form class="form">
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '492910391199405',
+                cookie: true,
+                xfbml: true,
+                version: 'v3.2'
+            });
+
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function statusChangeCallback(response) {
+            if (response.status === 'connected') {
+                window.open('@Url.Action("Index", "ReportExecution")');
+                console.log('logged in')
+            } else {
+                console.log('not authenticated')
+            }
+        }
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                statusChangeCallback(response);
+            });
+        }
+
+    </script>
+
     <div class="form-group">
         <input type="email" class="form-control center-block" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
     </div>
@@ -14,6 +60,11 @@
         <input type="password" class="form-control center-block" id="exampleInputPassword1" placeholder="Password">
     </div>
     <div>
-        <button type="button" class="btn btn-primary btn-block"onclick="window.location.href = '/profile/'">Login</button>
+        <button type="button" class="btn btn-primary btn-block" onclick="window.location.href = '/profile/'">Login</button>
     </div>
+
+    <fb:login-button id="fb-btn"
+                     scope="public_profile,email"
+                     onlogin="checkLoginState();">
+    </fb:login-button>
 </form>

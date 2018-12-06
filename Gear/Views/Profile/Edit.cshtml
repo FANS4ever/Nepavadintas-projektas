@@ -41,9 +41,12 @@
     <label for="Age" style="font:bold">Age:</label><br />
     <input class="myinput" type="text" name="Age" value=""><br><!--@Model.user.BirthDate-->
     <label for="Avatar" style="font:bold">Avatar:</label><br />
-    <input class="myinput" type="text" name="Avatar" value=""><br><!--@Model.user.Avatar-->
+    <input type="file"
+           id="avatar" name="avatar"
+           accept="image/png, image/jpeg">
+    <!--<input class="myinput" type="text" name="Avatar" value=""><br>@Model.user.Avatar-->
     <label for="country-info" style="font:bold">Country:</label><br />
-    <!--<input class="myinput" type="text" id="country-info" value="@Model.country.Name">-->
+    <!--<input class=<!--<input class="myinput" type="text" id="country-info" value="@Model.country.Name">-->
     <!--<br />-->
     <select id="country" name="country" class="form-control" onchange="getSelectedValue();">
         <option value="Afghanistan">Afghanistan</option>
