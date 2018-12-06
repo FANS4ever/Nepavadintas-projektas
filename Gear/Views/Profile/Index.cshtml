@@ -8,14 +8,15 @@
     <style>
         .grid-container {
             display: grid;
-            grid-template-columns:max-content 1fr max-content;
+            grid-gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(800px, 1fr));
         }
 
             .grid-container > columns {
             }
 
         .profile {
-            background: #edecec;
+           
         }
 
         .profile-sidebar {
@@ -36,39 +37,15 @@
         }
 
         .btn-primary, .btn-primary:active, .btn-primary:visited {
-            background-color: #dcdcdc !important;
-            border-color: #dcdcdc !important;
+            background-color: #edebeb !important;
+            border-color: #edebeb !important;
             color: #000000 !important;
             font-weight: bold;
         }
 
             .btn-primary:hover {
-                background-color: #b1abab !important;
-            }
-
-
-        .btn {
-            border: none;
-            background-color: inherit;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            display: inline-block;
-            width: 300px;
-            text-align: left;
-        }
-        .btn-game {
-            border: none;
-            background-color: inherit;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            display: inline-block;
-            width: 100%;
-            text-align: left;
-        }
-
-        
+                background-color: #dcdcdc !important;
+            }       
 
         #myInput {
             background-position: 10px 12px;
@@ -102,40 +79,6 @@
                     background-color: #b1b0b0;
                 }
 
-        .popup {
-            
-            display: flex;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            transform: translate(0px,-50px);
-            margin-top: 5px;
-        }
-            .popup:checked {
-                visibility: visible;
-            }
-            /* The actual popup */
-            .popup .popuptext {
-                visibility: hidden;
-                width: 160px;
-                background-color: #edecec;
-                
-                text-align: center;
-               
-                padding: 8px;
-                
-
-
-                
-            }
-            /* Toggle this class - hide and show the popup */
-            .popup .show {
-                visibility: visible;
-                -webkit-animation: fadeIn 1s;
-                animation: fadeIn 1s;
-            }
         .radio-input {
             visibility: hidden;
         }
@@ -143,6 +86,9 @@
             visibility: visible;
         }
         
+        #gameInfo {
+            font: bold;
+        }
     </style>
 
     <header>
@@ -152,38 +98,65 @@
     <div class="grid-container">
             
         <div class="game-list" style="grid-column:1;">
-            <input type="text" class="input-sm" style="margin-left:0px;" id="myInput" placeholder="Search for names.." title="Type in a name" oninput="newSearch()">
+            <input type="text" class="input-sm" style="margin-left:0px;" id="myInput" placeholder="Search for games.." title="Type in a name" oninput="newSearch()">
             <div id="game-list-item" class="list-group" style="background-color:#dcdcdc;">
                 @foreach (var game in Model.games)
                 {
                     <style>
                         .button {
-                            background-color: #dcdcdc;
-                            color:black;
+                            
+                            border: none;
+
+                            border-color: #c3c3c3;
+                            padding-left: 0px;
+                            padding-bottom: 0px;
+                            padding-top: 0px;
+                            color: black;
+                            
                         }
-                        .button span {
-                            color:black;
+
+                            .button span {
+                                color: black;
+                            }                           
+
+
+                        .grid-container-game {
+                            display: grid;
+                            grid-template-columns: 400px auto;
+                            grid-row-gap: 5px;
                         }
-                            .button:hover {
-                                background-color: #b1abab !important; 
-                            }
-                        
+                        .grid-item-info {
+                            position: relative;
+                            padding-left: 5px;
+                            font-size: 30px;
+
+                        }
+                        .grid-item-img>img {
+                            object-fit: cover;
+                            width: 100%;
+                            
+                        }
                     </style>
-                    <button class="list-group-item list-group-item-action button" style="margin-bottom: 1px;">
-                        <span class="text-primary">@game.Name</span>
-
-
-                        <!--<input class="radio-input" type="radio" name="games" id="@game.Id" />
-                        <label for="@game.Id" style="height: 50px">
-                            <a class="btn-game">@game.Name</a>
-                            <div class="popup" style="transform: translate(299px,-50px); width: 150px; visibility: hidden">
-                                <span class="popuptext" id="myPopup" style="padding-bottom: 11px">
-                                    @game.Name <br />
-                                    Bought: @game.Description <br />
-                                </span>
+                    
+                    
+                    <button id="@game.Name" onclick="download()" class="list-group-item list-group-item-action button" style="margin-bottom: 1px;">
+                        <div class="grid-container-game">
+                            <div class="grid-item-img">
+                                <img src="@Url.Content(game.Icon)" class="img-fluid" alt="Avatar" >
                             </div>
-                        </label>-->
+                            <div class="grid-item-info">
+                                <span class="text-primary" style="font:bold">
+                                    <h1>@game.Name</h1>
+                                </span> 
+                                <h2 style="font-size: 16px; bottom: 0">Genre: @game.Description</h2>
+                                <h2 style="font-size: 16px; bottom: 0">Release date: @game.ReleaseTime.ToString("yyyy/MM/dd")</h2>
+                            </div>
+                        </div>
                     </button>
+                    
+
+
+                    
                 }
             </div>
         </div>
@@ -206,8 +179,6 @@
                     </div>
                 </div>
                 <div class="btn-group-vertical button">
-
-
                     <button role="button" onclick="window.location.href= '/Profile/Edit';" class="btn btn-primary" style="width: 200px !important">Edit profile</button>
                     <button class="btn btn-primary" style="width: 200px !important">Facebook login</button>
                     <button role="button" onclick="window.location.href= '/Profile/ChatRoom';" class="btn btn-primary" style="width: 200px !important">Chat room</button>
@@ -246,5 +217,14 @@
 
                 //console.log(listitem[i].getElementByTagName("button").getElementsByTagName("span"));
             }
+        }
+
+        function download() {
+            confirm("Are you sure you want to download this game?");
+        }
+        var list = document.getElementById('gameList');
+
+        function showList() {
+
         }
     </script>
