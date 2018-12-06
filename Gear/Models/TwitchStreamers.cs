@@ -16,6 +16,6 @@ namespace Gear.Models
         public string created_at { get; set; }
         public string is_playlist { get; set; }
         public string stream_type { get; set; }
-        public TwitchChanel channel { get; set; }
+        public TwitchChannel channel { get; set; }
     }
 }

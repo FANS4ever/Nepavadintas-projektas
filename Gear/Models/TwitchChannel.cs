@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Gear.Models
 {
-    public class TwitchChanel
+    public class TwitchChannel
     {
 
         public string mature { get; set; }

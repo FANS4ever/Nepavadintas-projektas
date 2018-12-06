@@ -156,7 +156,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
-    <Compile Include="Models\TwitchChanel.cs" />
+    <Compile Include="Models\TwitchChannel.cs" />
     <Compile Include="Models\TwitchStreamers.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -260,6 +260,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\user.jpg" />
+    <Content Include="Files\CYBERPUNK\icon.jpg" />
     <Content Include="Files\WITCHER3\icon.jpg" />
     <Content Include="Content\images\witcher1.jpg" />
     <Content Include="Content\images\witcher2.jpg" />

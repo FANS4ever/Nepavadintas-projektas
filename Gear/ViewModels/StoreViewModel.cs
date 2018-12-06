@@ -8,10 +8,10 @@ namespace Gear.ViewModels
 {
     public class StoreViewModel
     {
-        public List<GameViewModel> Showcase { get; set; }
-        public List<GameViewModel> Pupular { get; set; }
-        public List<GameViewModel> Discounted { get; set; }
-        public List<GameViewModel> Newest { get; set; }
+        public List<Game> Showcase { get; set; }
+        public List<Visit> Popular { get; set; }
+        public List<Discount> Discounted { get; set; }
+        public List<Game> Newest { get; set; }
         public int Category { get; set; }
     }
 }
