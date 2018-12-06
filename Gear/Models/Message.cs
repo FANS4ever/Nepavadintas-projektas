@@ -17,7 +17,7 @@ namespace Gear.Models
         public int Id { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string Contents { get; set; }
-        public short Seen { get; set; }
+        public sbyte Seen { get; set; }
         public string User_Username { get; set; }
         public int ChatRoom_Id { get; set; }
     

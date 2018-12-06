@@ -7,32 +7,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gear.Models
+namespace Gear.Files
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class Genre
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Comment()
+        public Genre()
         {
-            this.CommentRatings = new HashSet<CommentRating>();
-            this.CommentWarnings = new HashSet<CommentWarning>();
+            this.Genre1 = new HashSet<Genre>();
+            this.Games = new HashSet<Game>();
         }
     
         public int Id { get; set; }
-        public System.DateTime CreateDate { get; set; }
-        public string Content { get; set; }
-        public sbyte Blocked { get; set; }
-        public int Game_Id { get; set; }
-        public string User_Username { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Genre_Id { get; set; }
     
-        public virtual Game Game { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CommentRating> CommentRatings { get; set; }
+        public virtual ICollection<Genre> Genre1 { get; set; }
+        public virtual Genre Genre2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CommentWarning> CommentWarnings { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
     }
 }

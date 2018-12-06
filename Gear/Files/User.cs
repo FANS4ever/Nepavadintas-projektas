@@ -7,48 +7,46 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gear.Models
+namespace Gear.Files
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Game
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Game()
+        public User()
         {
-            this.CartItems = new HashSet<CartItem>();
+            this.Carts = new HashSet<Cart>();
             this.Comments = new HashSet<Comment>();
-            this.Discounts = new HashSet<Discount>();
-            this.GameCodes = new HashSet<GameCode>();
+            this.CommentRatings = new HashSet<CommentRating>();
             this.GameRatings = new HashSet<GameRating>();
             this.LibraryGames = new HashSet<LibraryGame>();
             this.Marks = new HashSet<Mark>();
+            this.Messages = new HashSet<Message>();
+            this.Payments = new HashSet<Payment>();
             this.Visits = new HashSet<Visit>();
-            this.Genres = new HashSet<Genre>();
+            this.Developers = new HashSet<Developer>();
+            this.ChatRooms = new HashSet<ChatRoom>();
         }
     
-        public int Id { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public string ShortDescription { get; set; }
-        public double Price { get; set; }
-        public System.DateTime ReleaseDate { get; set; }
-        public string VersionBranch { get; set; }
-        public double VersionNumber { get; set; }
-        public string Dir { get; set; }
-        public sbyte Available { get; set; }
-        public int Developer_Id { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public Nullable<System.DateTime> Birthday { get; set; }
+        public short Blocked { get; set; }
+        public int Country_Code { get; set; }
+        public string Rank_Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CartItem> CartItems { get; set; }
+        public virtual ICollection<Cart> Carts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual Developer Developer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Discount> Discounts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GameCode> GameCodes { get; set; }
+        public virtual ICollection<CommentRating> CommentRatings { get; set; }
+        public virtual Country Country { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GameRating> GameRatings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -56,8 +54,15 @@ namespace Gear.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Mark> Marks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Message> Messages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Payment> Payments { get; set; }
+        public virtual Rank Rank { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Visit> Visits { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Genre> Genres { get; set; }
+        public virtual ICollection<Developer> Developers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChatRoom> ChatRooms { get; set; }
     }
 }

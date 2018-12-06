@@ -7,21 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gear.Models
+namespace Gear.Files
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Discount
+    public partial class Visit
     {
         public int Id { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime ExpireDate { get; set; }
-        public double Modifier { get; set; }
-        public string Code { get; set; }
-        public sbyte Hidden { get; set; }
+        public string Amount { get; set; }
         public int Game_Id { get; set; }
+        public string User_Username { get; set; }
     
         public virtual Game Game { get; set; }
+        public virtual User User { get; set; }
     }
 }

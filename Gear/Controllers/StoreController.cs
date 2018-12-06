@@ -19,12 +19,13 @@ namespace Gear.Controllers
         public ActionResult Index()
         {
             DateTime from = DateTime.Now.AddMonths(-1);
-            StoreViewModel model = new StoreViewModel() {
+            StoreViewModel model = new StoreViewModel()
+            {
                 Showcase = db.Games.ToList(),
                 Discounted = db.Discounts.Where(d => d.ExpireDate > DateTime.Now).ToList(),
-                Newest = db.Games.Where(g=>g.ReleaseDate >= from)
+                Newest = db.Games.Where(g => g.ReleaseDate >= from)
                                  .ToList()
-                
+
             };
 
             return View(model);

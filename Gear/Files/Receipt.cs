@@ -7,32 +7,26 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gear.Models
+namespace Gear.Files
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class Receipt
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Comment()
+        public Receipt()
         {
-            this.CommentRatings = new HashSet<CommentRating>();
-            this.CommentWarnings = new HashSet<CommentWarning>();
+            this.Payments = new HashSet<Payment>();
         }
     
         public int Id { get; set; }
         public System.DateTime CreateDate { get; set; }
-        public string Content { get; set; }
-        public sbyte Blocked { get; set; }
-        public int Game_Id { get; set; }
-        public string User_Username { get; set; }
+        public double Total { get; set; }
+        public int Cart_Id { get; set; }
     
-        public virtual Game Game { get; set; }
-        public virtual User User { get; set; }
+        public virtual Cart Cart { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CommentRating> CommentRatings { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CommentWarning> CommentWarnings { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

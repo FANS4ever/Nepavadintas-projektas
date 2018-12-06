@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gear.Models
+namespace Gear.Files
 {
     using System;
     using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace Gear.Models
         public System.DateTime ExpireDate { get; set; }
         public double Modifier { get; set; }
         public string Code { get; set; }
-        public sbyte Hidden { get; set; }
+        public short Hidden { get; set; }
         public int Game_Id { get; set; }
     
         public virtual Game Game { get; set; }

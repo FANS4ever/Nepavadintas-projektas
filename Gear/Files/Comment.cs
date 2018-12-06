@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gear.Models
+namespace Gear.Files
 {
     using System;
     using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace Gear.Models
         public int Id { get; set; }
         public System.DateTime CreateDate { get; set; }
         public string Content { get; set; }
-        public sbyte Blocked { get; set; }
+        public short Blocked { get; set; }
         public int Game_Id { get; set; }
         public string User_Username { get; set; }
     

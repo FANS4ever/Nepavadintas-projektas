@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gear.Models
+namespace Gear.Files
 {
     using System;
     using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace Gear.Models
         public string VersionBranch { get; set; }
         public double VersionNumber { get; set; }
         public string Dir { get; set; }
-        public sbyte Available { get; set; }
+        public short Available { get; set; }
         public int Developer_Id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
