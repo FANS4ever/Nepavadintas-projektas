@@ -168,9 +168,11 @@
         grid-column: 2;
         border: none;
         height: 25px;
+        display: inline-block;
+        margin-top: -10px;
     }
 
-        .comment-rating > label:before {
+        .comment-rating > star:before {
             font-size: 1.25em;
             font-family: FontAwesome;
             display: inline-block;
@@ -190,10 +192,10 @@
         grid-column: 2;
         border: none;
         height: 25px;
-        margin-top: -5px;
+        display: inline-block;
     }
 
-        .rating-review > label:before {
+        .rating-review > star:before {
             font-size: 1.25em;
             font-family: FontAwesome;
             display: inline-block;
@@ -397,12 +399,12 @@
         }
     }
 
-    function noteForBookmark() {
-
-        var input = document.createElement('input');
-        input.setAttribute('type', 'text');
-        input.setAttribute('name', 'note');
-        form.appendChild(input);
+    function noteForBookMark() {
+        var txt;
+        var note = prompt("Please enter your note (not mandatory)", "");
+        if (note != "") {
+            //nota nusiust i duombaze
+        }
     }
 
 </script>
@@ -446,27 +448,29 @@
     <div class="info-wrapper">
         <div class="info-developer">
             <span class="info-text"> Developer: @Model.Developer.Name</span><br>
-             <span class="info-text"> Relese date: @Model.ReleaseDate.Year-@Model.ReleaseDate.Month-@Model.ReleaseDate.Day</span><br>
-            <span class="info-text"> Average score: 
-            @{ double score = 0;
-                for (int i = 0; i < Model.GameRatings.Count; i++)
-                {
-                    score += double.Parse(Model.GameRatings.ElementAt(i).Rating);
+            <span class="info-text"> Relese date: @Model.ReleaseDate.Year-@Model.ReleaseDate.Month-@Model.ReleaseDate.Day</span><br>
+            <span class="info-text">
+                Average score:
+                @{ double score = 0;
+                    for (int i = 0; i < Model.GameRatings.Count; i++)
+                    {
+                        score += double.Parse(Model.GameRatings.ElementAt(i).Rating);
+                    }
+                    if (score != 0)
+                    {
+                        score /= Model.GameRatings.Count;
+                    }
                 }
-                if (score != 0)
-                {
-                    score /= Model.GameRatings.Count;
-                }
-            }
-            @score</span><br>
+                @score
+            </span><br>
             <span class="info-text"> Tags:</span><br>
         </div>
         <div class="cart-button-wrapper">
             <span>@Model.Price</span>
             <input class="cart-button" id="add-to-cart" type="button" value="Add to Cart" />
-            <input class="cart-button" id="bookmark" type="button" value="Bookmark" onclick="noteForBookmark()" />
-        </div>
 
+            <input class="cart-button" id="bookmark" type="button" value="Bookmark" onclick="noteForBookMark()" />
+        </div>
 
         @*justify-self: flex-end;*@
         <div class="info-extensive">
@@ -498,32 +502,35 @@
             <font size="40">@score</font> <br>
             <span>@Model.GameRatings.Count reviews</span>
         </center><br>
+                 <div class="rating-review">
+                     <star class="rating-review-full" for="star1" title="1 stars"></star>
+                     <star class="rating-review-full" for="star2" title="2 stars"></star>
+                     <star class="rating-review-full" for="star3" title="3 stars"></star>
+                     <star class="rating-review-full" for="star4" title="4 stars"></star>
+                     <star class="rating-review-full" for="star5" title="5 stars"></star>
+
+
+                     <span>
+                         @{
+                             int fiveStars = 0;
+                             for (int i = 0; i < Model.GameRatings.Count; i++)
+                             {
+                                 if (int.Parse(Model.GameRatings.ElementAt(i).Rating) == 5)
+                                 {
+                                     fiveStars++;
+                                 }
+                             }
+                         } @fiveStars
+                     </span>
+
+                 </div>
+
         <div class="rating-review">
-            <label class="rating-review-full" for="star1" title="1 stars"> </label>
-            <label class="rating-review-full" for="star2" title="2 stars"> </label>
-            <label class="rating-review-full" for="star3" title="3 stars"> </label>
-            <label class="rating-review-full" for="star4" title="4 stars"> </label>
-            <label class="rating-review-full" for="star5" title="5 stars"> </label>
-
-            <span>@{
-                int fiveStars = 0;
-                for (int i = 0; i < Model.GameRatings.Count; i++)
-                {
-                    if (int.Parse(Model.GameRatings.ElementAt(i).Rating) == 5)
-                    {
-                        fiveStars++;
-                    }
-                }
-            } @fiveStars</span>
-
-        </div>
-
-        <div class="rating-review">
-            <label class="rating-review-full" for="star1" title="1 stars"> </label>
-            <label class="rating-review-full" for="star2" title="2 stars"> </label>
-            <label class="rating-review-full" for="star3" title="3 stars"> </label>
-            <label class="rating-review-full" for="star4" title="4 stars"> </label>
-            <label class="rating-review-empty" for="star5" title="5 stars"> </label>
+            <star class="rating-review-full" for="star1" title="1 stars"> </star>
+            <star class="rating-review-full" for="star2" title="2 stars"> </star>
+            <star class="rating-review-full" for="star3" title="3 stars"> </star>
+            <star class="rating-review-full" for="star4" title="4 stars"> </star>
+            <star class="rating-review-empty" for="star5" title="5 stars"> </star>
 
             <span> @{
                 int fourStars = 0;
@@ -542,11 +549,11 @@
 
 
         <div class="rating-review">
-            <label class="rating-review-full" for="star1" title="1 stars"> </label>
-            <label class="rating-review-full" for="star2" title="2 stars"> </label>
-            <label class="rating-review-full" for="star3" title="3 stars"> </label>
-            <label class="rating-review-empty" for="star4" title="4 stars"> </label>
-            <label class="rating-review-empty" for="star5" title="5 stars"> </label>
+            <star class="rating-review-full" for="star1" title="1 stars"> </star>
+            <star class="rating-review-full" for="star2" title="2 stars"> </star>
+            <star class="rating-review-full" for="star3" title="3 stars"> </star>
+            <star class="rating-review-empty" for="star4" title="4 stars"> </star>
+            <star class="rating-review-empty" for="star5" title="5 stars"> </star>
 
             <span>@{
                 int threeStars = 0;
@@ -562,11 +569,11 @@
         </div>
 
         <div class="rating-review">
-            <label class="rating-review-full" for="star1" title="1 stars"> </label>
-            <label class="rating-review-full" for="star2" title="2 stars"> </label>
-            <label class="rating-review-empty" for="star3" title="3 stars"> </label>
-            <label class="rating-review-empty" for="star4" title="4 stars"> </label>
-            <label class="rating-review-empty" for="star5" title="5 stars"> </label>
+            <star class="rating-review-full" for="star1" title="1 stars"> </star>
+            <star class="rating-review-full" for="star2" title="2 stars"> </star>
+            <star class="rating-review-empty" for="star3" title="3 stars"> </star>
+            <star class="rating-review-empty" for="star4" title="4 stars"> </star>
+            <star class="rating-review-empty" for="star5" title="5 stars"> </star>
 
             <span>@{
                 int twoStars = 0;
@@ -582,11 +589,11 @@
         </div>
 
         <div class="rating-review">
-            <label class="rating-review-full" for="star1" title="1 stars"> </label>
-            <label class="rating-review-empty" for="star2" title="2 stars"> </label>
-            <label class="rating-review-empty" for="star3" title="3 stars"> </label>
-            <label class="rating-review-empty" for="star4" title="4 stars"> </label>
-            <label class="rating-review-empty" for="star5" title="5 stars"> </label>
+            <star class="rating-review-full" for="star1" title="1 stars"> </star>
+            <star class="rating-review-empty" for="star2" title="2 stars"> </star>
+            <star class="rating-review-empty" for="star3" title="3 stars"> </star>
+            <star class="rating-review-empty" for="star4" title="4 stars"> </star>
+            <star class="rating-review-empty" for="star5" title="5 stars"> </star>
 
             <span>@{
                 int oneStars = 0;
@@ -629,11 +636,22 @@
                 </div>
             </div>
 
-            <label class="comment-rating-full" for="star1" title="1 stars"> </label>
-            <label class="comment-rating-full" for="star2" title="2 stars"> </label>
-            <label class="comment-rating-full" for="star3" title="3 stars"> </label>
-            <label class="comment-rating-full" for="star4" title="4 stars"> </label>
-            <label class="comment-rating-empty" for="star5" title="5 stars"> </label>
+            @for (int i = 0; i < 5; i++)
+            {
+              //  if () jeigu 3 zvaigzdutes uzdet i < zvaigzduciu sk pasimt is modelio
+              //  {
+                        //det pilnas
+               // }
+             //  else{
+                        //det tuscias
+               // }
+            }
+
+            <star class="comment-rating-full" for="star1" title="1 stars"> </star>
+            <star class="comment-rating-full" for="star2" title="2 stars"> </star>
+            <star class="comment-rating-full" for="star3" title="3 stars"> </star>
+            <star class="comment-rating-full" for="star4" title="4 stars"> </star>
+            <star class="comment-rating-empty" for="star5" title="5 stars"> </star>
         </div>
 
         <span class="date"> 2018-10-29 </span>
@@ -660,11 +678,11 @@
             </div>
         </div>
 
-            <label class="comment-rating-full" for="star1" title="1 stars"> </label>
-            <label class="comment-rating-full" for="star2" title="2 stars"> </label>
-            <label class="comment-rating-full" for="star3" title="3 stars"> </label>
-            <label class="comment-rating-empty" for="star4" title="4 stars"> </label>
-            <label class="comment-rating-empty" for="star5" title="5 stars"> </label>
+            <star class="comment-rating-full" for="star1" title="1 stars"> </star>
+            <star class="comment-rating-full" for="star2" title="2 stars"> </star>
+            <star class="comment-rating-full" for="star3" title="3 stars"> </star>
+            <star class="comment-rating-empty" for="star4" title="4 stars"> </star>
+            <star class="comment-rating-empty" for="star5" title="5 stars"> </star>
         </div>
 
         <span class="date"> 2018-10-30 </span>
