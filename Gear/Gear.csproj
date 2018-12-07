@@ -282,14 +282,6 @@
     <Content Include="Content\images\user.jpg" />
     <Content Include="Files\CYBERPUNK\icon.jpg" />
     <Content Include="Files\WITCHER3\icon.jpg" />
-    <Content Include="Content\images\witcher1.jpg" />
-    <Content Include="Content\images\witcher2.jpg" />
-    <Content Include="Content\images\witcher3.jpg" />
-    <Content Include="Content\images\witcher4.jpg" />
-    <Content Include="Content\images\witcher5.jpg" />
-    <Content Include="Content\images\witcher6.jpg" />
-    <Content Include="Content\images\witcher7.jpg" />
-    <Content Include="Content\images\witcher_header.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />

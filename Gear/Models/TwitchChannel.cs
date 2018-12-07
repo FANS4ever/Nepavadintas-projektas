@@ -16,7 +16,7 @@ namespace Gear.Models
         public string display_name { get; set; }
         public string game { get; set; }
         public string language { get; set; }
-        public int _id { get; set; }                //
+        public int _id { get; set; }                
         public string name { get; set; }
         public string created_at { get; set; }
         public string updated_at { get; set; }
@@ -28,9 +28,8 @@ namespace Gear.Models
         public string profile_banner { get; set; }
         public string profile_banner_background_color { get; set; }
         public string url { get; set; }
-        public int views { get; set; }                              //
-        public int followers { get; set; }                  //
-        //public string _links { get; set; }
+        public int views { get; set; }                              
+        public int followers { get; set; }
 
     }
 }

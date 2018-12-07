@@ -21,44 +21,58 @@ namespace Gear.Controllers
 {
     public class GameController : Controller
     {
-        //// GET: GamePage
-        //public ActionResult Index()
-        //{
-        //    Random rand = new Random();
-        //    var rez = data("The Witcher 3: Wild Hunt");
-        //    int stream = -1;
-        //    if (rez != null)
-        //        stream = rand.Next(0, rez.Count);
 
-        //    if (stream != -1)
-        //    { 
-        //        var game = new Game()
-        //        {
-        //            Streamer = rez[stream].channel.display_name,
-        //            Name = "The Witcher 3: Wild Hunt",
-        //            Description = "Experience the epic conclusion to the story of professional monster slayer, witcher Geralt of Rivia. As war rages on throughout the Northern Realms, you take on the greatest contract of your life — tracking down the Child of Prophecy, a living weapon that can alter the shape of the world."
-        //        };
-        //        return View(game);
-        //    }
+        GearDBEntities db = new GearDBEntities();
 
-        //    else
-        //    {
-        //        var game = new Game()
-        //        {
-        //            Name = "The Witcher 3: Wild Hunt",
-        //            Description = "Experience the epic conclusion to the story of professional monster slayer, witcher Geralt of Rivia. As war rages on throughout the Northern Realms, you take on the greatest contract of your life — tracking down the Child of Prophecy, a living weapon that can alter the shape of the world."
-        //        };
-        //        return View(game);
-        //    }
+        // GET: GamePage
+        public ActionResult Index(string name)
+        {
+            name = "The Witcher 3: Wild Hunt";
+            var gameInfo = db.Games.Where(g => g.Name.Equals(name)).ToList();
+            int gameId = gameInfo[0].Id;
+            int devId = gameInfo[0].Developer_Id;
+            var dev = db.Developers.Where(d => d.Id == devId).ToList();
 
-           
-        //}
+
+            TwitchStreamers streamer = getTwitchStreamer(gameInfo[0].Name);
+
+            if (streamer != null)
+            {
+                Game game = new Game()
+                {
+                    Streamer = streamer.channel.display_name,
+
+                    Name = gameInfo[0].Name,
+                    Description = gameInfo[0].Description,
+                    Dir = gameInfo[0].Dir,
+                    Developer = dev[0],
+                    ReleaseDate = gameInfo[0].ReleaseDate,
+                    Price = gameInfo[0].Price,
+                    GameRatings = db.GameRatings.Where(g => g.Game_Id == gameId).ToList()
+
+                };
+                return View(game);
+            }
+
+            else
+            {
+                var game = new Game()
+                {
+                    Name = gameInfo[0].Name,
+                    Description = gameInfo[0].Description,
+                    Dir = gameInfo[0].Dir
+                };
+                return View(game);
+            }
+
+
+        }
 
         //public ActionResult AgeValidation()
         //{
         //    var game = new Game()
         //    {
-                
+
         //        Name =  "The Witcher® 3: Wild Hunt",
         //        AgeRestriction = 14
         //    };
@@ -67,17 +81,36 @@ namespace Gear.Controllers
 
 
 
-        //public List<TwitchStreamers> data(string name)
-        //{
-        //    var webClient = new WebClient();
-        //    webClient.Headers.Add("Client-ID", "9biq0mp63j7qbe0pv8x3sugesx1ezr");
+        public TwitchStreamers getTwitchStreamer(string name)
+        {
+            var webClient = new WebClient();
+            webClient.Headers.Add("Client-ID", "9biq0mp63j7qbe0pv8x3sugesx1ezr");
 
-        //    var json = webClient.DownloadString(@"https://api.twitch.tv/kraken/streams?game=" + name);
+            var json = webClient.DownloadString(@"https://api.twitch.tv/kraken/streams?game=" + name);
 
-        //    var contentJo = (JObject)JsonConvert.DeserializeObject(json);
-        //    var streamersJArray = contentJo["streams"].Value<JArray>();
+            var contentJo = (JObject)JsonConvert.DeserializeObject(json);
+            var streamersJArray = contentJo["streams"].Value<JArray>();
 
-        //    return streamersJArray.ToObject<List<TwitchStreamers>>();
-        //}
+            var rez = streamersJArray.ToObject<List<TwitchStreamers>>();
+
+            List<TwitchStreamers> enStreamers = new List<TwitchStreamers>();
+
+            foreach (var item in rez)
+                if (item.channel.language == "en")
+                    enStreamers.Add(item);
+
+            Random rand = new Random();
+
+
+            int stream = -1;
+            if (enStreamers != null && enStreamers.Count > 0)
+                stream = rand.Next(0, enStreamers.Count);
+
+
+            if (stream != -1)
+                return enStreamers[stream];
+            else
+                return null;
+        }
     }
 }
