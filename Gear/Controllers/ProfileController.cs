@@ -42,6 +42,14 @@ namespace Gear.Controllers
        [HttpPost]
         public ActionResult Register(string username, string email, string password, string confirmPassword, int country)
         {
+            //Game g = db.Games.ToList().Where(game => game.Name == "Witcher").ToList()[0];
+            //List<Genre> genres = g.Genres.ToList();
+            //foreach (Genre gen in genres)
+            //{
+            //    string name = gen.Name;
+            //}
+
+
             db.Users.Add(new User()
             {
                 Username = username,
