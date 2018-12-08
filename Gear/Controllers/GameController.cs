@@ -25,16 +25,22 @@ namespace Gear.Controllers
         GearDBEntities db = new GearDBEntities();
 
         // GET: GamePage
-        public ActionResult Index(string name)
+        public ActionResult Index(int id)
         {
-            name = "The Witcher 3: Wild Hunt";
-            var gameInfo = db.Games.Where(g => g.Name.Equals(name)).ToList();
-            int gameId = gameInfo[0].Id;
-            int devId = gameInfo[0].Developer_Id;
-            var dev = db.Developers.Where(d => d.Id == devId).ToList();
+            //name = "The Witcher 3: Wild Hunt";
+            var gameInfo = db.Games.Where(g => g.Id.Equals(id)).ToList()[0];
+            int gameId = gameInfo.Id;
+            int devId = gameInfo.Developer_Id;
+            var dev = db.Developers.Where(d => d.Id == devId).ToList()[0];
 
+            Game ga = db.Games.ToList().Where(game => game.Id.Equals(gameInfo.Id)).ToList()[0];
+            List<Genre> genres = ga.Genres.ToList();
+            foreach (Genre gen in genres)
+            {
+                string name = gen.Name;
+            }
 
-            TwitchStreamers streamer = getTwitchStreamer(gameInfo[0].Name);
+            TwitchStreamers streamer = getTwitchStreamer(gameInfo.Name);
 
             if (streamer != null)
             {
@@ -42,13 +48,16 @@ namespace Gear.Controllers
                 {
                     Streamer = streamer.channel.display_name,
 
-                    Name = gameInfo[0].Name,
-                    Description = gameInfo[0].Description,
-                    Dir = gameInfo[0].Dir,
-                    Developer = dev[0],
-                    ReleaseDate = gameInfo[0].ReleaseDate,
-                    Price = gameInfo[0].Price,
-                    GameRatings = db.GameRatings.Where(g => g.Game_Id == gameId).ToList()
+                    Id = gameInfo.Id,
+                    Name = gameInfo.Name,
+                    Description = gameInfo.Description,
+                    Dir = gameInfo.Dir,
+                    Developer = dev,
+                    ReleaseDate = gameInfo.ReleaseDate,
+                    Price = gameInfo.Price,
+                    GameRatings = db.GameRatings.Where(g => g.Game_Id == gameInfo.Id).ToList(),
+                    Genres = genres
+                    
 
                 };
                 return View(game);
@@ -58,9 +67,9 @@ namespace Gear.Controllers
             {
                 var game = new Game()
                 {
-                    Name = gameInfo[0].Name,
-                    Description = gameInfo[0].Description,
-                    Dir = gameInfo[0].Dir
+                    Name = gameInfo.Name,
+                    Description = gameInfo.Description,
+                    Dir = gameInfo.Dir
                 };
                 return View(game);
             }
@@ -68,16 +77,20 @@ namespace Gear.Controllers
 
         }
 
-        //public ActionResult AgeValidation()
-        //{
-        //    var game = new Game()
-        //    {
+        public ActionResult AgeValidation(int id)
+        {
+            var gameInfo = db.Games.Where(g => g.Id.Equals(id)).ToList()[0];
 
-        //        Name =  "The Witcher® 3: Wild Hunt",
-        //        AgeRestriction = 14
-        //    };
-        //    return View(game);
-        //}
+
+            var game = new Game()
+            {
+                Id = gameInfo.Id,
+                Name = gameInfo.Name,
+                Dir = gameInfo.Dir,
+                AgeRestriction = gameInfo.AgeRestriction
+        };
+            return View(game);
+        }
 
 
 
