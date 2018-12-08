@@ -33,22 +33,20 @@
         day = newDay
     }
 
-
-
     function ageValidation() {
         var today = new Date();
         if (today.getFullYear() - year > @Model.AgeRestriction) {
 
-            location.href = '@Url.Action("Index", "Game")'
+            location.href = '@Url.Action("Index", "Game", new RouteValueDictionary(new { id = Model.Id}))'
         }
         else if (today.getFullYear() - year >= @Model.AgeRestriction && month < today.getMonth() + 1)
         {
-             location.href = '@Url.Action("Index", "Game")'
+             location.href = '@Url.Action("Index", "Game", new RouteValueDictionary(new { id = Model.Id}))'
         }
 
         else if (today.getFullYear() - year >= @Model.AgeRestriction && month <= today.getMonth() + 1 && day <= today.getDate())
         {
-             location.href = '@Url.Action("Index", "Game")'
+             location.href = '@Url.Action("Index", "Game", new RouteValueDictionary(new { id = Model.Id}))'
         }
         else {
             alert("You are too young for this game");
@@ -60,7 +58,7 @@
 
 <center>
     <h2>@Model.Name</h2>
-    <img class="image-showcase" src="~/Content/images/witcher.jpg" alt="witcher.jpg" title="Witcher"><br><br>
+    <img class="image-showcase" src="~/Files/@Model.Dir/icon.jpg" alt="icon.jpg" title="icon"><br><br>
 
     <div class="warning">
         <span>This Game may contain content not appropriate for all ages, or may not be appropriate for viewing at work. Please validate your age.</span><br><br>

@@ -385,6 +385,7 @@
         var curImage = document.getElementById('currentImg');
         curImage.src = imgPath;
         curImage.alt = imgPath;
+        curImage.title = curImage.src
     }
 
 
@@ -401,7 +402,7 @@
 
     function noteForBookMark() {
         var txt;
-        var note = prompt("Please enter your note (not mandatory)", "");
+        var note = prompt("Enter your note (not mandatory)", "");
         if (note != "") {
             //nota nusiust i duombaze
         }
@@ -418,7 +419,7 @@
 
         
         <div class="image-menu">
-            <img src="~/Files/@Model.Dir/icon.jpg" onclick="showImage('../Files/@Model.Dir/icon.jpg');" data-pin-nopin="true">
+            <img src="~/Files/@Model.Dir/icon.jpg" onclick="showImage('../../Files/@Model.Dir/icon.jpg');" data-pin-nopin="true">
             @{int imgNr = 0;
                 while (true)
                 {
@@ -427,7 +428,7 @@
                     var absolutePath = HttpContext.Current.Server.MapPath(path);
                     if (System.IO.File.Exists(absolutePath))
                     {
-                        <img src="~/Files/@Model.Dir/@imgName" onclick="showImage('../Files/@Model.Dir/@imgName');" data-pin-nopin="true">
+                        <img src="~/Files/@Model.Dir/@imgName" onclick="showImage('../../Files/@Model.Dir/@imgName');" data-pin-nopin="true">
                         imgNr++;
                     }
                     else
@@ -454,7 +455,7 @@
                 @{ double score = 0;
                     for (int i = 0; i < Model.GameRatings.Count; i++)
                     {
-                        score += double.Parse(Model.GameRatings.ElementAt(i).Rating);
+                        score += Model.GameRatings.ElementAt(i).Rating;
                     }
                     if (score != 0)
                     {
@@ -463,7 +464,7 @@
                 }
                 @score
             </span><br>
-            <span class="info-text"> Tags:</span><br>
+                   <span class="info-text"> Tags: @Model.Genres.ElementAt(0).Name  @Model.Genres.ElementAt(1).Name </span><br>
         </div>
         <div class="cart-button-wrapper">
             <span>@Model.Price</span>
@@ -484,7 +485,7 @@
         <div class="showcase row">
             @for (int i = 0; i < 5; i++)
             {
-                <div class="showcase-item" onclick="window.location.href = '/game/index'">
+                <div class="showcase-item" onclick="window.location.href = '@Url.Action("AgeValidation", "Game",  new RouteValueDictionary(new { id = Model.Id}))'">
                     <img class="showcase-item-image" src="~/Files/@Model.Dir/icon.jpg" />
                     <text class="showcase-item-text">@Model.Name</text>
                     <text class="showcase-item-price">10.99$</text>
@@ -515,7 +516,7 @@
                              int fiveStars = 0;
                              for (int i = 0; i < Model.GameRatings.Count; i++)
                              {
-                                 if (int.Parse(Model.GameRatings.ElementAt(i).Rating) == 5)
+                                 if (Model.GameRatings.ElementAt(i).Rating == 5)
                                  {
                                      fiveStars++;
                                  }
@@ -536,7 +537,7 @@
                 int fourStars = 0;
                 for (int i = 0; i < Model.GameRatings.Count; i++)
                 {
-                    if (int.Parse(Model.GameRatings.ElementAt(i).Rating) == 4)
+                    if (Model.GameRatings.ElementAt(i).Rating == 4)
                     {
                         fourStars++;
                     }
@@ -559,7 +560,7 @@
                 int threeStars = 0;
                 for (int i = 0; i < Model.GameRatings.Count; i++)
                 {
-                    if (int.Parse(Model.GameRatings.ElementAt(i).Rating) == 3)
+                    if (Model.GameRatings.ElementAt(i).Rating == 3)
                     {
                         threeStars++;
                     }
@@ -579,7 +580,7 @@
                 int twoStars = 0;
                 for (int i = 0; i < Model.GameRatings.Count; i++)
                 {
-                    if (int.Parse(Model.GameRatings.ElementAt(i).Rating) == 2)
+                    if (Model.GameRatings.ElementAt(i).Rating == 2)
                     {
                         twoStars++;
                     }
@@ -599,7 +600,7 @@
                 int oneStars = 0;
                 for (int i = 0; i < Model.GameRatings.Count; i++)
                 {
-                    if (int.Parse(Model.GameRatings.ElementAt(i).Rating) == 1)
+                    if (Model.GameRatings.ElementAt(i).Rating == 1)
                     {
                         oneStars++;
                     }
