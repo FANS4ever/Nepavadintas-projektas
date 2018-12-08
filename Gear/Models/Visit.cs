@@ -15,7 +15,7 @@ namespace Gear.Models
     public partial class Visit
     {
         public int Id { get; set; }
-        public string Amount { get; set; }
+        public int Amount { get; set; }
         public int Game_Id { get; set; }
         public string User_Username { get; set; }
     

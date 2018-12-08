@@ -16,7 +16,7 @@ namespace Gear.Models
     {
         public int Id { get; set; }
         public System.DateTime CreateDate { get; set; }
-        public string Rating { get; set; }
+        public int Rating { get; set; }
         public int Game_Id { get; set; }
         public string User_Username { get; set; }
     

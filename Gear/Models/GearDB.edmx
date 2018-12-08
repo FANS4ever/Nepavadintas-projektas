@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GearDBModel1.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="GearDBModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Cart">
           <Key>
             <PropertyRef Name="Id" />
@@ -37,7 +37,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="Content" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Content" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Blocked" Type="tinyint" Nullable="false" />
           <Property Name="Game_Id" Type="int" Nullable="false" />
           <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
@@ -58,7 +58,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="Content" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Content" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Comment_Id" Type="int" Nullable="false" />
           <Property Name="Developer_Id" Type="int" Nullable="false" />
         </EntityType>
@@ -69,6 +69,7 @@
           <Property Name="Code" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="ISO2" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="ISO3" Type="varchar" MaxLength="3" Nullable="false" />
         </EntityType>
         <EntityType Name="Developer">
           <Key>
@@ -94,7 +95,7 @@
           <Property Name="StartDate" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="ExpireDate" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="Modifier" Type="double" Nullable="false" />
-          <Property Name="Code" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Hidden" Type="tinyint" Nullable="false" />
           <Property Name="Game_Id" Type="int" Nullable="false" />
         </EntityType>
@@ -103,14 +104,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="ShortDescription" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="1020" Nullable="false" />
+          <Property Name="ShortDescription" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Price" Type="double" Nullable="false" />
           <Property Name="ReleaseDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="VersionBranch" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="VersionBranch" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="VersionNumber" Type="double" Nullable="false" />
           <Property Name="Dir" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="TrailerURL" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="AgeRestriction" Type="int" Nullable="false" />
           <Property Name="Available" Type="tinyint" Nullable="false" />
           <Property Name="Developer_Id" Type="int" Nullable="false" />
         </EntityType>
@@ -129,7 +132,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="ExpireDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="Code" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Uses" Type="int" Nullable="false" />
           <Property Name="Game_Id" Type="int" Nullable="false" />
         </EntityType>
@@ -139,7 +142,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="Rating" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Rating" Type="int" Nullable="false" />
           <Property Name="Game_Id" Type="int" Nullable="false" />
           <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -148,9 +151,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="Genre_Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Genre_Id" Type="int" />
         </EntityType>
         <EntityType Name="LibraryGame">
           <Key>
@@ -169,7 +172,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="45" />
+          <Property Name="Description" Type="varchar" MaxLength="50" />
           <Property Name="Game_Id" Type="int" Nullable="false" />
           <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -200,9 +203,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="45" />
-          <Property Name="Website" Type="varchar" MaxLength="45" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="255" />
+          <Property Name="Website" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Rank">
           <Key>
@@ -226,9 +229,9 @@
           </Key>
           <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="45" />
-          <Property Name="Surname" Type="varchar" MaxLength="45" />
-          <Property Name="Email" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Birthday" Type="datetime" Precision="0" />
           <Property Name="Blocked" Type="smallint" Nullable="false" />
           <Property Name="Country_Code" Type="int" Nullable="false" />
@@ -247,7 +250,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Amount" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="Game_Id" Type="int" Nullable="false" />
           <Property Name="User_Username" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
@@ -468,7 +471,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_Genre_Genre1">
-          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
           <End Role="Genre1" Type="Self.Genre" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Genre">
@@ -671,7 +674,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GearDBModel1StoreContainer">
+        <EntityContainer Name="GearDBModelStoreContainer">
           <EntitySet Name="Cart" EntityType="Self.Cart" Schema="GearDB" store:Type="Tables" />
           <EntitySet Name="CartItem" EntityType="Self.CartItem" Schema="GearDB" store:Type="Tables" />
           <EntitySet Name="ChatRoom" EntityType="Self.ChatRoom" Schema="GearDB" store:Type="Tables" />
@@ -842,7 +845,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="GearDBModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="GearDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Cart">
           <Key>
             <PropertyRef Name="Id" />
@@ -882,7 +885,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" />
-          <Property Name="Content" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Blocked" Type="SByte" Nullable="false" />
           <Property Name="Game_Id" Type="Int32" Nullable="false" />
           <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -909,7 +912,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" />
-          <Property Name="Content" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Comment_Id" Type="Int32" Nullable="false" />
           <Property Name="Developer_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comment" Relationship="Self.fk_CommentWarning_Comment1" FromRole="CommentWarning" ToRole="Comment" />
@@ -922,6 +925,7 @@
           <Property Name="Code" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ISO2" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ISO3" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.fk_User_Country1" FromRole="Country" ToRole="User" />
         </EntityType>
         <EntityType Name="Developer">
@@ -943,7 +947,7 @@
           <Property Name="StartDate" Type="DateTime" Nullable="false" />
           <Property Name="ExpireDate" Type="DateTime" Nullable="false" />
           <Property Name="Modifier" Type="Double" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Hidden" Type="SByte" Nullable="false" />
           <Property Name="Game_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Game" Relationship="Self.fk_Discount_Game1" FromRole="Discount" ToRole="Game" />
@@ -953,14 +957,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ShortDescription" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1020" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ShortDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Price" Type="Double" Nullable="false" />
           <Property Name="ReleaseDate" Type="DateTime" Nullable="false" />
-          <Property Name="VersionBranch" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="VersionBranch" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="VersionNumber" Type="Double" Nullable="false" />
           <Property Name="Dir" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TrailerURL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AgeRestriction" Type="Int32" Nullable="false" />
           <Property Name="Available" Type="SByte" Nullable="false" />
           <Property Name="Developer_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CartItems" Relationship="Self.fk_CartItem_Game1" FromRole="Game" ToRole="CartItem" />
@@ -981,7 +987,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" />
           <Property Name="ExpireDate" Type="DateTime" Nullable="false" />
-          <Property Name="Code" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Uses" Type="Int32" Nullable="false" />
           <Property Name="Game_Id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Game" Relationship="Self.fk_GameCode_Game1" FromRole="GameCode" ToRole="Game" />
@@ -992,7 +998,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" />
-          <Property Name="Rating" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rating" Type="Int32" Nullable="false" />
           <Property Name="Game_Id" Type="Int32" Nullable="false" />
           <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Game" Relationship="Self.fk_GameRating_Game1" FromRole="GameRating" ToRole="Game" />
@@ -1003,9 +1009,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Genre_Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Genre_Id" Type="Int32" />
           <NavigationProperty Name="Genre1" Relationship="Self.fk_Genre_Genre1" FromRole="Genre" ToRole="Genre1" />
           <NavigationProperty Name="Genre2" Relationship="Self.fk_Genre_Genre1" FromRole="Genre1" ToRole="Genre" />
           <NavigationProperty Name="Games" Relationship="Self.Game_has_Genre" FromRole="Genre" ToRole="Game" />
@@ -1029,7 +1035,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Game_Id" Type="Int32" Nullable="false" />
           <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Game" Relationship="Self.fk_Mark_Game1" FromRole="Mark" ToRole="Game" />
@@ -1067,9 +1073,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="Website" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Website" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Payments" Relationship="Self.fk_Payment_PaymentType1" FromRole="PaymentType" ToRole="Payment" />
         </EntityType>
         <EntityType Name="Rank">
@@ -1097,9 +1103,9 @@
           </Key>
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="Surname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Birthday" Type="DateTime" />
           <Property Name="Blocked" Type="Int16" Nullable="false" />
           <Property Name="Country_Code" Type="Int32" Nullable="false" />
@@ -1123,7 +1129,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Amount" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
           <Property Name="Game_Id" Type="Int32" Nullable="false" />
           <Property Name="User_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Game" Relationship="Self.fk_Visit_Game1" FromRole="Visit" ToRole="Game" />
@@ -1370,7 +1376,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="fk_Genre_Genre1">
-          <End Role="Genre" Type="Self.Genre" Multiplicity="1" />
+          <End Role="Genre" Type="Self.Genre" Multiplicity="0..1" />
           <End Role="Genre1" Type="Self.Genre" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Genre">
@@ -1646,9 +1652,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GearDBModel1StoreContainer" CdmEntityContainer="GearDBEntities">
+        <EntityContainerMapping StorageEntityContainer="GearDBModelStoreContainer" CdmEntityContainer="GearDBEntities">
           <EntitySetMapping Name="Carts">
-            <EntityTypeMapping TypeName="GearDBModel1.Cart">
+            <EntityTypeMapping TypeName="GearDBModel.Cart">
               <MappingFragment StoreEntitySet="Cart">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1658,7 +1664,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CartItems">
-            <EntityTypeMapping TypeName="GearDBModel1.CartItem">
+            <EntityTypeMapping TypeName="GearDBModel.CartItem">
               <MappingFragment StoreEntitySet="CartItem">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1669,7 +1675,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChatRooms">
-            <EntityTypeMapping TypeName="GearDBModel1.ChatRoom">
+            <EntityTypeMapping TypeName="GearDBModel.ChatRoom">
               <MappingFragment StoreEntitySet="ChatRoom">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1677,7 +1683,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comments">
-            <EntityTypeMapping TypeName="GearDBModel1.Comment">
+            <EntityTypeMapping TypeName="GearDBModel.Comment">
               <MappingFragment StoreEntitySet="Comment">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1689,7 +1695,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CommentRatings">
-            <EntityTypeMapping TypeName="GearDBModel1.CommentRating">
+            <EntityTypeMapping TypeName="GearDBModel.CommentRating">
               <MappingFragment StoreEntitySet="CommentRating">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1700,7 +1706,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CommentWarnings">
-            <EntityTypeMapping TypeName="GearDBModel1.CommentWarning">
+            <EntityTypeMapping TypeName="GearDBModel.CommentWarning">
               <MappingFragment StoreEntitySet="CommentWarning">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1711,16 +1717,17 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Countries">
-            <EntityTypeMapping TypeName="GearDBModel1.Country">
+            <EntityTypeMapping TypeName="GearDBModel.Country">
               <MappingFragment StoreEntitySet="Country">
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ISO2" ColumnName="ISO2" />
+                <ScalarProperty Name="ISO3" ColumnName="ISO3" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Developers">
-            <EntityTypeMapping TypeName="GearDBModel1.Developer">
+            <EntityTypeMapping TypeName="GearDBModel.Developer">
               <MappingFragment StoreEntitySet="Developer">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1729,7 +1736,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Discounts">
-            <EntityTypeMapping TypeName="GearDBModel1.Discount">
+            <EntityTypeMapping TypeName="GearDBModel.Discount">
               <MappingFragment StoreEntitySet="Discount">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
@@ -1742,7 +1749,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Games">
-            <EntityTypeMapping TypeName="GearDBModel1.Game">
+            <EntityTypeMapping TypeName="GearDBModel.Game">
               <MappingFragment StoreEntitySet="Game">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1753,13 +1760,15 @@
                 <ScalarProperty Name="VersionBranch" ColumnName="VersionBranch" />
                 <ScalarProperty Name="VersionNumber" ColumnName="VersionNumber" />
                 <ScalarProperty Name="Dir" ColumnName="Dir" />
+                <ScalarProperty Name="TrailerURL" ColumnName="TrailerURL" />
+                <ScalarProperty Name="AgeRestriction" ColumnName="AgeRestriction" />
                 <ScalarProperty Name="Available" ColumnName="Available" />
                 <ScalarProperty Name="Developer_Id" ColumnName="Developer_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="GameCodes">
-            <EntityTypeMapping TypeName="GearDBModel1.GameCode">
+            <EntityTypeMapping TypeName="GearDBModel.GameCode">
               <MappingFragment StoreEntitySet="GameCode">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1771,7 +1780,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="GameRatings">
-            <EntityTypeMapping TypeName="GearDBModel1.GameRating">
+            <EntityTypeMapping TypeName="GearDBModel.GameRating">
               <MappingFragment StoreEntitySet="GameRating">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1782,7 +1791,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Genres">
-            <EntityTypeMapping TypeName="GearDBModel1.Genre">
+            <EntityTypeMapping TypeName="GearDBModel.Genre">
               <MappingFragment StoreEntitySet="Genre">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1792,7 +1801,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LibraryGames">
-            <EntityTypeMapping TypeName="GearDBModel1.LibraryGame">
+            <EntityTypeMapping TypeName="GearDBModel.LibraryGame">
               <MappingFragment StoreEntitySet="LibraryGame">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1804,7 +1813,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Marks">
-            <EntityTypeMapping TypeName="GearDBModel1.Mark">
+            <EntityTypeMapping TypeName="GearDBModel.Mark">
               <MappingFragment StoreEntitySet="Mark">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1815,7 +1824,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Messages">
-            <EntityTypeMapping TypeName="GearDBModel1.Message">
+            <EntityTypeMapping TypeName="GearDBModel.Message">
               <MappingFragment StoreEntitySet="Message">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1827,7 +1836,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Payments">
-            <EntityTypeMapping TypeName="GearDBModel1.Payment">
+            <EntityTypeMapping TypeName="GearDBModel.Payment">
               <MappingFragment StoreEntitySet="Payment">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1839,7 +1848,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PaymentTypes">
-            <EntityTypeMapping TypeName="GearDBModel1.PaymentType">
+            <EntityTypeMapping TypeName="GearDBModel.PaymentType">
               <MappingFragment StoreEntitySet="PaymentType">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1849,7 +1858,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Ranks">
-            <EntityTypeMapping TypeName="GearDBModel1.Rank">
+            <EntityTypeMapping TypeName="GearDBModel.Rank">
               <MappingFragment StoreEntitySet="Rank">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1857,7 +1866,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Receipts">
-            <EntityTypeMapping TypeName="GearDBModel1.Receipt">
+            <EntityTypeMapping TypeName="GearDBModel.Receipt">
               <MappingFragment StoreEntitySet="Receipt">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
@@ -1867,7 +1876,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="GearDBModel1.User">
+            <EntityTypeMapping TypeName="GearDBModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -1882,7 +1891,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Visits">
-            <EntityTypeMapping TypeName="GearDBModel1.Visit">
+            <EntityTypeMapping TypeName="GearDBModel.Visit">
               <MappingFragment StoreEntitySet="Visit">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
@@ -1891,7 +1900,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Developer_has_User" TypeName="GearDBModel1.Developer_has_User" StoreEntitySet="Developer_has_User">
+          <AssociationSetMapping Name="Developer_has_User" TypeName="GearDBModel.Developer_has_User" StoreEntitySet="Developer_has_User">
             <EndProperty Name="Developer">
               <ScalarProperty Name="Id" ColumnName="Developer_Id" />
             </EndProperty>
@@ -1899,7 +1908,7 @@
               <ScalarProperty Name="Username" ColumnName="User_Username" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="Game_has_Genre" TypeName="GearDBModel1.Game_has_Genre" StoreEntitySet="Game_has_Genre">
+          <AssociationSetMapping Name="Game_has_Genre" TypeName="GearDBModel.Game_has_Genre" StoreEntitySet="Game_has_Genre">
             <EndProperty Name="Game">
               <ScalarProperty Name="Id" ColumnName="Game_Id" />
             </EndProperty>
@@ -1907,7 +1916,7 @@
               <ScalarProperty Name="Id" ColumnName="Genre_Id" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="User_has_ChatRoom" TypeName="GearDBModel1.User_has_ChatRoom" StoreEntitySet="User_has_ChatRoom">
+          <AssociationSetMapping Name="User_has_ChatRoom" TypeName="GearDBModel.User_has_ChatRoom" StoreEntitySet="User_has_ChatRoom">
             <EndProperty Name="ChatRoom">
               <ScalarProperty Name="Id" ColumnName="ChatRoom_Id" />
             </EndProperty>

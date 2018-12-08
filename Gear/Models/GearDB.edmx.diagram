@@ -4,61 +4,61 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="8de1c5595c7c4ceca2162676233c204b" Name="Diagram1">
-        <EntityTypeShape EntityType="GearDBModel1.Cart" Width="1.5" PointX="8.25" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.CartItem" Width="1.5" PointX="5.25" PointY="23.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.ChatRoom" Width="1.5" PointX="3.75" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Comment" Width="1.5" PointX="8.25" PointY="23.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.CommentRating" Width="1.5" PointX="10.5" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.CommentWarning" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Country" Width="1.5" PointX="3.75" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Developer" Width="1.5" PointX="0.75" PointY="20.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Discount" Width="1.5" PointX="5.25" PointY="27.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Game" Width="1.5" PointX="3" PointY="22.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.GameCode" Width="1.5" PointX="5.25" PointY="30.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.GameRating" Width="1.5" PointX="5.25" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Genre" Width="1.5" PointX="5.25" PointY="36.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.LibraryGame" Width="1.5" PointX="8.25" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Mark" Width="1.5" PointX="8.25" PointY="27.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Message" Width="1.5" PointX="8.25" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Payment" Width="1.5" PointX="12.75" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.PaymentType" Width="1.5" PointX="10.5" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Rank" Width="1.5" PointX="3.75" PointY="9.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Receipt" Width="1.5" PointX="10.5" PointY="14.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.User" Width="1.5" PointX="6" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GearDBModel1.Visit" Width="1.5" PointX="11.25" PointY="23.75" IsExpanded="true" />
-        <AssociationConnector Association="GearDBModel1.fk_Cart_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_CartItem_Cart1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Receipt_Cart1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_CartItem_Game1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Message_ChatRoom1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Comment_Game1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Comment_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_CommentRating_Comment1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_CommentWarning_Comment1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_CommentRating_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_CommentWarning_Developer1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_User_Country1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Game_Developer1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Discount_Game1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_GameCode_Game1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_GameRating_Game1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_LibraryGame_Game1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Mark_Game1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Visit_Game1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_GameRating_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Genre_Genre1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_LibraryGame_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Mark_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Message_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Payment_PaymentType1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Payment_Receipt1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Payment_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_User_Rank1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.fk_Visit_User1" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.Developer_has_User" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.Game_has_Genre" ManuallyRouted="false" />
-        <AssociationConnector Association="GearDBModel1.User_has_ChatRoom" ManuallyRouted="false" />
+      <Diagram DiagramId="7489a510ee3247488a1ec5149d4ef92c" Name="Diagram1">
+        <EntityTypeShape EntityType="GearDBModel.Cart" Width="1.5" PointX="8.25" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.CartItem" Width="1.5" PointX="5.25" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.ChatRoom" Width="1.5" PointX="3.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Comment" Width="1.5" PointX="8.25" PointY="23.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.CommentRating" Width="1.5" PointX="10.5" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.CommentWarning" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Country" Width="1.5" PointX="3.75" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Developer" Width="1.5" PointX="0.75" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Discount" Width="1.5" PointX="5.25" PointY="27.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Game" Width="1.5" PointX="3" PointY="22.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.GameCode" Width="1.5" PointX="5.25" PointY="30.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.GameRating" Width="1.5" PointX="5.25" PointY="19.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Genre" Width="1.5" PointX="5.25" PointY="36.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.LibraryGame" Width="1.5" PointX="8.25" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Mark" Width="1.5" PointX="8.25" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Message" Width="1.5" PointX="8.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Payment" Width="1.5" PointX="12.75" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.PaymentType" Width="1.5" PointX="10.5" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Rank" Width="1.5" PointX="3.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Receipt" Width="1.5" PointX="10.5" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.User" Width="1.5" PointX="6" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GearDBModel.Visit" Width="1.5" PointX="11.25" PointY="23.75" IsExpanded="true" />
+        <AssociationConnector Association="GearDBModel.fk_Cart_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_CartItem_Cart1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Receipt_Cart1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_CartItem_Game1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Message_ChatRoom1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Comment_Game1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Comment_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_CommentRating_Comment1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_CommentWarning_Comment1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_CommentRating_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_CommentWarning_Developer1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_User_Country1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Game_Developer1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Discount_Game1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_GameCode_Game1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_GameRating_Game1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_LibraryGame_Game1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Mark_Game1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Visit_Game1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_GameRating_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Genre_Genre1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_LibraryGame_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Mark_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Message_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Payment_PaymentType1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Payment_Receipt1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Payment_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_User_Rank1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.fk_Visit_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.Developer_has_User" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.Game_has_Genre" ManuallyRouted="false" />
+        <AssociationConnector Association="GearDBModel.User_has_ChatRoom" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

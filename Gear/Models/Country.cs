@@ -23,6 +23,7 @@ namespace Gear.Models
         public int Code { get; set; }
         public string Name { get; set; }
         public string ISO2 { get; set; }
+        public string ISO3 { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
