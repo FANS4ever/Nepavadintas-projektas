@@ -262,6 +262,7 @@
 
     .section-header {
         text-transform: uppercase;
+        cursor: pointer;
     }
 
     .showcase {
@@ -278,11 +279,13 @@
         margin-left: 5px;
         /*fix whitespaces*/
         padding-right: 16px;
+        cursor: pointer;
     }
 
     .showcase-item {
         display: inline-grid;
         width: 250px;
+        cursor: pointer;
         /*Remove whitespace*/
     }
 
@@ -290,7 +293,8 @@
         grid-row: 1;
         grid-column: 1;
         width: 250px;
-        height: auto;
+        height: 150px;
+        cursor: pointer;
     }
 
     .showcase-item-text {
@@ -299,6 +303,7 @@
         width: 100%;
         align-self: flex-end;
         background-color: rgb(224,224,224,0.7);
+        cursor: pointer;
     }
 
     .showcase-item-price {
@@ -309,6 +314,7 @@
         padding: 0px 3px 0px 3px;
         background-color: rgb(88,88,88,0.7);
         color: mediumturquoise;
+        cursor: pointer;
     }
 
     .showcase-item-discount {
@@ -321,6 +327,7 @@
         color: lightgreen;
         opacity: 0.9;
         border-bottom-left-radius: 8px;
+        cursor: pointer;
     }
 
     .line {
@@ -385,7 +392,6 @@
         var curImage = document.getElementById('currentImg');
         curImage.src = imgPath;
         curImage.alt = imgPath;
-        curImage.title = curImage.src
     }
 
 
@@ -414,7 +420,7 @@
 <h2>@Model.Name</h2>
 <div class="content-head">
     <div class="image-wrapper">
-        <img class="image-showcase" id="currentImg" src="~/Files/@Model.Dir/icon.jpg" title="Witcher">
+        <img class="image-showcase" id="currentImg" src="~/Files/@Model.Dir/icon.jpg">
 
 
         
@@ -441,7 +447,7 @@
         </div>
     </div>
     <div class="video-player-wrapper">
-        <iframe class="video-player" onload="this.onload=null; this.src='//www.youtube.com/embed/' + getId('https://www.youtube.com/watch?v=XHrskkHf958');" allowfullscreen></iframe>
+        <iframe class="video-player" onload="this.onload=null; this.src='//www.youtube.com/embed/' + getId('@Model.TrailerURL');" allowfullscreen></iframe>
 
         <iframe class="video-player" src='https://player.twitch.tv/?channel=@Model.Streamer&autoplay=false' allowfullscreen></iframe>
     </div>
@@ -464,10 +470,23 @@
                 }
                 @score
             </span><br>
-                   <span class="info-text"> Tags: @Model.Genres.ElementAt(0).Name  @Model.Genres.ElementAt(1).Name </span><br>
+                   <span class="info-text"> Tags: 
+                   @foreach (var item in Model.Genres)
+                   {
+                       if (Model.Genres.Last() != item)
+                       {
+                           @item.Name;
+                           string coma = ", ";
+                           @coma}
+                       else
+                       { 
+                           @item.Name;
+                       }
+                   }  
+                   </span><br>
         </div>
         <div class="cart-button-wrapper">
-            <span>@Model.Price</span>
+            <span>@String.Format("{0:0.00}", Model.Price, 2) EUR</span>
             <input class="cart-button" id="add-to-cart" type="button" value="Add to Cart" />
 
             <input class="cart-button" id="bookmark" type="button" value="Bookmark" onclick="noteForBookMark()" />
@@ -483,14 +502,17 @@
     <div style="grid-column: 1;">
         <h1>Recomended games:</h1>
         <div class="showcase row">
-            @for (int i = 0; i < 5; i++)
+            @foreach(var item in Model.Recomended)
             {
-                <div class="showcase-item" onclick="window.location.href = '@Url.Action("AgeValidation", "Game",  new RouteValueDictionary(new { id = Model.Id}))'">
-                    <img class="showcase-item-image" src="~/Files/@Model.Dir/icon.jpg" />
-                    <text class="showcase-item-text">@Model.Name</text>
-                    <text class="showcase-item-price">10.99$</text>
-                    <text class="showcase-item-discount">100%</text>
-                </div>
+            <div class="showcase-item" onclick="window.location.href = '@Url.Action("AgeValidation", "Game",  new RouteValueDictionary(new { id = item.Id}))'">
+                <img class="showcase-item-image" src="~/Files/@item.Dir/icon.jpg" />
+                <text class="showcase-item-text">@item.Name</text>
+                <text class="showcase-item-price">@String.Format("{0:0.00}", item.Price) EUR</text>
+                @if (item.Discount > 0)
+                {
+                    @:<text class="showcase-item-discount"> @item.Discount %</text>
+                }
+            </div >
             }
         </div>
     </div>

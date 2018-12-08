@@ -42,6 +42,9 @@ namespace Gear.Models
         public sbyte Available { get; set; }
         public int Developer_Id { get; set; }
         public string Streamer { get; set; }
+
+        public List<Game> Recomended { get; set; }
+        public double Discount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CartItem> CartItems { get; set; }

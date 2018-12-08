@@ -27,17 +27,25 @@ namespace Gear.Controllers
         // GET: GamePage
         public ActionResult Index(int id)
         {
+
+
             //name = "The Witcher 3: Wild Hunt";
-            var gameInfo = db.Games.Where(g => g.Id.Equals(id)).ToList()[0];
-            int gameId = gameInfo.Id;
+            Game gameInfo = db.Games.Where(g => g.Id.Equals(id)).ToList()[0];
             int devId = gameInfo.Developer_Id;
-            var dev = db.Developers.Where(d => d.Id == devId).ToList()[0];
+            Developer dev = db.Developers.Where(d => d.Id == devId).ToList()[0];
 
             Game ga = db.Games.ToList().Where(game => game.Id.Equals(gameInfo.Id)).ToList()[0];
             List<Genre> genres = ga.Genres.ToList();
-            foreach (Genre gen in genres)
+            List<Discount> discounts = ga.Discounts.Where(d => d.ExpireDate > DateTime.Now).ToList();
+
+            List<Game> allGames = db.Games.ToList();
+
+            List<Game> recomended = RecomendedGames(genres, allGames, gameInfo);
+
+            double price = gameInfo.Price;
+            foreach (var item in discounts)
             {
-                string name = gen.Name;
+                price *= item.Modifier;
             }
 
             TwitchStreamers streamer = getTwitchStreamer(gameInfo.Name);
@@ -54,11 +62,11 @@ namespace Gear.Controllers
                     Dir = gameInfo.Dir,
                     Developer = dev,
                     ReleaseDate = gameInfo.ReleaseDate,
-                    Price = gameInfo.Price,
+                    Price = price,
                     GameRatings = db.GameRatings.Where(g => g.Game_Id == gameInfo.Id).ToList(),
-                    Genres = genres
-                    
-
+                    Genres = genres,
+                    TrailerURL = gameInfo.TrailerURL,
+                    Recomended = recomended
                 };
                 return View(game);
             }
@@ -67,9 +75,16 @@ namespace Gear.Controllers
             {
                 var game = new Game()
                 {
+                    Id = gameInfo.Id,
                     Name = gameInfo.Name,
                     Description = gameInfo.Description,
-                    Dir = gameInfo.Dir
+                    Dir = gameInfo.Dir,
+                    Developer = dev,
+                    ReleaseDate = gameInfo.ReleaseDate,
+                    Price = price,
+                    GameRatings = db.GameRatings.Where(g => g.Game_Id == gameInfo.Id).ToList(),
+                    Genres = genres,
+                    TrailerURL = gameInfo.TrailerURL
                 };
                 return View(game);
             }
@@ -124,6 +139,66 @@ namespace Gear.Controllers
                 return enStreamers[stream];
             else
                 return null;
+        }
+
+        public List<Game> RecomendedGames(List<Genre> tags, List<Game> allGames, Game currentGame)
+        {
+            List<Game> recomended = new List<Game>();
+            foreach(var item in allGames)
+            {
+                if (item != currentGame)
+                {
+                    List<Genre> genres = item.Genres.ToList();
+                    foreach (var gen in genres)
+                    {
+                        if (tags.Contains(gen))
+                        {
+                            recomended.Add(item);
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            if (recomended.Count <= 5)
+            {
+                foreach (var item in recomended)
+                {
+                    List<Discount> discounts = item.Discounts.Where(d => d.ExpireDate > DateTime.Now).ToList();
+                    item.Discount = 0;
+                    foreach (var disc in discounts)
+                    {
+                        item.Price *= disc.Modifier;
+                        item.Discount = item.Discount + (disc.Modifier * 100);
+                    }
+                }
+                return recomended;
+            }
+            else
+            {
+                Random ran = new Random();
+                int n = 0;
+                List<Game> pickedGames = new List<Game>();
+                while (pickedGames.Count != 5)
+                {
+                    n = ran.Next(0, recomended.Count);
+                    pickedGames.Add(recomended[n]);
+                    recomended.Remove(recomended[n]);
+                }
+
+                foreach (var item in pickedGames)
+                {
+                    List<Discount> discounts = item.Discounts.Where(d => d.ExpireDate > DateTime.Now).ToList();
+                    item.Discount = 0;
+                    foreach (var disc in discounts)
+                    {
+                        item.Price *= disc.Modifier;
+                        item.Discount += (int)disc.Modifier * 100;
+                    }
+                }
+
+                return pickedGames;
+            }
         }
     }
 }
