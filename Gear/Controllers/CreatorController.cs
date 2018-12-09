@@ -14,6 +14,7 @@ namespace Gear.Controllers
 {
     public class CreatorController : Controller
     {
+        GearDBEntities db = new GearDBEntities();
         // GET: CreatorPage
         public ActionResult Index()
         {
@@ -45,6 +46,23 @@ namespace Gear.Controllers
         }
         public ActionResult BecomingCreator()
         {
+            return View(@"~/Views/Creator/BecomingCreator.cshtml");
+        }
+
+        [HttpPost]
+        public ActionResult BecomingCreator(string name, string website)
+        {
+            int id = 0;
+            var user = Session["User"] as List<User>;
+            db.Developers.Add(new Developer()
+            {
+                Users = user,
+                Name = name,
+                Website = website
+            }
+            );
+
+            db.SaveChanges();
             return View(@"~/Views/Creator/BecomingCreator.cshtml");
         }
     }

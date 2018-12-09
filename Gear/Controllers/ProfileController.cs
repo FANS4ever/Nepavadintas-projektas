@@ -32,6 +32,7 @@ namespace Gear.Controllers
             return View();
         }
 
+
         [HttpGet]
         public ActionResult Register()
         {
@@ -66,6 +67,22 @@ namespace Gear.Controllers
 
         public ActionResult Login()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(string username, string password)
+        {
+            List<User> users = db.Users.ToList();
+            foreach (User item in users)
+            {
+                if (item.Username == username && item.Password == password)
+                {
+                    Session["User"] = item;
+                    
+                    return Content("Logged in");
+                }
+            }
             return View();
         }
     }
