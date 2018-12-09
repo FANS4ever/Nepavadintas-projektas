@@ -85,6 +85,7 @@
     }
 
     .comment-grid {
+        grid-column: 1;
         display: grid;
         max-width: 700px;
         grid-template-columns: 9% 91%;
@@ -115,7 +116,8 @@
         grid-column: 1;
         width: 70px;
         height: 35px;
-        margin-top: 5px;
+        margin-top: 12px;
+        margin-left: 5px;
         justify-self: flex-end;
     }
 
@@ -128,13 +130,15 @@
         justify-self: flex-start;
         margin-left: -270px;
         margin-top: -2px;
+        margin-left: 0px;
+        float: left;
     }
 
         .rating > input {
             display: none;
         }
 
-        .rating > label:before {
+        .rating > label:after {
             margin: 5px;
             font-size: 2.25em;
             font-family: FontAwesome;
@@ -405,15 +409,6 @@
             return 'error';
         }
     }
-
-    function noteForBookMark() {
-        var txt;
-        var note = prompt("Enter your note (not mandatory)", "");
-        if (note != "") {
-            //nota nusiust i duombaze
-        }
-    }
-
 </script>
 
 <br>
@@ -423,7 +418,7 @@
         <img class="image-showcase" id="currentImg" src="~/Files/@Model.Dir/icon.jpg">
 
 
-        
+
         <div class="image-menu">
             <img src="~/Files/@Model.Dir/icon.jpg" onclick="showImage('../../Files/@Model.Dir/icon.jpg');" data-pin-nopin="true">
             @{int imgNr = 0;
@@ -470,26 +465,75 @@
                 }
                 @score
             </span><br>
-                   <span class="info-text"> Tags: 
-                   @foreach (var item in Model.Genres)
-                   {
-                       if (Model.Genres.Last() != item)
-                       {
-                           @item.Name;
-                           string coma = ", ";
-                           @coma}
-                       else
-                       { 
-                           @item.Name;
-                       }
-                   }  
-                   </span><br>
+            <span class="info-text">
+                Tags:
+                @foreach (var item in Model.Genres)
+                {
+                    if (Model.Genres.Last() != item)
+                    {
+                        @item.Name;
+                        string coma = ", ";
+                        @coma}
+                    else
+                    {
+                        @item.Name;
+                    }
+                }
+            </span><br>
         </div>
         <div class="cart-button-wrapper">
             <span>@String.Format("{0:0.00}", Model.Price, 2) EUR</span>
             <input class="cart-button" id="add-to-cart" type="button" value="Add to Cart" />
 
-            <input class="cart-button" id="bookmark" type="button" value="Bookmark" onclick="noteForBookMark()" />
+
+
+            <button type="button" class="cart-button" data-toggle="modal" data-target="#exampleModal">Bookmark</button>
+
+            @if (Model.User != null)
+            {
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Enter note for yourself (Not mandatory)</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="note" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Ok</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">You need to be loged in</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
         </div>
 
         @*justify-self: flex-end;*@
@@ -502,51 +546,50 @@
     <div style="grid-column: 1;">
         <h1>Recomended games:</h1>
         <div class="showcase row">
-            @foreach(var item in Model.Recomended)
+            @foreach (var item in Model.Recomended)
             {
-            <div class="showcase-item" onclick="window.location.href = '@Url.Action("AgeValidation", "Game",  new RouteValueDictionary(new { id = item.Id}))'">
-                <img class="showcase-item-image" src="~/Files/@item.Dir/icon.jpg" />
-                <text class="showcase-item-text">@item.Name</text>
-                <text class="showcase-item-price">@String.Format("{0:0.00}", item.Price) EUR</text>
-                @if (item.Discount > 0)
-                {
-                    @:<text class="showcase-item-discount"> @item.Discount %</text>
-                }
-            </div >
+                <div class="showcase-item" onclick="window.location.href = '@Url.Action("AgeValidation", "Game",  new RouteValueDictionary(new { id = item.Id}))'">
+                    <img class="showcase-item-image" src="~/Files/@item.Dir/icon.jpg" />
+                    <text class="showcase-item-text">@item.Name</text>
+                    <text class="showcase-item-price">@String.Format("{0:0.00}", item.Price) EUR</text>
+                    @if (item.Discount > 0)
+                    {
+                        @:<text class="showcase-item-discount"> @item.Discount %</text>
+                    }
+                </div>
             }
         </div>
     </div>
-
 
     <h1 style="grid-column: 1;">Reviews:</h1>
     <div class="rating-grid">
 
         <center class="rating-text">
             <font size="40">@score</font> <br>
-            <span>@Model.GameRatings.Count reviews</span>
+            <span>@Model.GameRatings.Count ratings</span>
         </center><br>
-                 <div class="rating-review">
-                     <star class="rating-review-full" for="star1" title="1 stars"></star>
-                     <star class="rating-review-full" for="star2" title="2 stars"></star>
-                     <star class="rating-review-full" for="star3" title="3 stars"></star>
-                     <star class="rating-review-full" for="star4" title="4 stars"></star>
-                     <star class="rating-review-full" for="star5" title="5 stars"></star>
+        <div class="rating-review">
+            <star class="rating-review-full" for="star1" title="1 stars"></star>
+            <star class="rating-review-full" for="star2" title="2 stars"></star>
+            <star class="rating-review-full" for="star3" title="3 stars"></star>
+            <star class="rating-review-full" for="star4" title="4 stars"></star>
+            <star class="rating-review-full" for="star5" title="5 stars"></star>
 
 
-                     <span>
-                         @{
-                             int fiveStars = 0;
-                             for (int i = 0; i < Model.GameRatings.Count; i++)
-                             {
-                                 if (Model.GameRatings.ElementAt(i).Rating == 5)
-                                 {
-                                     fiveStars++;
-                                 }
-                             }
-                         } @fiveStars
-                     </span>
+            <span>
+                @{
+                    int fiveStars = 0;
+                    for (int i = 0; i < Model.GameRatings.Count; i++)
+                    {
+                        if (Model.GameRatings.ElementAt(i).Rating == 5)
+                        {
+                            fiveStars++;
+                        }
+                    }
+                } @fiveStars
+            </span>
 
-                 </div>
+        </div>
 
         <div class="rating-review">
             <star class="rating-review-full" for="star1" title="1 stars"> </star>
@@ -555,16 +598,18 @@
             <star class="rating-review-full" for="star4" title="4 stars"> </star>
             <star class="rating-review-empty" for="star5" title="5 stars"> </star>
 
-            <span> @{
-                int fourStars = 0;
-                for (int i = 0; i < Model.GameRatings.Count; i++)
-                {
-                    if (Model.GameRatings.ElementAt(i).Rating == 4)
+            <span>
+                @{
+                    int fourStars = 0;
+                    for (int i = 0; i < Model.GameRatings.Count; i++)
                     {
-                        fourStars++;
+                        if (Model.GameRatings.ElementAt(i).Rating == 4)
+                        {
+                            fourStars++;
+                        }
                     }
-                }
-            } @fourStars </span>
+                } @fourStars
+            </span>
 
         </div>
 
@@ -578,16 +623,18 @@
             <star class="rating-review-empty" for="star4" title="4 stars"> </star>
             <star class="rating-review-empty" for="star5" title="5 stars"> </star>
 
-            <span>@{
-                int threeStars = 0;
-                for (int i = 0; i < Model.GameRatings.Count; i++)
-                {
-                    if (Model.GameRatings.ElementAt(i).Rating == 3)
+            <span>
+                @{
+                    int threeStars = 0;
+                    for (int i = 0; i < Model.GameRatings.Count; i++)
                     {
-                        threeStars++;
+                        if (Model.GameRatings.ElementAt(i).Rating == 3)
+                        {
+                            threeStars++;
+                        }
                     }
-                }
-            } @threeStars</span>
+                } @threeStars
+            </span>
 
         </div>
 
@@ -598,16 +645,18 @@
             <star class="rating-review-empty" for="star4" title="4 stars"> </star>
             <star class="rating-review-empty" for="star5" title="5 stars"> </star>
 
-            <span>@{
-                int twoStars = 0;
-                for (int i = 0; i < Model.GameRatings.Count; i++)
-                {
-                    if (Model.GameRatings.ElementAt(i).Rating == 2)
+            <span>
+                @{
+                    int twoStars = 0;
+                    for (int i = 0; i < Model.GameRatings.Count; i++)
                     {
-                        twoStars++;
+                        if (Model.GameRatings.ElementAt(i).Rating == 2)
+                        {
+                            twoStars++;
+                        }
                     }
-                }
-            } @twoStars </span>
+                } @twoStars
+            </span>
 
         </div>
 
@@ -618,38 +667,119 @@
             <star class="rating-review-empty" for="star4" title="4 stars"> </star>
             <star class="rating-review-empty" for="star5" title="5 stars"> </star>
 
-            <span>@{
-                int oneStars = 0;
-                for (int i = 0; i < Model.GameRatings.Count; i++)
-                {
-                    if (Model.GameRatings.ElementAt(i).Rating == 1)
+            <span>
+                @{
+                    int oneStars = 0;
+                    for (int i = 0; i < Model.GameRatings.Count; i++)
                     {
-                        oneStars++;
+                        if (Model.GameRatings.ElementAt(i).Rating == 1)
+                        {
+                            oneStars++;
+                        }
                     }
-                }
-            } @oneStars </span>
+                } @oneStars
+            </span>
 
         </div>
 
 
     </div>
 
+    <form method="post" class="comment-write">
+        <textarea class="comment-write" name="coment" placeholder="start writing review here"></textarea>
 
-    <textarea class="comment-write" placeholder="start writing review here"></textarea>
-    <input class="post-button" id="post" type="button" value="Post" />
-    <fieldset class="rating">
-        <input type="radio" id="star5" name="rating" value="5" /><label class="full" for="star5" title="5 stars"></label>
-        <input type="radio" id="star4" name="rating" value="4" /><label class="full" for="star4" title="4 stars"></label>
-        <input type="radio" id="star3" name="rating" value="3" /><label class="full" for="star3" title="3 stars"></label>
-        <input type="radio" id="star2" name="rating" value="2" /><label class="full" for="star2" title="2 stars"></label>
-        <input type="radio" id="star1" name="rating" value="1" /><label class="full" for="star1" title="1 star"></label>
-    </fieldset>
+        <fieldset class="rating">
+            @for (int i = 5; i > 0; i--)
+            {
+                <input type="radio" id="star @i" name="rating" value="@i" /><label class="full" for="star @i" title="@i stars"></label>
+            }
+        </fieldset>
+        @if (Model.User != null)
+        {
+            <input class="post-button" id="post" type="submit" value="Post" />
+        }
+        else
+        {
+            <button type="button" class="post-button" data-toggle="modal" data-target="#exampleModal">Post</button>
 
-    <div class="comment-grid">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">You need to be loged in</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </form>
+
+    <div style="grid-column: 1; height: 100px;"></div>
+
+    @foreach (var item in Model.Comments)
+    {
+        <div class="comment-grid">
+            <img class="user-profile-image" src="~/Content/images/user.jpg">
+
+            <div class="comment-rating">
+                <b><span class="comment-display">@item.User_Username</span></b>
+                <div class="dropdown">
+                    <button onclick="dropDown()" class="dropbtn">…</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="#home">Important</a>
+                        <a href="#about">Warn</a>
+                        <a href="#contact">Remove</a>
+                    </div>
+                </div>
+                @{ 
+                    int gameRating = 0;
+                    foreach (var rating in Model.GameRatings)
+                    {
+                        if (item.User_Username == rating.User_Username)
+                        {
+                            gameRating = rating.Rating;
+                            break;
+                        }
+                    }
+
+                    for (int i = 1; i < 6; i++)
+                    {
+                        if (i <= gameRating)
+                        {
+                        <star class="comment-rating-full" for="star @i" title="@i stars"> </star>
+                        }
+                        else
+                        {
+                        <star class="comment-rating-empty" for="star @i" title="@i stars"> </star>
+                        }
+                    }
+                 }
+            </div>
+
+            <span class="date"> @item.CreateDate.Year-@item.CreateDate.Month-@item.CreateDate.Day </span>
+            <span class="comment-display">@item.Content</span>
+
+            <div class="line"> </div>
+            <span class="date"> Average score of review:  3</span>
+            <input class="reply-button" id="reply" type="button" value="Reply" /><br>
+        </div>
+    }
+
+
+    @*<br>
+
+    <div class="comment-grid" style="margin-left: 50px;">
         <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
 
         <div class="comment-rating">
-            <b><span class="comment-display"> Vartotojas 1</span></b>
+            <b><span class="comment-display"> Vartotojas 2</span></b>
             <div class="dropdown">
                 <button onclick="dropDown()" class="dropbtn">…</button>
                 <div id="myDropdown" class="dropdown-content">
@@ -658,48 +788,6 @@
                     <a href="#contact">Remove</a>
                 </div>
             </div>
-
-            @for (int i = 0; i < 5; i++)
-            {
-              //  if () jeigu 3 zvaigzdutes uzdet i < zvaigzduciu sk pasimt is modelio
-              //  {
-                        //det pilnas
-               // }
-             //  else{
-                        //det tuscias
-               // }
-            }
-
-            <star class="comment-rating-full" for="star1" title="1 stars"> </star>
-            <star class="comment-rating-full" for="star2" title="2 stars"> </star>
-            <star class="comment-rating-full" for="star3" title="3 stars"> </star>
-            <star class="comment-rating-full" for="star4" title="4 stars"> </star>
-            <star class="comment-rating-empty" for="star5" title="5 stars"> </star>
-        </div>
-
-        <span class="date"> 2018-10-29 </span>
-        <span class="comment-display">Cia yra labai labai labai labai labai labai labai labai labai labai labai labai ilgas ilgas pirmo vartotojo komentaras</span>
-
-        <div class="line"> </div>
-        <span class="date"> Average score of review:  3</span>
-        <input class="reply-button" id="reply" type="button" value="Reply" /><br>
-    </div>
-
-    <br>
-
-    <div class="comment-grid" style="margin-left: 50px;">
-        <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
-
-        <div class="comment-rating">
-            <b><span class="comment-display"> Vartotojas 2</span></b>
-            <div class="dropdown">
-            <button onclick="dropDown()" class="dropbtn">…</button>
-            <div id="myDropdown" class="dropdown-content">
-                <a href="#home">Important</a>
-                <a href="#about">Warn</a>
-                <a href="#contact">Remove</a>
-            </div>
-        </div>
 
             <star class="comment-rating-full" for="star1" title="1 stars"> </star>
             <star class="comment-rating-full" for="star2" title="2 stars"> </star>
@@ -712,11 +800,11 @@
         <span class="comment-display">Cia yra atsakymas i labai labai labai labai labai labai labai labai labai labai labai labai ilga pirmo vartotojo komentara</span>
         <div class="line"> </div>
         <span class="date"> Average score of review:  0</span>
-        <input class="reply-button" id="reply" type="button" value="Reply" onclick="noteForBookmark()" />
+        <input class="reply-button" id="reply" type="button" value="Reply" onclick="replySomething()" />
     </div>
 
 
-</div>
+</div>*@
 
 <!--Naudoti jei nebereik grid-->
 <div class="content-tail">

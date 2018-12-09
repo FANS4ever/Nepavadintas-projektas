@@ -17,7 +17,7 @@
     }
 </style>
 
-<<script type="text/javascript">
+<script type="text/javascript">
 
     var year = 2018;
     var month = 1;
@@ -37,16 +37,16 @@
         var today = new Date();
         if (today.getFullYear() - year > @Model.AgeRestriction) {
 
-            location.href = '@Url.Action("Index", "Game", new RouteValueDictionary(new { id = Model.Id}))'
+            location.href = '@Url.Action("Index", "Game", new RouteValueDictionary(new { id = Model.Id }))'
         }
         else if (today.getFullYear() - year >= @Model.AgeRestriction && month < today.getMonth() + 1)
         {
-             location.href = '@Url.Action("Index", "Game", new RouteValueDictionary(new { id = Model.Id}))'
+             location.href = '@Url.Action("Index", "Game", new RouteValueDictionary(new { id = Model.Id }))'
         }
 
         else if (today.getFullYear() - year >= @Model.AgeRestriction && month <= today.getMonth() + 1 && day <= today.getDate())
         {
-             location.href = '@Url.Action("Index", "Game", new RouteValueDictionary(new { id = Model.Id}))'
+             location.href = '@Url.Action("Index", "Game", new RouteValueDictionary(new { id = Model.Id }))'
         }
         else {
             alert("You are too young for this game");
@@ -56,43 +56,228 @@
     }
 </script>
 
-<center>
-    <h2>@Model.Name</h2>
-    <img class="image-showcase" src="~/Files/@Model.Dir/icon.jpg" alt="icon.jpg" title="icon"><br><br>
+ <center>
+     <h2>@Model.Name</h2>
+     <img class="image-showcase" src="~/Files/@Model.Dir/icon.jpg" alt="icon.jpg" title="icon"><br><br>
 
-    <div class="warning">
-        <span>This Game may contain content not appropriate for all ages, or may not be appropriate for viewing at work. Please validate your age.</span><br><br>
-    </div>
+     <div class="warning">
+         <span>This Game may contain content not appropriate for all ages, or may not be appropriate for viewing at work. Please validate your age.</span><br><br>
+     </div>
 
-    <select onchange="setDay(this.value)">
-        @for (int i = 1; i < 32; i++)
-        {
-            <option value="@i">@i</option>
-        }
-    </select>
-    <select onchange="setMonth(this.value)">
-        <option value="1">January</option>
-        <option value="2">February</option>
-        <option value="3">March</option>
-        <option value="4">April</option>
-        <option value="5">May</option>
-        <option value="6">June</option>
-        <option value="7">July</option>
-        <option value="8">August</option>
-        <option value="9">September</option>
-        <option value="10">October</option>
-        <option value="11">November</option>
-        <option value="12">December</option>
-    </select>
-    <select onchange="setYear(this.value)">
-        @for (int i = 2018; i > 1899; i--)
-        {
-            <option value="@i">@i</option>
-        }
-    </select>
-    <br><br>
-    <input id="viewPage" type="button" value="View page" onclick="ageValidation()" />
-    <input id="cancel" type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Store")'" />
 
-</center>
+     <select onchange="setDay(this.value)">
+         @for (int i = 1; i < 32; i++)
+         {
+             if (Model.User != null)
+             {
+                 if (Model.User.Birthday != null && Model.User.Birthday.Value.Day == i)
+                 {
+                     <option selected="selected">@Model.User.Birthday.Value.Day</option>
+                     <script>setDay(@Model.User.Birthday.Value.Day);</script>
+                 }
+                 else
+                 {
+                     <option value="@i">@i</option>
+                 }
+             }
+
+             if (Model.User == null)
+             {
+                 <option value="@i">@i</option>
+             }
+
+         }
+     </select>
+     <select onchange="setMonth(this.value)">
+
+
+         @if (Model.User != null)
+         {
+             if (Model.User.Birthday != null)
+             {
+                 if (Model.User.Birthday.Value.Month == 1)
+                 {
+                     <option value="1" selected>January</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="1">January</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 2)
+                 {
+                     <option value="2" selected>February</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="2">February</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 3)
+                 {
+                     <option value="3" selected>March</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="3">March</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 4)
+                 {
+                     <option value="4" selected>April</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="4">April</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 5)
+                 {
+                     <option value="5" selected>May</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="5">May</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 6)
+                 {
+                     <option value="6" selected>June</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="6">June</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 7)
+                 {
+                     <option value="7" selected>July</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="7">July</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 8)
+                 {
+                     <option value="8" selected>August</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="8">August</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 9)
+                 {
+                     <option value="9" selected>September</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="9">September</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 10)
+                 {
+                     <option value="10" selected>October</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="10">October</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 11)
+                 {
+                     <option value="11" selected>November</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="11">November</option>
+                 }
+
+                 if (Model.User.Birthday.Value.Month == 12)
+                 {
+                     <option value="12" selected>December</option>
+                     <script>setMonth(@Model.User.Birthday.Value.Month);</script>
+                 }
+                 else
+                 {
+                     <option value="12">December</option>
+                 }
+
+             }
+             else
+             {
+                 <option value="1">January</option>
+                 <option value="2">February</option>
+                 <option value="3">March</option>
+                 <option value="4">April</option>
+                 <option value="5">May</option>
+                 <option value="6">June</option>
+                 <option value="7">July</option>
+                 <option value="8">August</option>
+                 <option value="9">September</option>
+                 <option value="10">October</option>
+                 <option value="11">November</option>
+                 <option value="12">December</option>
+             }
+         }
+
+         @if (Model.User == null)
+         {
+             <option value="1">January</option>
+             <option value="2">February</option>
+             <option value="3">March</option>
+             <option value="4">April</option>
+             <option value="5">May</option>
+             <option value="6">June</option>
+             <option value="7">July</option>
+             <option value="8">August</option>
+             <option value="9">September</option>
+             <option value="10">October</option>
+             <option value="11">November</option>
+             <option value="12">December</option>
+         }
+     </select>
+     <select onchange="setYear(this.value)">
+         @for (int i = 2018; i > 1899; i--)
+         {
+             if (Model.User != null)
+             {
+                 if (Model.User.Birthday != null && Model.User.Birthday.Value.Year == i)
+                 {
+                     <option selected="selected">@Model.User.Birthday.Value.Year</option>
+                     <script>setYear(@Model.User.Birthday.Value.Year);</script>
+                 }
+                 else
+                 {
+                     <option value="@i">@i</option>
+                 }
+             }
+
+             if (Model.User == null)
+             {
+                 <option value="@i">@i</option>
+             }
+
+         }
+     </select>
+
+
+
+     <br><br>
+     <input id="viewPage" type="button" value="View page" onclick="ageValidation()" />
+     <input id="cancel" type="button" value="Cancel" onclick="location.href='@Url.Action("Index", "Store")'" />
+
+ </center>
 

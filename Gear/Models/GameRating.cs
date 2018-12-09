@@ -19,7 +19,7 @@ namespace Gear.Models
         public int Rating { get; set; }
         public int Game_Id { get; set; }
         public string User_Username { get; set; }
-    
+
         public virtual Game Game { get; set; }
         public virtual User User { get; set; }
     }

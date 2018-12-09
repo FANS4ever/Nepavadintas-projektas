@@ -42,6 +42,8 @@ namespace Gear.Controllers
 
             List<Game> recomended = RecomendedGames(genres, allGames, gameInfo);
 
+            List<Comment> com = ga.Comments.ToList();
+
             double price = gameInfo.Price;
             foreach (var item in discounts)
             {
@@ -66,8 +68,11 @@ namespace Gear.Controllers
                     GameRatings = db.GameRatings.Where(g => g.Game_Id == gameInfo.Id).ToList(),
                     Genres = genres,
                     TrailerURL = gameInfo.TrailerURL,
-                    Recomended = recomended
-                };
+                    Recomended = recomended,
+                    User = Session["User"] as User,
+                    Comments = com
+                    
+            };
                 return View(game);
             }
 
@@ -102,8 +107,9 @@ namespace Gear.Controllers
                 Id = gameInfo.Id,
                 Name = gameInfo.Name,
                 Dir = gameInfo.Dir,
-                AgeRestriction = gameInfo.AgeRestriction
-        };
+                AgeRestriction = gameInfo.AgeRestriction,
+                User = Session["User"] as User
+            };
             return View(game);
         }
 
@@ -199,6 +205,58 @@ namespace Gear.Controllers
 
                 return pickedGames;
             }
+        }
+
+        [HttpPost]
+        public ActionResult Index(string note, int id, string coment, int? rating)
+        {
+            User user = Session["User"] as User;
+            if (note != null)
+            {
+                db.Marks.Add(new Mark()
+                {
+                    CreateDate = DateTime.Now,
+                    Description = note,
+                    Game_Id = id,
+                    User_Username = user.Username
+                });
+            }
+            else
+            {
+                db.Comments.Add(new Comment()
+                {
+                    CreateDate = DateTime.Now,
+                    Content = coment,
+                    Game_Id = id,
+                    User_Username = user.Username
+                });
+
+
+                if (rating != null)
+                {
+                    var currentGameRating = db.GameRatings.SingleOrDefault(gr => gr.User_Username.Equals(user.Username) && gr.Game_Id.Equals(id));
+
+                    if (currentGameRating != null)
+                    {
+                        currentGameRating.CreateDate = DateTime.Now;
+                        currentGameRating.Rating = (int)rating;
+                        // update rating in db (magic)
+                    }
+                    else
+                    {
+                        db.GameRatings.Add(new GameRating()
+                        {
+                            CreateDate = DateTime.Now,
+                            Rating = (int)rating,
+                            Game_Id = id,
+                            User_Username = user.Username
+                        });
+                    }
+                }
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("Index", new { id = id});
         }
     }
 }
