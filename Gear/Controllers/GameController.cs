@@ -22,14 +22,11 @@ namespace Gear.Controllers
     public class GameController : ControllerBase
     {
 
-        GearDBEntities db = new GearDBEntities();
+        //GearDBEntities db = new GearDBEntities();
 
         // GET: GamePage
         public ActionResult Index(int id)
         {
-
-
-            //name = "The Witcher 3: Wild Hunt";
             Game gameInfo = db.Games.Where(g => g.Id.Equals(id)).ToList()[0];
             int devId = gameInfo.Developer_Id;
             Developer dev = db.Developers.Where(d => d.Id == devId).ToList()[0];
@@ -51,6 +48,14 @@ namespace Gear.Controllers
             }
 
             TwitchStreamers streamer = getTwitchStreamer(gameInfo.Name);
+            
+            User user = null;
+            if ((bool)Session["LoggedIn"])
+            {
+                string logedIn = Session["Username"].ToString();
+                user = db.Users.Where(u => u.Username.Equals(logedIn)).ToList()[0];
+            }
+               
 
             if (streamer != null)
             {
@@ -69,7 +74,7 @@ namespace Gear.Controllers
                     Genres = genres,
                     TrailerURL = gameInfo.TrailerURL,
                     Recomended = recomended,
-                    User = Session["User"] as User,
+                    User = user,
                     Comments = com
                     
             };
@@ -89,7 +94,10 @@ namespace Gear.Controllers
                     Price = price,
                     GameRatings = db.GameRatings.Where(g => g.Game_Id == gameInfo.Id).ToList(),
                     Genres = genres,
-                    TrailerURL = gameInfo.TrailerURL
+                    TrailerURL = gameInfo.TrailerURL,
+                    Recomended = recomended,
+                    User = db.Users.Where(u => u.Username.Equals(user)).ToList()[0],
+                    Comments = com
                 };
                 return View(game);
             }
@@ -101,6 +109,12 @@ namespace Gear.Controllers
         {
             var gameInfo = db.Games.Where(g => g.Id.Equals(id)).ToList()[0];
 
+            User user = null;
+            if ((bool)Session["LoggedIn"])
+            {
+                string logedIn = Session["Username"].ToString();
+                user = db.Users.Where(u => u.Username.Equals(logedIn)).ToList()[0];
+            }
 
             var game = new Game()
             {
@@ -108,7 +122,7 @@ namespace Gear.Controllers
                 Name = gameInfo.Name,
                 Dir = gameInfo.Dir,
                 AgeRestriction = gameInfo.AgeRestriction,
-                User = Session["User"] as User
+                User = user
             };
             return View(game);
         }
@@ -210,7 +224,10 @@ namespace Gear.Controllers
         [HttpPost]
         public ActionResult Index(string note, int id, string coment, int? rating, string addToCart)
         {
-            User user = Session["User"] as User;
+            string logedInUser = Session["Username"].ToString();
+            User user = db.Users.Where(u => u.Username.Equals(logedInUser)).ToList()[0];
+
+            //User user = Session["User"] as User;
             if (note != null)
             {
                 db.Marks.Add(new Mark()
