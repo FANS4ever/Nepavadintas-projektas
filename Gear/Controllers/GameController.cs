@@ -208,7 +208,7 @@ namespace Gear.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(string note, int id, string coment, int? rating)
+        public ActionResult Index(string note, int id, string coment, int? rating, string addToCart)
         {
             User user = Session["User"] as User;
             if (note != null)
@@ -221,28 +221,32 @@ namespace Gear.Controllers
                     User_Username = user.Username
                 });
             }
-            else
+            else if (coment != null || rating != null)
             {
-                db.Comments.Add(new Comment()
+                if (coment != "")
                 {
-                    CreateDate = DateTime.Now,
-                    Content = coment,
-                    Game_Id = id,
-                    User_Username = user.Username
-                });
+                    db.Comments.Add(new Comment()
+                    {
+                        CreateDate = DateTime.Now,
+                        Content = coment,
+                        Game_Id = id,
+                        User_Username = user.Username
+                    });
+                }
+               
 
 
                 if (rating != null)
                 {
                     var currentGameRating = db.GameRatings.SingleOrDefault(gr => gr.User_Username.Equals(user.Username) && gr.Game_Id.Equals(id));
-
+                    var currentGameComents = user.Comments.Where(c => c.Game_Id.Equals(id)).ToList();
                     if (currentGameRating != null)
                     {
                         currentGameRating.CreateDate = DateTime.Now;
                         currentGameRating.Rating = (int)rating;
                         // update rating in db (magic)
                     }
-                    else
+                    else if (coment != "" || currentGameComents.Count != 0)
                     {
                         db.GameRatings.Add(new GameRating()
                         {
@@ -254,7 +258,34 @@ namespace Gear.Controllers
                     }
                 }
             }
+            else if (addToCart != null)
+            {
+                var carts = db.Carts.Where(c => c.User_Username.Equals(user.Username)).ToList();
 
+                if (carts.Count == 0)
+                {
+                    db.Carts.Add(new Cart()
+                    {
+                        CreateDate = DateTime.Now,
+                        EditDate = DateTime.Now,
+                        User_Username = user.Username
+                    });
+                    db.SaveChanges();
+                }
+                var cart = db.Carts.Where(c => c.User_Username.Equals(user.Username)).ToList()[0];
+
+                cart.EditDate = DateTime.Now;
+
+                db.CartItems.Add(new CartItem()
+                {
+                    CreateDate = DateTime.Now,
+                    Amount = 1,
+                    Cart_Id = cart.Id,
+                    Game_Id = id
+                });
+
+
+            }
             db.SaveChanges();
             return RedirectToAction("Index", new { id = id});
         }
