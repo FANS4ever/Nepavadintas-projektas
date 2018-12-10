@@ -223,7 +223,7 @@ namespace Gear.Controllers
             }
             else if (coment != null || rating != null)
             {
-                if (coment != null)
+                if (coment != "")
                 {
                     db.Comments.Add(new Comment()
                     {
@@ -239,14 +239,14 @@ namespace Gear.Controllers
                 if (rating != null)
                 {
                     var currentGameRating = db.GameRatings.SingleOrDefault(gr => gr.User_Username.Equals(user.Username) && gr.Game_Id.Equals(id));
-
+                    var currentGameComents = user.Comments.Where(c => c.Game_Id.Equals(id)).ToList();
                     if (currentGameRating != null)
                     {
                         currentGameRating.CreateDate = DateTime.Now;
                         currentGameRating.Rating = (int)rating;
                         // update rating in db (magic)
                     }
-                    else if (coment != null)
+                    else if (coment != "" || currentGameComents.Count != 0)
                     {
                         db.GameRatings.Add(new GameRating()
                         {
