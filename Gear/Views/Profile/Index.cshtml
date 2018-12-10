@@ -99,7 +99,7 @@
         <div class="game-list" style="grid-column:1;">
             <input type="text" class="input-sm" style="margin-left:0px;" id="myInput" placeholder="Search for games.." title="Type in a name" oninput="newSearch()">
             <div id="game-list-item" class="list-group" style="background-color:#dcdcdc;">
-                @foreach (var game in Model.games)
+                @foreach (var game in Model.LibraryGames)
                 {
                     <style>
                         .button {
@@ -116,12 +116,13 @@
 
                             .button span {
                                 color: black;
-                            }                           
+                            }
 
 
                         .grid-container-game {
                             display: grid;
                             grid-template-columns: 400px auto;
+                            grid-auto-rows: 200px;
                             grid-row-gap: 5px;
                         }
                         .grid-item-info {
@@ -131,24 +132,24 @@
 
                         }
                         .grid-item-img>img {
-                            object-fit: cover;
-                            width: 100%;
                             
+                            width: 100%;
+                            height: 100%;
                         }
                     </style>
                     
                     
-                    <button id="@game.Name" onclick="download()" class="list-group-item list-group-item-action button" style="margin-bottom: 1px;">
+                    <button id="@game.Game.Name" onclick="download()" class="list-group-item list-group-item-action button" style="margin-bottom: 1px;">
                         <div class="grid-container-game">
                             <div class="grid-item-img">
-                                <img src="@Url.Content(game.Icon)" class="img-fluid" alt="Avatar" >
+                                <img src="~/Files/@game.Game.Dir/icon.jpg" class="img-fluid" alt="Avatar" >
                             </div>
                             <div class="grid-item-info">
-                                <span class="text-primary" style="font:bold">
-                                    <h1>@game.Name</h1>
+                                <span class="text-primary">
+                                    <h1 style="font:bold; color: black">@game.Game.Name</h1>
                                 </span> 
-                                <h2 style="font-size: 16px; bottom: 0">Genre: @game.Description</h2>
-                                <h2 style="font-size: 16px; bottom: 0">Release date: @game.ReleaseTime.ToString("yyyy/MM/dd")</h2>
+                                <h2 style="font-size: 16px; bottom: 0">@game.Game.ShortDescription</h2>
+                                <h2 style="font-size: 16px; bottom: 0">Release date: @game.Game.ReleaseDate.ToString("yyyy/MM/dd")</h2>
                             </div>
                         </div>
                     </button>
@@ -164,23 +165,23 @@
 
             <div class="profile-sidebar">
                 <div class="profile-user-pic">
-                    <img src="@Url.Content(Model.user.Avatar)" class="img-fluid img-circle" alt="Avatar" style="width: 200px; height: 200px">
+                    <img src="~/Content/images/user.jpg" class="img-fluid img-circle" alt="Avatar" style="width: 200px; height: 200px">
                 </div>
                 <div class="profile-user-title">
                     <div class="profile-user-username">
-                        @Model.user.Username
+                        @Model.Username
                     </div>
                     <div class="profile-user-name">
-                        @Model.user.Name @Model.user.Surname
+                        @Model.Name @Model.Surname
                     </div>
                     <div class="profile-user-email">
-                        @Model.user.Email
+                        @Model.Email
                     </div>
                 </div>
                 <div class="btn-group-vertical button">
-                    <button role="button" onclick="window.location.href= '/Profile/Edit';" class="btn btn-primary" style="width: 200px !important">Edit profile</button>
+                    <button role="button" onclick="window.location.href= @Url.Action("Edit", "User");" class="btn btn-primary" style="width: 200px !important">Edit profile</button>
                     <button class="btn btn-primary" style="width: 200px !important">Facebook login</button>
-                    <button role="button" onclick="window.location.href= '/Profile/ChatRoom';" class="btn btn-primary" style="width: 200px !important">Chat room</button>
+                    <button role="button" onclick="window.location.href= '@Url.Action("Index", "User")';" class="btn btn-primary" style="width: 200px !important">Chat room</button>
                     <button class="btn btn-primary" style="width: 200px !important">Shopping cart</button>
                     <button role="button" onclick="window.location.href= '/Creator/BecomingCreator';" class="btn btn-primary" style="width: 200px !important">Become creator</button>
                     <button class="btn btn-primary" style="width: 200px !important">Sign out</button>
