@@ -11,9 +11,8 @@ using Gear.ViewModels;
 /// </summary>
 namespace Gear.Controllers
 {
-    public class StoreController : Controller
+    public class StoreController : ControllerBase
     {
-        GearDBEntities db = new GearDBEntities();
         // GET: Store
         public ActionResult Index()
         {
@@ -25,7 +24,6 @@ namespace Gear.Controllers
                 Newest = db.Games.Where(g => g.ReleaseDate >= from).ToList()
 
             };
-
             return View(model);
         }
 

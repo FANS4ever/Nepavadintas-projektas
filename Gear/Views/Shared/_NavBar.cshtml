@@ -18,14 +18,22 @@
                 </li>
                 <li class="nav-item">@Html.ActionLink("Profile", "Index", "Profile", null, new { @class = "nav-link" })</li>
                 <li class="nav-item">@Html.ActionLink("Creator", "Index", "Creator", null, new { @class = "nav-link" })</li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Account <span class="caret"></span></a>
-                    <div class="dropdown-menu">
-                        @Html.ActionLink("Login", "Login", "Profile", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Register", "Register", "Profile", null, new { @class = "dropdown-item" })
-                    </div>
-                </li>
+            </ul>
+            <ul class="nav navbar-nav ml-auto">
+                @if ((bool)Session["LoggedIn"])
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">@Session["Username"] <span class="caret"></span></a>
+                        <div class="dropdown-menu">
+                            @Html.ActionLink("Logout", "Logout", "Profile", null, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">@Html.ActionLink("Login", "Login", "Profile", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Register", "Register", "Profile", null, new { @class = "nav-link" })</li>
+                }
             </ul>
         </div>
     </div>

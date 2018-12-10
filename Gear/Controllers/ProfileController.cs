@@ -11,10 +11,8 @@ using Gear.Models;
 /// </summary>
 namespace Gear.Controllers
 {
-    public class ProfileController : Controller
+    public class ProfileController : ControllerBase
     {
-        GearDBEntities db = new GearDBEntities();
-
         [HttpGet]
         public ActionResult Index()
         {
@@ -99,17 +97,28 @@ namespace Gear.Controllers
         [HttpPost]
         public ActionResult Login(string username, string password)
         {
-            List<User> users = db.Users.ToList();
-            foreach (User item in users)
+            User user = db.Users.Where(u => u.Username.Equals(username)).FirstOrDefault();
+
+            if (user != null)
             {
-                if (item.Username == username && item.Password == password)
+                //Hash here
+                password = password;
+
+                if (user.Password == password)
                 {
-                    Session["User"] = item;
-                    
-                    return Content("Logged in");
-                }
+                    Session["LoggedIn"] = true;
+                    Session["Username"] = user.Username;
+                    Session["Rank"] = user.Rank_Name;
+                } 
             }
+
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Clear();
+            return RedirectToAction("Index","Store"); ;
         }
     }
 }

@@ -19,7 +19,7 @@ using Newtonsoft.Json.Linq;
 /// </summary>
 namespace Gear.Controllers
 {
-    public class GameController : Controller
+    public class GameController : ControllerBase
     {
 
         GearDBEntities db = new GearDBEntities();

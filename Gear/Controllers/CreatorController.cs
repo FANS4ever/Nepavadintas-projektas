@@ -12,9 +12,9 @@ using System.Web.Mvc;
 /// </summary>
 namespace Gear.Controllers
 {
-    public class CreatorController : Controller
+    public class CreatorController : ControllerBase
     {
-        GearDBEntities db = new GearDBEntities();
+        
         // GET: CreatorPage
         public ActionResult Index()
         {
