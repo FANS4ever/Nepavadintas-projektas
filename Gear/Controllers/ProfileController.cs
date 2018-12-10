@@ -18,12 +18,38 @@ namespace Gear.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            List<User> Users = db.Users.ToList();
+            List<Game> Games = db.Games.ToList();
+            User loggedUser = Session["User"] as User;
+
+            User user = new User()
+            {
+                Username = loggedUser.Username,
+                Password = loggedUser.Password,
+                Name = loggedUser.Name,
+                Surname = loggedUser.Surname,
+                Email = loggedUser.Email,
+                Birthday = loggedUser.Birthday,
+                Blocked = loggedUser.Blocked,
+                Country_Code = loggedUser.Country_Code,
+                Rank_Name = loggedUser.Rank_Name,
+                LibraryGames = loggedUser.LibraryGames.ToList(),
+            };
+            return View(user);
         }
 
-
-        public ActionResult Edit()
+        [HttpPost]
+        public ActionResult Edit(string password, string email, string name, string surename)
         {
+            User loggedUser = Session["User"] as User;
+            var currUser = db.Users.SingleOrDefault(usr => usr.Username.Equals(loggedUser.Username));
+            //currUser.Username = username;
+            currUser.Password = password;
+            currUser.Email = email;
+            currUser.Name = name;
+            currUser.Surname = surename;
+            //currUser.Birthday = birthday;
+            db.SaveChanges();
             return View();
         }
 
