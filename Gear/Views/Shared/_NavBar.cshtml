@@ -8,23 +8,22 @@
 
         <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Store <span class="caret"></span></a>
-                    <div class="dropdown-menu">
-                        @Html.ActionLink("Store", "Index", "Store", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Search", "Search", "Store", null, new { @class = "dropdown-item" })
-                        @Html.ActionLink("Payment", "Payment", "Store", null, new { @class = "dropdown-item" })
-                    </div>
-                </li>
-                <li class="nav-item">@Html.ActionLink("Profile", "Index", "Profile", null, new { @class = "nav-link" })</li>
-                <li class="nav-item">@Html.ActionLink("Creator", "Index", "Creator", null, new { @class = "nav-link" })</li>
             </ul>
+            <div class="dropdown-divider"></div>
             <ul class="nav navbar-nav ml-auto">
                 @if ((bool)Session["LoggedIn"])
                 {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">@Session["Username"] <span class="caret"></span></a>
                         <div class="dropdown-menu">
+                            <h6 class="dropdown-header">@Session["Rank"]</h6>
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Profile", "Index", "Profile", null, new { @class = "dropdown-item" })
+                            @if (((string)Session["Rank"]).Contains("Creator"))
+                            {
+                                @Html.ActionLink("Creator", "Index", "Creator", null, new { @class = "dropdown-item" })
+                            }
+                            <div class="dropdown-divider"></div>
                             @Html.ActionLink("Logout", "Logout", "Profile", null, new { @class = "dropdown-item" })
                         </div>
                     </li>
