@@ -44,6 +44,13 @@ namespace Gear.Controllers
         {
             return View(@"~/Views/Creator/Create.cshtml");
         }
+
+        [HttpPost]
+        public ActionResult Create(string gamename, string message, HttpPostedFileBase pic, string trailer, string version,string genre, string age, string date, HttpPostedFileBase file, string price)
+        {
+
+            return View(@"~/Views/Creator/Create.cshtml");
+        }
         public ActionResult BecomingCreator()
         {
             return View(@"~/Views/Creator/BecomingCreator.cshtml");
@@ -52,18 +59,24 @@ namespace Gear.Controllers
         [HttpPost]
         public ActionResult BecomingCreator(string name, string website)
         {
-            int id = 0;
-            var user = Session["User"] as List<User>;
-            db.Developers.Add(new Developer()
+            //Changes users status to Creator
+            var user = Session["User"] as User;
+            User userInfo = db.Users.Where(s=>s.Username == user.Username).FirstOrDefault();
+            if (userInfo != null)
             {
-                Users = user,
+                userInfo.Rank_Name = "Creator";
+                var dev= db.Developers.Add(new Developer()
+            {
                 Name = name,
                 Website = website
             }
             );
+                dev.Users.Add(userInfo);
+            }
 
             db.SaveChanges();
-            return View(@"~/Views/Creator/BecomingCreator.cshtml");
+            var connection = db.Developers.Where(x => x.Users.Any(r => userInfo.Username.Contains(r.Username)));
+            return Content(connection.ToList()[0].Id.ToString());
         }
     }
 }
