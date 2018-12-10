@@ -1,59 +1,69 @@
-﻿@model Gear.Models.User
-@{
-    ViewBag.Title = "Edit";
-    //Layout = "~/Views/Shared/_Layout.cshtml";
-}
+﻿@model Gear.ViewModels.CountryViewModel
 
-<h2>Edit</h2>
 
-<style>
-    .myinput{
-        padding: 5px;
-    }
 
-    .btn-primary, .btn-primary:active, .btn-primary:visited {
-        background-color: #dcdcdc !important;
-        border-color: #dcdcdc !important;
-        color: #000000 !important;
-        font-weight: bold;
-        margin-top: 5px;
-    }
+<h2>Edit Profile</h2>
 
-        .btn-primary:hover {
-            background-color: #b1abab !important;
-        }
-</style>
+<form method="post" class="col-6 mx-auto mt-2">
 
-@using (Html.BeginForm())
-{
-<form action="/action_page.php">
-    <label for="Password" style="font:bold">Password:</label>   <br />
-    <input class="myinput" type="password" name="Password" value="@Model.Password"><br>
-    <label for="Email" style="font:bold">Email:</label><br />
-    <input class="myinput" type="text" name="Email" value="@Model.Email"><br>
-    <label for="Name" style="font:bold">Name:</label><br />
-    <input class="myinput" type="text" name="Name" value="@Model.Name"><br>
-    <label for="Surname" style="font:bold">Surname:</label><br />
-    <input class="myinput" type="text" name="Surname" value="@Model.Surname"><br>
-    @*<label for="Age" style="font:bold">Age:</label><br />
-    <input class="myinput" type="datetime" name="Age" value="@Model.Birthday"><br>
-    <label for="Avatar" style="font:bold">Avatar:</label><br />
-    <input type="file"
-           id="avatar" name="avatar"
-           accept="image/png, image/jpeg">*@
-    <label for="country-info" style="font:bold">Country:</label><br />
-   
-    <input class="btn btn-primary" type="submit" value="Submit">
-    <!--<input class="btn btn-primary" type="submit" value="Delete Profile">-->
+    <div class="col">
+        <label>Username</label>
+        <input name="username" type="text" class="form-control" value="@Model.user.Username" />
+    </div>
+    <div class="col">
+        <label>Email</label>
+        <input name="email" type="email" class="form-control" value="@Model.user.Email" />
+    </div>
+    <div class="col">
+        <label>Firstname</label>
+        <input name="name" type="text" class="form-control" value="@Model.user.Name" />
+    </div>
+    <div class="col">
+        <label>Surename</label>
+        <input name="surename" type="text" class="form-control" value="@Model.user.Surname" />
+    </div>
+    <div class="col">
+        <label>Birthday</label>
+        <input name="birthday" type="date" class="form-control" value="@Model.user.Birthday" />
+    </div>
 
+    <div class="col">
+        <label>Password</label>
+        <input id="password" name="password" type="password" class="form-control">
+    </div>
+    <div class="col">
+        <label>Confirm password</label>
+        <input id="confirm_password" name="confirmPassword" type="password" class="form-control" />
+    </div>
+
+
+    <div class="form-group">
+        <label>Country</label>
+        <select name="country" class="form-control mw-100">
+            <option value="@Model.user.Country_Code">Select your country</option>
+            @foreach (var item in Model.Countries)
+            {
+                <option value="@item.Code">@item.Name</option>
+            }
+        </select>
+    </div>
+    <button type="submit" name="edit" class="btn btn-primary w-100" style="padding-top: 20px">Edit</button>
+    @Html.ActionLink("Remove", "Remove", "Profile", null, new { @class = "btn btn-primary w-100" })
+    
 </form>
-}
 
 <script>
-    function getSelectedValue() {
-        var value = document.getElementById("country").value;
-        document.getElementById('country-info').value = value;
-        
+    var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
     }
 
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
 </script>

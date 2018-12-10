@@ -38,7 +38,7 @@
 
         function statusChangeCallback(response) {
             if (response.status === 'connected') {
-                window.open('@Url.Action("Index", "ReportExecution")');
+                //window.open('@Url.Action("Index", "ReportExecution")');
                 console.log('logged in')
             } else {
                 console.log('not authenticated')
@@ -54,7 +54,7 @@
     </script>
 
     <div class="form-group">
-        <input type="text" class="form-control center-block" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" placeholder="Enter email">
+        <input type="text" class="form-control center-block" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" placeholder="Enter username">
     </div>
     <div class="form-group">
         <input type="password" class="form-control center-block" id="exampleInputPassword1" name="password" placeholder="Password">

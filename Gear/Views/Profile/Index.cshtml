@@ -1,4 +1,4 @@
-﻿@model Gear.Models.User
+﻿@model Gear.ViewModels.CountryViewModel
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -99,7 +99,7 @@
         <div class="game-list" style="grid-column:1;">
             <input type="text" class="input-sm" style="margin-left:0px;" id="myInput" placeholder="Search for games.." title="Type in a name" oninput="newSearch()">
             <div id="game-list-item" class="list-group" style="background-color:#dcdcdc;">
-                @foreach (var game in Model.LibraryGames)
+                @foreach(var game in Model.user.LibraryGames)
                 {
                     <style>
                         .button {
@@ -169,22 +169,20 @@
                 </div>
                 <div class="profile-user-title">
                     <div class="profile-user-username">
-                        @Model.Username
+                        @Model.user.Username
                     </div>
                     <div class="profile-user-name">
-                        @Model.Name @Model.Surname
+                        @Model.user.Name @Model.user.Surname
                     </div>
                     <div class="profile-user-email">
-                        @Model.Email
+                        @Model.user.Email
                     </div>
                 </div>
                 <div class="btn-group-vertical button">
-                    <button role="button" onclick="window.location.href= @Url.Action("Edit", "User");" class="btn btn-primary" style="width: 200px !important">Edit profile</button>
-                    <button class="btn btn-primary" style="width: 200px !important">Facebook login</button>
-                    <button role="button" onclick="window.location.href= '@Url.Action("Index", "User")';" class="btn btn-primary" style="width: 200px !important">Chat room</button>
-                    <button class="btn btn-primary" style="width: 200px !important">Shopping cart</button>
-                    <button role="button" onclick="window.location.href= '/Creator/BecomingCreator';" class="btn btn-primary" style="width: 200px !important">Become creator</button>
-                    <button class="btn btn-primary" style="width: 200px !important">Sign out</button>
+                    <button role="button" class="btn btn-primary" style="width: 200px !important">@Html.ActionLink("Edit profile", "Edit", null, new { @class = "nav-link" })</button>
+                    @*<button role="button" class="btn btn-primary" style="width: 200px !important">@Html.ActionLink("Chat Room", "Chatroom", null, new { @class = "nav-link" })</button>*@
+                    <button class="btn btn-primary" style="width: 200px !important">@Html.ActionLink("Shopping Cart", "Profile", null, new { @class = "nav-link" })</button>
+                    <button role="button" class="btn btn-primary" style="width: 200px !important">@Html.ActionLink("Become a creator", "Profile", null, new { @class = "nav-link" })</button>
                 </div>
                 <div class="profile-use-menu">
 
