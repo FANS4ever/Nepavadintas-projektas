@@ -73,9 +73,13 @@ namespace Gear.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public ActionResult Payment()
         {
-            return View();
+            string user = (string)Session["Username"];
+            Cart cart = db.Carts.Where(c=>c.User.Equals(user)).Where(c=>c.Receipts.Count == 0).SingleOrDefault();
+
+            return View(cart);
         }
 
         public ActionResult Receipt()

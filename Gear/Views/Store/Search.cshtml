@@ -39,7 +39,7 @@
                             <div class="align-self-end">
                                 @foreach (Gear.Models.Genre genre in game.Genres)
                                 {
-                                    @Html.ActionLink(genre.Name, "Search", "Store", null, new { @class = "badge badge-info ml-sm-1" })
+                                    @Html.ActionLink(genre.Name, "Search", "Store", new { tag = genre.Name }, new { @class = "badge badge-info ml-sm-1" })
                                 }
                             </div>
                         </div>
@@ -73,12 +73,14 @@
 
     @using (Html.BeginForm("Search", "Store", FormMethod.Post, new { @class = "col nav navbar-nav ml-1" }))
     {
-            <div class="nav-item input-group mb-1">
-                <input type="text" class="form-control text-truncate" placeholder="Search store" name="search">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
-                </div>
+        <div class="nav-item input-group mb-1">
+            <input type="text" class="form-control text-truncate" placeholder="Search store" name="search">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
             </div>
+        </div>
+        if ((bool)Session["LoggedIn"])
+        {
             <div class="nav-item">
                 <button class="btn btn-light w-100" type="button" data-toggle="collapse" data-target="#cartCollapse" aria-expanded="false" aria-controls="cartCollapse"><b>Cart</b></button>
                 <div class="collapse multi-collapse" id="cartCollapse">
@@ -103,26 +105,28 @@
                     </ul>
                 </div>
             </div>
-            <div class="nav-item text-center">
-                <button class="btn btn-light w-100" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse"><b>Categories</b></button>
-                <div class="collapse multi-collapse" id="tagCollapse">
-                    <div class="dropdown-divider"></div>
-                    @if (Model.Tags != null && Model.Tags.Count > 0)
-                    {
-                        <div class="btn-group-toggle" data-toggle="buttons">
-                            @foreach (Gear.Models.Genre item in Model.Tags)
-                            {
-                                <label class="btn btn-sm btn-warning">
-                                    <input type="radio" name="tag" value="@item.Name"> @item.Name
-                                </label>
-                            }
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="list-group-item alert alert-info text-center">No categories!</div>
-                    }
-                </div>
+        }
+
+        <div class="nav-item text-center">
+            <button class="btn btn-light w-100" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse"><b>Categories</b></button>
+            <div class="collapse multi-collapse" id="tagCollapse">
+                <div class="dropdown-divider"></div>
+                @if (Model.Tags != null && Model.Tags.Count > 0)
+                {
+                    <div class="btn-group-toggle" data-toggle="buttons">
+                        @foreach (Gear.Models.Genre item in Model.Tags)
+                        {
+                            <label class="btn btn-sm btn-warning">
+                                <input type="radio" name="tag" value="@item.Name"> @item.Name
+                            </label>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="list-group-item alert alert-info text-center">No categories!</div>
+                }
             </div>
+        </div>
     }
 </div>
