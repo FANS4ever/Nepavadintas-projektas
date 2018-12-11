@@ -41,10 +41,13 @@ namespace Gear.Controllers
                 LibraryGames = loggedUser.LibraryGames.ToList(),
             };
 
+            List<Mark> marked = db.Marks.Where(m => m.User_Username.Equals(loggedUserName)).ToList();
+
             CountryViewModel model = new CountryViewModel()
             {
                 Countries = db.Countries.ToList(),
-                user = usr
+                user = usr,
+                marks = marked
             };
             return View(model);
         }
@@ -144,7 +147,7 @@ namespace Gear.Controllers
             }
             else
             {
-                return View();
+                return RedirectToAction("Register", "Profile"); ;
             }
          
         }
@@ -179,26 +182,31 @@ namespace Gear.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
+            
             return RedirectToAction("Index","Store");
         }
 
-        public ActionResult LoginFB(loginFb obj)
+        [HttpGet]
+        public ActionResult LoginFB(JsonResult obj)
         {
-            User user = db.Users.Where(u => u.Name.Equals(obj.name) && u.Surname.Equals(obj.surename)).FirstOrDefault();
+            //string name = obj[0];
+            //string surename = obj[1];
 
-            if (user != null)
-            {
+            //User user = db.Users.Where(u => u.Name.Equals(name) && u.Surname.Equals(surename)).FirstOrDefault();
 
-                Session["LoggedIn"] = true;
-                Session["Username"] = user.Username;
-                Session["Rank"] = user.Rank_Name;
-                return RedirectToAction("Index", "Store"); ;
-            }
-            else
-            {
-                return RedirectToAction("Index", "Store"); ;
-            }
-            
+            //if (user != null)
+            //{
+
+            //    Session["LoggedIn"] = true;
+            //    Session["Username"] = user.Username;
+            //    Session["Rank"] = user.Rank_Name;
+            //    return RedirectToAction("Index", "Store"); ;
+            //}
+            //else
+            //{
+            //    return RedirectToAction("Index", "Store"); ;
+            //}
+            return RedirectToAction("Index", "Store"); ;
         }
     }
 }
