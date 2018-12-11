@@ -14,6 +14,12 @@ namespace Gear.Controllers
 {
     public class ProfileController : ControllerBase
     {
+        public class loginFb
+        {
+            public string name { get; set; }
+            public string surename { get; set; }
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -174,6 +180,25 @@ namespace Gear.Controllers
         {
             Session.Clear();
             return RedirectToAction("Index","Store"); ;
+        }
+
+        public ActionResult LoginFB(loginFb obj)
+        {
+            User user = db.Users.Where(u => u.Name.Equals(obj.name) && u.Surname.Equals(obj.surename)).FirstOrDefault();
+
+            if (user != null)
+            {
+
+                Session["LoggedIn"] = true;
+                Session["Username"] = user.Username;
+                Session["Rank"] = user.Rank_Name;
+                return RedirectToAction("Index", "Store"); ;
+            }
+            else
+            {
+                return RedirectToAction("Index", "Store"); ;
+            }
+            
         }
     }
 }
