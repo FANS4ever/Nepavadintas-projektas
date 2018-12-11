@@ -77,7 +77,7 @@ namespace Gear.Controllers
         public ActionResult Payment()
         {
             string user = (string)Session["Username"];
-            Cart cart = db.Carts.Where(c=>c.User.Equals(user)).Where(c=>c.Receipts.Count == 0).SingleOrDefault();
+            Cart cart = db.Carts.Where(c => c.User_Username.Equals(user)).Where(c => c.Receipts.Count == 0).FirstOrDefault();
 
             return View(cart);
         }
