@@ -16,18 +16,37 @@ namespace Gear.Controllers
         // GET: Store
         public ActionResult Index()
         {
-            DateTime from = DateTime.Now.AddMonths(-1);
+            DateTime now = DateTime.Now;
+
+            List<Game> popular = db.Games.OrderByDescending(
+                    g => g.Visits.Where(v => v.Game_Id == g.Id)
+                    .Sum(x => x.Amount)).Take(10).ToList();
+            List<Game> newest = db.Games.Where(
+                    g => g.ReleaseDate < now)
+                    .OrderByDescending(g => g.ReleaseDate).Take(10).ToList();
+            List<Discount> discounted = db.Discounts.Where(
+                    d => d.ExpireDate > now).Where(d => d.Hidden != 1).Take(10).ToList();
+
+            Random rand = new Random();
+            List<Game> showcase = db.Games.OrderByDescending(
+                    g => g.GameRatings.Where(r => r.Game_Id == g.Id)
+                    .Sum(x => x.Rating)).Take(3).ToList();
+
+            string user = (string)Session["Username"];
+            Cart cart = (bool)Session["LoggedIn"] == true ? db.Carts.Where(c => c.User_Username.Equals(user)).Where(c => c.Receipts.Count == 0).FirstOrDefault() : null;
+
             StoreViewModel model = new StoreViewModel()
             {
-                Showcase = db.Games.ToList(),
-                Discounted = db.Discounts.Where(d => d.ExpireDate > DateTime.Now).ToList(),
-                Newest = db.Games.Where(g => g.ReleaseDate >= from).ToList()
-
+                Popular = popular,
+                Discounted = discounted,
+                Newest = newest,
+                Showcase = showcase,
+                Cart = cart
             };
             return View(model);
         }
 
-        public ActionResult Search()
+        public ActionResult Search(string tag)
         {
             return View();
         }

@@ -8,6 +8,14 @@
 
         <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="nav navbar-nav">
+                <li class="nav-item">
+                    <div class="input-group">
+                        <input type="text" class="form-control text-truncate" placeholder="Search store">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button">Search</button>
+                        </div>
+                    </div>
+                </li>
             </ul>
             <div class="dropdown-divider"></div>
             <ul class="nav navbar-nav ml-auto">
@@ -30,8 +38,29 @@
                 }
                 else
                 {
-                    <li class="nav-item">@Html.ActionLink("Login", "Login", "Profile", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Register", "Register", "Profile", null, new { @class = "nav-link" })</li>
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button">Login <span class="caret"></span></a>
+                        <div class="dropdown-menu dropdown-menu-right" style="min-width: 250px;">
+                            @using (Html.BeginForm("Login", "Profile", FormMethod.Post, new { @class = "p-3" }))
+                            {
+                                <div class="form-group">
+                                    <label for="dropdownUsername">Username</label>
+                                    <input type="text" class="form-control" id="dropdownUsername" name="username" placeholder="Enter Username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dropdownPassword">Password</label>
+                                    <input type="password" class="form-control" id="dropdownPassword" name="password" placeholder="Enter Password">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Sign in</button>
+                            }
+                            <div class="dropdown-divider"></div>
+                            @Html.ActionLink("Register", "Register", "Profile", null, new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+
+
+                    @*<li class="nav-item">@Html.ActionLink("Login", "Login", "Profile", null, new { @class = "nav-link" })</li>*@
                 }
             </ul>
         </div>

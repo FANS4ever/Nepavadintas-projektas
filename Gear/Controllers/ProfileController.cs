@@ -112,13 +112,13 @@ namespace Gear.Controllers
                 } 
             }
 
-            return View();
+            return RedirectToAction("Index", "Store");
         }
 
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Index","Store"); ;
+            return RedirectToAction("Index","Store");
         }
     }
 }

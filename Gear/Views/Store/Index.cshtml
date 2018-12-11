@@ -6,12 +6,13 @@
 
 }
 
+
 <div>
     <h1 class="display-4">Featured</h1>
 
     <div id="featured" class="carousel slide w-75 mx-auto pb-4" data-ride="carousel">
         <div class="carousel-inner">
-            @foreach (Gear.Models.Discount game in Model.Discounted)
+            @foreach (Gear.Models.Game game in Model.Showcase)
             {
 
                 <style>
@@ -24,10 +25,9 @@
                         }
                 </style>
 
-                <div class="carousel-item @(Model.Discounted.First() == game ? "active" : "")">
-                    <img class="d-block w-100 rounded" src="@("../Files/" + game.Game.Dir + "/icon.jpg")" alt="First slide">
+                <div class="carousel-item @(Model.Showcase.First() == game ? "active" : "")">
+                    <img class="d-block w-100 rounded" src="@("../Files/" + game.Dir + "/icon.jpg")"alt="First slide">
 
-                    @*change later*@
                     <style>
                         .carousel-caption {
                             left: auto;
@@ -38,11 +38,21 @@
                     </style>
 
                     <div id="recommended" class="carousel-caption d-flex align-items-end w-100 p-1 bg-dark">
-                        <h5 class="d-inline my-auto ml-3 mr-auto">@game.Game.Name</h5>
+                        <h5 class="d-inline my-auto ml-3 mr-auto">@game.Name</h5>
                         <p class="d-inline my-auto mr-3">
-                            <text class="px-2 rounded" style="color: black; background-color:lightgreen;">@game.Modifier.ToString("#0.##%")</text>
-                            <text>@((game.Game.Price * game.Modifier).ToString("0.00"))</text>
-                            <text>EUR</text>
+                            @{
+                                DateTime now = DateTime.Now;
+                                Gear.Models.Discount hasDiscount = game.Discounts.Where(d => d.ExpireDate > now).Where(d => d.Hidden != 1).FirstOrDefault();
+                            }
+                            @if (hasDiscount != null)
+                            {
+                                <span class="px-2 rounded" style="color: black; background-color:lightgreen;">@hasDiscount.Modifier.ToString("#0.##%")</span>
+                                <span>@((game.Price * hasDiscount.Modifier).ToString("0.00")) EUR</span>
+                            }
+                            else
+                            {
+                                <span>@((game.Price)) EUR</span>
+                            }
                         </p>
                     </div>
                 </div>
@@ -62,14 +72,29 @@
 
         <ul class="carousel-indicators" style="bottom:-10px;">
 
-            @for (int i = 0; i < Model.Discounted.Count; i++)
+            @for (int i = 0; i < Model.Showcase.Count; i++)
             {
                 <li data-target="#featured" data-slide-to="@i" class="@(i==0?"active":"") border rounded p-1"></li>
             }
         </ul>
+
+        <a class="carousel-control-prev" href="#featured" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#featured" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
 </div>
+
+<!------------------------------ Main page ------------------------------------->
+
 <div class="row">
+
+    <!------------------------------ Game list ------------------------------------->
+
     <div class="col-9">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
@@ -84,12 +109,12 @@
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="popular" role="tabpanel" aria-labelledby="popular-tab">
-                @foreach (var game in Model.Newest)
+                @foreach (Gear.Models.Game game in Model.Popular)
                 {
                     <div class="row border-bottom p-sm-1 rounded">
                         <div class="col-3">
                             <img class="p-0 rounded img-fluid" style="width: 100%; height:auto;" src="@("../Files/" + game.Dir + "/icon.jpg")" alt="First slide">
-                        </div>  
+                        </div>
                         <div class="col row w-100">
                             <div class="col row mr-auto">
                                 <div class="align-self-start col-12 p-0">
@@ -97,42 +122,134 @@
                                     <text class="">@game.ShortDescription</text>
                                 </div>
                                 <div class="align-self-end">
-                                    <text class="">Test</text>
+                                    @foreach (Gear.Models.Genre genre in game.Genres)
+                                    {
+                                        @Html.ActionLink(genre.Name, "Search", "Store", null, new { @class = "badge badge-info ml-sm-1" })
+                                    }
                                 </div>
                             </div>
                             <div class="col-auto align-self-center mr-2">
-                                <text class="row">@game.Price EUR</text>
+                                @{
+                                    DateTime now = DateTime.Now;
+                                    Gear.Models.Discount hasDiscount = game.Discounts.Where(d => d.ExpireDate > now).Where(d => d.Hidden != 1).FirstOrDefault();
+                                }
+
+                                @if (hasDiscount != null)
+                                {
+                                    <span class="d-block text-center badge badge-success">-@hasDiscount.Modifier.ToString("#0.##%")</span>
+                                    <span class="d-block text-center badge badge-light">@((game.Price * hasDiscount.Modifier).ToString("0.00")) EUR</span>
+                                }
+                                else
+                                {
+                                    <span class="d-block text-center badge badge-light">@game.Price EUR</span>
+                                }
                             </div>
                         </div>
                     </div>
                 }
             </div>
             <div class="tab-pane fade" id="discounted" role="tabpanel" aria-labelledby="discounted-tab">
-                <h5>Discounted</h5>
+                @foreach (Gear.Models.Discount discount in Model.Discounted)
+                {
+                    <div class="row border-bottom p-sm-1 rounded">
+                        <div class="col-3">
+                            <img class="p-0 rounded img-fluid" style="width: 100%; height:auto;" src="@("../Files/" + discount.Game.Dir + "/icon.jpg")" alt="First slide">
+                        </div>
+                        <div class="col row w-100">
+                            <div class="col row mr-auto">
+                                <div class="align-self-start col-12 p-0">
+                                    <h5 class="">@discount.Game.Name</h5>
+                                    <text class="">@discount.Game.ShortDescription</text>
+                                </div>
+                                <div class="align-self-end">
+                                    @foreach (Gear.Models.Genre genre in discount.Game.Genres)
+                                    {
+                                        @Html.ActionLink(genre.Name, "Search", "Store", null, new { @class = "badge badge-info ml-sm-1" })
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-auto align-self-center mr-2">
+                                <span class="d-block text-center badge badge-success">-@discount.Modifier.ToString("#0.##%")</span>
+                                <span class="d-block text-center badge badge-light">@((discount.Game.Price * discount.Modifier).ToString("0.00")) EUR</span>
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
             <div class="tab-pane fade" id="newest" role="tabpanel" aria-labelledby="newest-tab">
-                <h5>Newest</h5>
+                @foreach (Gear.Models.Game game in Model.Newest)
+                {
+                    <div class="row border-bottom p-sm-1 rounded">
+                        <div class="col-3">
+                            <img class="p-0 rounded img-fluid" style="width: 100%; height:auto;" src="@("../Files/" + game.Dir + "/icon.jpg")" alt="First slide">
+                        </div>
+                        <div class="col row w-100">
+                            <div class="col row mr-auto">
+                                <div class="align-self-start col-12 p-0">
+                                    <h5 class="">@game.Name</h5>
+                                    <text class="">@game.ShortDescription</text>
+                                </div>
+                                <div class="align-self-end">
+                                    @foreach (Gear.Models.Genre genre in game.Genres)
+                                    {
+                                        @Html.ActionLink(genre.Name, "Search", "Store", null, new { @class = "badge badge-info ml-sm-1" })
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-auto align-self-center mr-2">
+                                @{
+                                    DateTime now = DateTime.Now;
+                                    Gear.Models.Discount hasDiscount = game.Discounts.Where(d => d.ExpireDate > now).Where(d => d.Hidden != 1).FirstOrDefault();
+                                }
+
+                                @if (hasDiscount != null)
+                                {
+                                    <span class="d-block text-center badge badge-success">-@hasDiscount.Modifier.ToString("#0.##%")</span>
+                                    <span class="d-block text-center badge badge-light">@((game.Price * hasDiscount.Modifier).ToString("0.00")) EUR</span>
+                                }
+                                else
+                                {
+                                    <span class="d-block text-center badge badge-light">@game.Price EUR</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>
-    <div class="col-3">
-        <div class="input-group">
-            <input class="form-control" type="text"/>
+
+    <!------------------------------ Side menu ------------------------------------->
+
+    <div class="col-3 nav navbar-nav">
+        <div class="nav-item input-group mb-1">
+            <input type="text" class="form-control text-truncate" placeholder="Search store">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button">Search</button>
             </div>
         </div>
-        <div class="input-group">
-            <div class="input-group">
-                <a class="badge badge-primary mr-1" href="#">+</a>
-                <a class="badge badge-primary mr-1" href="#">-</a>
-                <text class="text-primary">Tag1</text>
-            </div>
-            
-            <div class="input-group">
-                <a class="badge badge-primary mr-1" href="#">+</a>
-                <a class="badge badge-primary mr-1" href="#">-</a>
-                <text class="text-primary">Tag2</text>
+        <div class="nav-item">
+            <button class="btn btn-light w-100" type="button" data-toggle="collapse" data-target="#cartCollapse" aria-expanded="false" aria-controls="cartCollapse"><b>Cart</b></button>
+            <div class="collapse multi-collapse" id="cartCollapse">
+                <div class="dropdown-divider"></div>
+                <a href="#" class="btn btn-outline-info w-100">Checkout</a>
+                <div class="dropdown-divider"></div>
+                    <ul class="list-group">
+                        @if (Model.Cart != null && Model.Cart.CartItems.Count != 0)
+                        {
+                            foreach (Gear.Models.CartItem item in Model.Cart.CartItems)
+                            {
+                                <li class="list-group-item">
+                                    <span class="text-primary">x@(item.Amount)</span>
+                                    <span class="text-capitalize">@item.Game.Name</span>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-group-item alert alert-info text-center">Cart is empty!</li>
+                        }
+                    </ul>
             </div>
         </div>
     </div>
