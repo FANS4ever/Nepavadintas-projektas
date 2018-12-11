@@ -46,9 +46,27 @@ namespace Gear.Controllers
             return View(model);
         }
 
-        public ActionResult Search(string tag)
+
+        [HttpGet]
+        public ActionResult Search()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Search(string search)
+        {
+            string[] spl = search.Split(',');
+
+            List<Game> show = new List<Game>();
+
+            if (spl.Count() == 1)
+            {
+                show = db.Games.Where(g=>g.Name.Contains(search)).ToList();
+            }
+
+
+            return View(show);
         }
 
         public ActionResult Payment()
