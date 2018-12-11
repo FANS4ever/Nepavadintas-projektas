@@ -52,7 +52,8 @@
                 }
             </tbody>
         </table>
-        <button class="btn btn-primary ml-auto">Checkout</button>
+
+        <a class="btn btn-primary ml-auto" href="@(Url.Action("Receipt","Store",new { cartId = Model.Id }))"> Order</a>
     </div>
 }
 else

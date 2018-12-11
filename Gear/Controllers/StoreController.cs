@@ -61,7 +61,6 @@ namespace Gear.Controllers
                 show = show.Where(s=>s.Genres.Where(g=>g.Name == tag).FirstOrDefault() != null).ToList();
             }
 
-
             SearchViewModel model = new SearchViewModel() {
                 View = show,
                 Cart = cart,
@@ -73,6 +72,7 @@ namespace Gear.Controllers
             return View(model);
         }
 
+        //cart
         [HttpGet]
         public ActionResult Payment()
         {
@@ -82,9 +82,45 @@ namespace Gear.Controllers
             return View(cart);
         }
 
-        public ActionResult Receipt()
+        //receipt
+        [HttpGet]
+        public ActionResult Receipt(int? cartId)
         {
-            return View();
+            if (cartId == null)
+            {
+                return RedirectToAction("Payment");
+            }
+
+            Cart userCart = db.Carts.Where(c=>c.Id == (int)cartId).SingleOrDefault();
+
+            if (userCart == null)
+            {
+                return RedirectToAction("Payment");
+            }
+
+
+            DateTime now = DateTime.Now;
+            double total = 0;
+
+            foreach (CartItem item in userCart.CartItems)
+            {
+                Discount discount = item.Game.Discounts.Where(d => d.ExpireDate > now).Where(d => d.Hidden != 1).FirstOrDefault();
+
+                if (discount != null)
+                {
+                    total += item.Amount * item.Game.Price * discount.Modifier;
+                }
+                else
+                {
+                    total += item.Amount * item.Game.Price;
+                }
+            }
+
+            Receipt receipt = new Receipt() { Cart_Id = userCart.Id, CreateDate = DateTime.Now, Total = total };
+            db.Receipts.Add(receipt);
+            db.SaveChanges();
+
+            return View(receipt);
         }
 
         public ActionResult RemoveFromCart(int id)
