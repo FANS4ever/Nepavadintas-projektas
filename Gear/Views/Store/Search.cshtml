@@ -28,12 +28,14 @@
             {
                 <div class="row border-bottom p-sm-1 rounded">
                     <div class="col-3">
-                        <img class="p-0 rounded img-fluid" style="width: 100%; height:auto;" src="@("../Files/" + game.Dir + "/icon.jpg")" alt="First slide">
+                        <a href="@Url.Action("AgeValidation","Game",new { id = game.Id })">
+                            <img class="p-0 rounded img-fluid" style="width: 100%; height:auto;" src="@("../Files/" + game.Dir + "/icon.jpg")" alt="First slide">
+                        </a>
                     </div>
                     <div class="col row w-100">
                         <div class="col row mr-auto">
                             <div class="align-self-start col-12 p-0">
-                                <h5 class="">@game.Name</h5>
+                                <h5>@Html.ActionLink(game.Name, "AgeValidation", "Game", new { id = game.Id }, new { @class = "text-dark" })</h5>
                                 <text class="">@game.ShortDescription</text>
                             </div>
                             <div class="align-self-end">
