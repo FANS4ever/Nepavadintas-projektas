@@ -98,6 +98,39 @@ namespace Gear.Controllers
             string loggedUserName = (string)Session["Username"];
             User loggedUser = db.Users.Where(usr => usr.Username.Equals(loggedUserName)).FirstOrDefault();
             db.Users.Remove(loggedUser);
+
+            Cart cart = db.Carts.Where(x => x.User_Username.Equals(loggedUser.Username)).FirstOrDefault();
+            if (cart != null)
+            {
+                db.Carts.Remove(cart);
+                CartItem itm = db.CartItems.Where(x => x.Cart_Id.Equals(cart.Id)).FirstOrDefault();
+                db.CartItems.Remove(itm);
+            }
+
+            GameRating gameRating = db.GameRatings.Where(x => x.User_Username.Equals(loggedUser.Username)).FirstOrDefault();
+            if (gameRating != null)
+                db.GameRatings.Remove(gameRating);
+
+            LibraryGame libGame = db.LibraryGames.Where(x => x.User_Username.Equals(loggedUser.Username)).FirstOrDefault();
+            if (libGame != null)
+                db.LibraryGames.Remove(libGame);
+
+            CommentRating commentRating = db.CommentRatings.Where(x => x.User_Username.Equals(loggedUser.Username)).FirstOrDefault();
+            if (commentRating != null)
+                db.CommentRatings.Remove(commentRating);
+
+            Comment com = db.Comments.Where(x => x.User_Username.Equals(loggedUser.Username)).FirstOrDefault();
+            if (com != null)
+                db.Comments.Remove(com);
+
+            Mark mark = db.Marks.Where(x => x.User_Username.Equals(loggedUser.Username)).FirstOrDefault();
+            if (mark != null)
+                db.Marks.Remove(mark);
+
+            Visit visit = db.Visits.Where(x => x.User_Username.Equals(loggedUser.Username)).FirstOrDefault();
+            if (visit != null)
+                db.Visits.Remove(visit);
+
             Session.Clear();
             db.SaveChanges();
             return RedirectToAction("Index", "Store"); ;
