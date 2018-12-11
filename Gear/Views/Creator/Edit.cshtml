@@ -20,16 +20,18 @@
 
 
     <div class="form">
+        <br>
+        <br>
         <h3>Title:</h3>
-        <input class="myInput" type="text" name="gamename">
+        <input class="myInput" type="text" name="name" value="@Model.Name">
         <h4>Game discription:</h4>
-        <textarea name="message" rows="5"></textarea>
+        <textarea name="message" rows="5" value="@Model.Description"></textarea>
         <h4>Add photos:</h4>
         <input type="file" name="pic" accept="image/*">
         <h4>Link a youtube trailer:</h4>
-        <input type="text" name="trailer">
+        <input type="text" name="trailer" value="@Model.TrailerURL">
         <h4>Version:</h4>
-        <input type="text" name="version">
+        <input type="text" name="version" value="VersionBranch">
         <h4>Genre</h4>
         <div class="select">
             <select name="genre" id="genre">

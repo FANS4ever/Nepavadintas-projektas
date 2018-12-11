@@ -38,11 +38,40 @@ namespace Gear.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            return View(@"~/Views/Creator/Edit.cshtml");
+            Game game = db.Games.Where(x => x.Id == id).ToList()[0];
+            return View(@"~/Views/Creator/Edit.cshtml", game);
         }
-        public ActionResult Statistics()
+        [HttpPost]
+        public ActionResult Edit(string gamename, string message, string pic, string trailer, string version, string genre, string age, DateTime date, HttpPostedFileBase file, string price)
+        {
+            string loggedUserName = (string)Session["Username"];
+            Developer developer = db.Developers.Where(x => x.Users.Any(y => y.Username.Contains(loggedUserName))).ToList()[0];
+
+            //Game game = db.Games.Where(x => x.Id == id);
+
+            Game addGame = new Game()
+            {
+                Name = gamename,
+                Description = message,
+                ShortDescription = "ner",
+                TrailerURL = trailer,
+                Price = double.Parse(price),
+                VersionBranch = version,
+                VersionNumber = 1.0,
+                Dir = pic,
+                Available = (sbyte)1,
+                ReleaseDate = date,
+                AgeRestriction = int.Parse(age)
+
+            };
+            
+            db.Games.Add(addGame);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+            public ActionResult Statistics()
         {
             double count = 1000, y = 100;
             Random random = new Random();
@@ -87,7 +116,7 @@ namespace Gear.Controllers
             addGame.Developer_Id = developer.Id;
             db.Games.Add(addGame);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
     }
         public ActionResult BecomingCreator()
         {
