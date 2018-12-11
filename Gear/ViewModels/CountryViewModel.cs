@@ -10,6 +10,7 @@ namespace Gear.ViewModels
     {
         public List<Country> Countries { get; set; }
         public User user { get; set; }
+        public List<Mark> marks { get; set; }
 
     }
 }

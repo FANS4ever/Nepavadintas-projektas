@@ -57,7 +57,31 @@
                         model.name = name;
                         model.surename = surename;
                         console.log(model.name);
-                        jQuery.ajax({
+                        $.ajax({
+                            type: "POST",
+                            url: "Home/Position",
+                            data: jsonStr,
+                            cache: false,
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (json) {
+
+                            }
+                        @*$.ajax({
+                            url: '@Url.Action("LoginFB", "Profile")', // try to use Url Helper when possible
+                            type: 'GET', // use Get for [HttpGet] action or POST for [HttpPost]
+                            contentType: 'json', 
+                            //dataType: 'jsonp', jsonp is for sending to a site other than the current one.. 
+                            data: jsonStr, // no need to stringify
+                            success: function (result) {
+                                if (result == true) {
+                                    //window.location = "/Dashboard";
+                                } else {
+                                    //$QuickLoginErrors.text(result);
+                                }
+                            }
+                        });*@
+                        @*jQuery.ajax({
                             type: "POST",
                             url: "@Url.Action("LoginFB")",
                             dataType: "json",
@@ -69,7 +93,7 @@
                             failure: function (errMsg) {
                                 alert(errMsg);
                             }
-                        });
+                        });*@
                     }
                 });
             } else {
@@ -82,6 +106,8 @@
                 statusChangeCallback(response);
             });
         }
+
+
 
     </script>
 
