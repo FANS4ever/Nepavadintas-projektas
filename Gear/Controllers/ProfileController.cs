@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Gear.Models;
+using Gear.ViewModels;
 
 
 /// <summary>
@@ -13,14 +14,20 @@ namespace Gear.Controllers
 {
     public class ProfileController : ControllerBase
     {
+        public class loginFb
+        {
+            public string name { get; set; }
+            public string surename { get; set; }
+        }
+
         [HttpGet]
         public ActionResult Index()
         {
             List<User> Users = db.Users.ToList();
             List<Game> Games = db.Games.ToList();
-            User loggedUser = Session["User"] as User;
-
-            User user = new User()
+            string loggedUserName = (string)Session["Username"];
+            User loggedUser = db.Users.Where(u => u.Username.Equals(loggedUserName)).FirstOrDefault();
+            User usr = new User()
             {
                 Username = loggedUser.Username,
                 Password = loggedUser.Password,
@@ -33,22 +40,64 @@ namespace Gear.Controllers
                 Rank_Name = loggedUser.Rank_Name,
                 LibraryGames = loggedUser.LibraryGames.ToList(),
             };
-            return View(user);
+
+            CountryViewModel model = new CountryViewModel()
+            {
+                Countries = db.Countries.ToList(),
+                user = usr
+            };
+            return View(model);
+        }
+
+        [HttpGet]
+        public ActionResult Edit()
+        {
+            string loggedUserName = (string)Session["Username"];
+            User loggedUser = db.Users.Where(u => u.Username.Equals(loggedUserName)).FirstOrDefault();
+            User usr = new User()
+            {
+                Username = loggedUser.Username,
+                Password = loggedUser.Password,
+                Name = loggedUser.Name,
+                Surname = loggedUser.Surname,
+                Email = loggedUser.Email,
+                Birthday = loggedUser.Birthday,
+                Country_Code = loggedUser.Country_Code,
+            };
+            CountryViewModel model = new CountryViewModel()
+            {
+                Countries = db.Countries.ToList(),
+                user = usr
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public ActionResult Edit(string password, string email, string name, string surename)
+        public ActionResult Edit(string username, string email, string name, string surename, DateTime birthday, string password, int country)
         {
-            User loggedUser = Session["User"] as User;
-            var currUser = db.Users.SingleOrDefault(usr => usr.Username.Equals(loggedUser.Username));
-            //currUser.Username = username;
-            currUser.Password = password;
-            currUser.Email = email;
-            currUser.Name = name;
-            currUser.Surname = surename;
-            //currUser.Birthday = birthday;
+            string loggedUserName = (string)Session["Username"];
+            User loggedUser = db.Users.Where(usr => usr.Username.Equals(loggedUserName)).FirstOrDefault();
+            //loggedUser.Username = username;
+            if(password != "")
+                loggedUser.Password = password;
+            loggedUser.Email = email;
+            loggedUser.Name = name;
+            loggedUser.Surname = surename;
+            loggedUser.Birthday = birthday;
+            if(country != 0)
+                loggedUser.Country_Code = country;
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index", "Profile"); ;
+        }
+
+        public ActionResult Remove()
+        {
+            string loggedUserName = (string)Session["Username"];
+            User loggedUser = db.Users.Where(usr => usr.Username.Equals(loggedUserName)).FirstOrDefault();
+            db.Users.Remove(loggedUser);
+            Session.Clear();
+            db.SaveChanges();
+            return RedirectToAction("Index", "Store"); ;
         }
 
         public ActionResult ChatRoom()
@@ -65,7 +114,7 @@ namespace Gear.Controllers
         }
 
        [HttpPost]
-        public ActionResult Register(string username, string email, string password, string confirmPassword, int country)
+        public ActionResult Register(string username, string email, string password, string confirmPassword, string name, string surename, DateTime birthday, int country)
         {
             //Game g = db.Games.ToList().Where(game => game.Name == "Witcher").ToList()[0];
             //List<Genre> genres = g.Genres.ToList();
@@ -73,20 +122,31 @@ namespace Gear.Controllers
             //{
             //    string name = gen.Name;
             //}
-
-
-            db.Users.Add(new User()
+            User user = new User()
             {
                 Username = username,
                 Password = password,
+                Name = name,
+                Surname = surename,
+                Birthday = birthday,
                 Email = email,
                 Blocked = 0,
                 Country_Code = country,
                 Rank_Name = "User"
-            });
-            db.SaveChanges();
+            };
 
-            return Content("Good");
+            User temp = db.Users.Where(u => u.Username.Equals(username)).FirstOrDefault();
+            if (temp == null)
+            {
+                db.Users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Login", "Profile"); ;
+            }
+            else
+            {
+                return View();
+            }
+         
         }
 
         public ActionResult Login()
@@ -109,6 +169,7 @@ namespace Gear.Controllers
                     Session["LoggedIn"] = true;
                     Session["Username"] = user.Username;
                     Session["Rank"] = user.Rank_Name;
+                    return RedirectToAction("Index", "Store"); ;
                 } 
             }
 
@@ -119,6 +180,25 @@ namespace Gear.Controllers
         {
             Session.Clear();
             return RedirectToAction("Index","Store");
+        }
+
+        public ActionResult LoginFB(loginFb obj)
+        {
+            User user = db.Users.Where(u => u.Name.Equals(obj.name) && u.Surname.Equals(obj.surename)).FirstOrDefault();
+
+            if (user != null)
+            {
+
+                Session["LoggedIn"] = true;
+                Session["Username"] = user.Username;
+                Session["Rank"] = user.Rank_Name;
+                return RedirectToAction("Index", "Store"); ;
+            }
+            else
+            {
+                return RedirectToAction("Index", "Store"); ;
+            }
+            
         }
     }
 }

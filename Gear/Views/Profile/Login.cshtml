@@ -1,4 +1,5 @@
-﻿<style>
+﻿@model Gear.Models.User
+<style>
     .form {
         display:grid; 
         grid-template-columns:max-content;
@@ -38,8 +39,39 @@
 
         function statusChangeCallback(response) {
             if (response.status === 'connected') {
-                window.open('@Url.Action("Index", "ReportExecution")');
+                //window.open('@Url.Action("Index", "ReportExecution")');
                 console.log('logged in')
+
+                FB.api('/me?fields=name', function (response) {
+                    if (response && !response.error) {
+                        var model = new Object();
+                        
+                        var jsonStr = JSON.stringify(response);
+
+                        //var json = JSON.parse(response);
+                        var objJSON = eval("(function(){return " + jsonStr + ";})()");
+                        var values = objJSON.name.split(" ");
+                        var name = values[0];
+                        var surename = values[1];
+
+                        model.name = name;
+                        model.surename = surename;
+                        console.log(model.name);
+                        jQuery.ajax({
+                            type: "POST",
+                            url: "@Url.Action("LoginFB")",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            data: JSON.stringify({ user: model }),
+                            success: function (data) {
+                                alert(data);
+                            },
+                            failure: function (errMsg) {
+                                alert(errMsg);
+                            }
+                        });
+                    }
+                });
             } else {
                 console.log('not authenticated')
             }
@@ -54,7 +86,7 @@
     </script>
 
     <div class="form-group">
-        <input type="text" class="form-control center-block" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" placeholder="Enter email">
+        <input type="text" class="form-control center-block" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" placeholder="Enter username">
     </div>
     <div class="form-group">
         <input type="password" class="form-control center-block" id="exampleInputPassword1" name="password" placeholder="Password">
@@ -67,4 +99,5 @@
                      scope="public_profile,email"
                      onlogin="checkLoginState();">
     </fb:login-button>
+    
 </form>
