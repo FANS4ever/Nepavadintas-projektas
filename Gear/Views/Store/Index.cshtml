@@ -261,12 +261,13 @@
     <!------------------------------ Side menu ------------------------------------->
 
     <div class="col nav navbar-nav ml-1">
-        <div class="nav-item input-group mb-1">
-            <input type="text" class="form-control text-truncate" placeholder="Search store">
+        @using (Html.BeginForm("Search", "Store", FormMethod.Post, new { @class = "nav-item input-group mb-1" }))
+        {
+            <input type="text" class="form-control text-truncate" placeholder="Search store" name="search">
             <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">Search</button>
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
             </div>
-        </div>
+        }
         @if ((bool)Session["LoggedIn"])
         {
             <div class="nav-item">

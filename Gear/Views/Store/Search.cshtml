@@ -87,7 +87,7 @@
                 <button class="btn btn-light w-100" type="button" data-toggle="collapse" data-target="#cartCollapse" aria-expanded="false" aria-controls="cartCollapse"><b>Cart</b></button>
                 <div class="collapse multi-collapse" id="cartCollapse">
                     <div class="dropdown-divider"></div>
-                    <a href="#" class="btn btn-outline-info w-100">Checkout</a>
+                    <a href="@Url.Action("Payment","Store")" class="btn btn-outline-info w-100">Checkout</a>
                     <div class="dropdown-divider"></div>
                     <ul class="list-group">
                         @if (Model.Cart != null && Model.Cart.CartItems.Count != 0)

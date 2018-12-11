@@ -86,5 +86,33 @@ namespace Gear.Controllers
         {
             return View();
         }
+
+        public ActionResult RemoveFromCart(int id)
+        {
+            CartItem item = db.CartItems.Where(c => c.Id == id).SingleOrDefault();
+            db.CartItems.Remove(item);
+            db.SaveChanges();
+
+            return RedirectToAction("Payment");
+        }
+
+        public ActionResult ChangeCartItemAmount(int id, int amount)
+        {
+            if (amount <= 0)
+            {
+                return RedirectToAction("RemoveFromCart",new { id = id });
+            }
+            CartItem item = db.CartItems.Where(c => c.Id == id).SingleOrDefault();
+
+            if (item.Amount == amount)
+            {
+                return RedirectToAction("Payment");
+            }
+
+            item.Amount = amount;
+            db.SaveChanges();
+
+            return RedirectToAction("Payment");
+        }
     }
 }
