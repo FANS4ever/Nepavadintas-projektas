@@ -604,7 +604,7 @@
                     <text class="showcase-item-price">@String.Format("{0:0.00}", item.Price) EUR</text>
                     @if (item.Discount > 0)
                     {
-                        @:<text class="showcase-item-discount"> @item.Discount %</text>
+                        @:<text class="showcase-item-discount"> -@item.Discount %</text>
                     }
                 </div>
             }
@@ -775,61 +775,11 @@
 
     @foreach (var item in Model.Comments)
     {
-        <div class="comment-grid">
-            <img class="user-profile-image" src="~/Content/images/user.jpg">
-
-            <div class="comment-rating">
-                <b><span class="comment-display">@item.User_Username</span></b>
-                <div class="dropdown">
-                    <button onclick="dropDown()" class="dropbtn">…</button>
-                    <div id="myDropdown" class="dropdown-content">
-                        <a href="#home">Important</a>
-                        <a href="#about">Warn</a>
-                        <a href="#contact">Remove</a>
-                    </div>
-                </div>
-                @{ 
-                    int gameRating = 0;
-                    foreach (var rating in Model.GameRatings)
-                    {
-                        if (item.User_Username == rating.User_Username)
-                        {
-                            gameRating = rating.Rating;
-                            break;
-                        }
-                    }
-
-                    for (int i = 1; i < 6; i++)
-                    {
-                        if (i <= gameRating)
-                        {
-                        <star class="comment-rating-full" for="star @i" title="@i stars"> </star>
-                        }
-                        else
-                        {
-                        <star class="comment-rating-empty" for="star @i" title="@i stars"> </star>
-                        }
-                    }
-                 }
-            </div>
-
-            <span class="date"> @item.CreateDate.Year-@item.CreateDate.Month-@item.CreateDate.Day </span>
-            <span class="comment-display">@item.Content</span>
-
-            <div class="line"> </div>
-            <span class="date"> Average score of review:  3</span>
-            <input class="reply-button" id="reply" type="button" value="Reply" /><br>
-        </div>
-    }
-
-
-    @*<br>
-
-    <div class="comment-grid" style="margin-left: 50px;">
-        <img class="user-profile-image" src="~/Content/images/user.jpg" alt="witcher.jpg" title="Witcher">
+    <div class="comment-grid">
+        <img class="user-profile-image" src="~/Content/images/user.jpg">
 
         <div class="comment-rating">
-            <b><span class="comment-display"> Vartotojas 2</span></b>
+            <b><span class="comment-display">@item.User_Username</span></b>
             <div class="dropdown">
                 <button onclick="dropDown()" class="dropbtn">…</button>
                 <div id="myDropdown" class="dropdown-content">
@@ -838,23 +788,38 @@
                     <a href="#contact">Remove</a>
                 </div>
             </div>
+            @{
+                int gameRating = 0;
+                foreach (var rating in Model.GameRatings)
+                {
+                    if (item.User_Username == rating.User_Username)
+                    {
+                        gameRating = rating.Rating;
+                        break;
+                    }
+                }
 
-            <star class="comment-rating-full" for="star1" title="1 stars"> </star>
-            <star class="comment-rating-full" for="star2" title="2 stars"> </star>
-            <star class="comment-rating-full" for="star3" title="3 stars"> </star>
-            <star class="comment-rating-empty" for="star4" title="4 stars"> </star>
-            <star class="comment-rating-empty" for="star5" title="5 stars"> </star>
+                for (int i = 1; i < 6; i++)
+                {
+                    if (i <= gameRating)
+                    {
+                        <star class="comment-rating-full" for="star @i" title="@i stars"> </star>
+                    }
+                    else
+                    {
+                        <star class="comment-rating-empty" for="star @i" title="@i stars"> </star>
+                    }
+                }
+            }
         </div>
 
-        <span class="date"> 2018-10-30 </span>
-        <span class="comment-display">Cia yra atsakymas i labai labai labai labai labai labai labai labai labai labai labai labai ilga pirmo vartotojo komentara</span>
+        <span class="date"> @item.CreateDate.Year-@item.CreateDate.Month-@item.CreateDate.Day </span>
+        <span class="comment-display">@item.Content</span>
+
         <div class="line"> </div>
-        <span class="date"> Average score of review:  0</span>
-        <input class="reply-button" id="reply" type="button" value="Reply" onclick="replySomething()" />
+        <br>
     </div>
-
-
-</div>*@
+    }
 
 <!--Naudoti jei nebereik grid-->
 <div class="content-tail">
