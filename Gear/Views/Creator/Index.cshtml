@@ -83,28 +83,36 @@
 <h3>Published games</h3>
 
 <table style="width:100%">
-    <tr>
-        <th width="256px">
-            <img src="~/Files/WITCHER3/icon.jpg" alt="Witcher">
-        </th>
-        <th>
-            <div align="center">
-                <h1 style="font-size:3vw;">The Witcher 3: Wild Hunt</h1>
-            </div>
-        </th>
-        <th width="256px">
-            <div align="center">
-                <div class="l">
-                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Creator")'">Edit</button>
-                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Statistics", "Creator")'">Statistics</button>
-                </div>
-                <div class="l">
-                    <button type="button" class="btn btn-primary" onclick="showDiscount('');">Discounts</button>
-                    <button type="button" class="btn btn-primary" onclick="showPrompt('Do you realy want to remove the game?');">Remove</button>
-                </div>
-            </div>
-        </th>
-    </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+
+            <tr>
+                <th width="256px">
+                    <img src="~/Files/@item.Dir/icon.jpg" alt="@item.Name">
+                </th>
+                <th>
+                    <div align="center">
+                        <h1 style="font-size:3vw;">@item.Name</h1>
+                    </div>
+                </th>
+                <th width="256px">
+                    <div align="center">
+                        <div class="l">
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Creator")'">Edit</button>
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Statistics", "Creator")'">Statistics</button>
+                        </div>
+                        <div class="l">
+                            <button type="button" class="btn btn-primary" onclick="showDiscount('');">Discounts</button>
+                            <button type="button" class="btn btn-primary" onclick="showPrompt('Do you realy want to remove the game?',@item.Id);">Remove</button>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        }
+    }
+    
 </table>
 <p>
     <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Creator")'">Publish a new game</button>
@@ -114,7 +122,7 @@
 <!-- Code for confirmation window-->
 
 <script>
-    function showPrompt(msg) {
+    function showPrompt(msg,index) {
         // CREATE A Promise TO RETURN
         var p = new Promise(function (resolve, reject) {
             ;
@@ -127,6 +135,7 @@
                     $('<div/>', { class: 'text-right' })
                         .append($('<button/>', { class: 'btn btn-cancel' }).html('Cancel').on('click', function () {
                             $('.overlay').remove();
+                            //Url.Action("Remove","Creator", new {id = index' });
                             // RESOLVE Promise TO false
                             resolve(false);
                         }))
