@@ -30,7 +30,7 @@ namespace Gear.Controllers
             Random rand = new Random();
             List<Game> showcase = db.Games.OrderByDescending(
                     g => g.GameRatings.Where(r => r.Game_Id == g.Id)
-                    .Sum(x => x.Rating)).Take(3).ToList();
+                    .Sum(x => x.Rating)).Take(6).ToList();
 
             string user = (string)Session["Username"];
             Cart cart = (bool)Session["LoggedIn"] == true ? db.Carts.Where(c => c.User_Username.Equals(user)).Where(c => c.Receipts.Count == 0).FirstOrDefault() : null;
@@ -46,27 +46,31 @@ namespace Gear.Controllers
             return View(model);
         }
 
-
-        [HttpGet]
-        public ActionResult Search()
+        public ActionResult Search(string search, string tag)
         {
-            return View();
-        }
+            search = search == null ? "" : search;
 
-        [HttpPost]
-        public ActionResult Search(string search)
-        {
-            string[] spl = search.Split(',');
+            List<Game> show = db.Games.Where(g => g.Name.Contains(search)).OrderBy(g=>g.Name).ToList();
+            List<Genre> genre = db.Genres.ToList();
 
-            List<Game> show = new List<Game>();
+            string user = (string)Session["Username"];
+            Cart cart = (bool)Session["LoggedIn"] == true ? db.Carts.Where(c => c.User_Username.Equals(user)).Where(c => c.Receipts.Count == 0).FirstOrDefault() : null;
 
-            if (spl.Count() == 1)
+            if (tag != null)
             {
-                show = db.Games.Where(g=>g.Name.Contains(search)).ToList();
+                show = show.Where(s=>s.Genres.Where(g=>g.Name == tag).FirstOrDefault() != null).ToList();
             }
 
 
-            return View(show);
+            SearchViewModel model = new SearchViewModel() {
+                View = show,
+                Cart = cart,
+                Tags = genre,
+                Selected = tag,
+                Search = search
+            };
+
+            return View(model);
         }
 
         public ActionResult Payment()

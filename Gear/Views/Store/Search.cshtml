@@ -1,137 +1,128 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Search</h2>
-<hr />
-<div style="display:grid; grid-auto-columns:1fr max-content;">
-    <div style="grid-row:1;">
-        <style>
-            .game-list-wrapper {
-            }
-
-            .game-list {
-                margin-top: 5px;
-            }
-
-            .game-list-item {
-                display: grid;
-                grid-template-columns: max-content 1fr max-content;
-                margin: 0px 3px 5px 3px;
-                padding: 2px 5px 5px 5px;
-                border-bottom: 1px solid rgb(204,204,204,0.7);
-            }
-
-                .game-list-item:hover {
-                    background-color: rgb(245,245,245);
-                }
-
-                .game-list-item .icon-wrapper {
-                    max-width: 200px;
-                    max-height: 113px;
-                }
-
-                    .game-list-item .icon-wrapper .icon {
-                        width: 100%;
-                        height: 100%;
-                        cursor: pointer;
-                    }
-
-                .game-list-item .info-wrapper {
-                    /*grid-area: info;*/
-                    display: grid;
-                    grid-template-rows: max-content auto max-content;
-                    margin-left: 10px;
-                    padding-bottom: 2px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                }
-
-                    .game-list-item .info-wrapper .title {
-                        font-size: 20px;
-                    }
-
-                        .game-list-item .info-wrapper .title:hover {
-                            text-decoration: underline;
-                            cursor: pointer;
-                        }
-
-                    .game-list-item .info-wrapper .description {
-                        font-size: 15px;
-                    }
-
-                    .game-list-item .info-wrapper .tags {
-                        font-size: 12px;
-                    }
-
-                        .game-list-item .info-wrapper .tags .tag {
-                            border: 1px solid rgb(204,204,204);
-                            border-radius: 10px;
-                            padding: 2px;
-                        }
-
-                .game-list-item .cart-wrapper {
-                    /*grid-area: cart;*/
-                    align-self: center;
-                    display: grid;
-                    grid-template-columns: 1fr 1fr;
-                    grid-template-rows: 1fr 1fr;
-                    text-align: center;
-                    margin-left: 30px;
-                    margin-right: 30px;
-                }
-
-                    .game-list-item .cart-wrapper .price {
-                        grid-row: 1;
-                        grid-column: 2;
-                        margin-left: 2px;
-                    }
-
-                    .game-list-item .cart-wrapper .discount {
-                        grid-row: 1;
-                        grid-column: 1;
-                        margin-right: 2px;
-                        background-color: lightgreen;
-                        border-radius: 3px;
-                    }
-
-                    .game-list-item .cart-wrapper .cart-button {
-                        grid-row: 2;
-                        grid-column: 1/-1;
-                    }
-        </style>
-        @for (int i = 0; i < 3; i++)
+@model Gear.ViewModels.SearchViewModel
+<div class="row mt-2">
+    <h5 class="display-4">Search</h5>
+</div>
+<hr/>
+<div class="row">
+    <div>
+        <span>Search: </span>
+        <b>@(Model.Search == "" ? "All" : Model.Search)</b>
+    </div>
+    @if (Model.Selected != null)
+    {
+        <div class="ml-2">
+            <span>Category: </span>
+            <b>@Model.Selected</b>
+        </div>
+    }
+</div>
+<div class="row mt-3">
+    <div class="col-9">
+        @if (Model.View.Count > 0)
         {
-            <div class="game-list-item">
-                <div class="icon-wrapper">
-                    <img class="icon" onclick="window.location.href = '/game/'" src="../@(Model.Pupular[0].Picture.Directory)">
-                </div>
-                <div class="info-wrapper">
-                    <div class="title" onclick="window.location.href = '/game/'">@(Model.Pupular[0].Game.Name)</div>
-                    <div class="description">@(Model.Pupular[0].Game.Description) popular tab</div>
-                    <div class="tags">
-                        <a class="tag">Tag 1</a>
-                        <a class="tag">Tag 2</a>
-                        <a class="tag">Tag 3</a>
+            foreach (Gear.Models.Game game in Model.View)
+            {
+                <div class="row border-bottom p-sm-1 rounded">
+                    <div class="col-3">
+                        <img class="p-0 rounded img-fluid" style="width: 100%; height:auto;" src="@("../Files/" + game.Dir + "/icon.jpg")" alt="First slide">
+                    </div>
+                    <div class="col row w-100">
+                        <div class="col row mr-auto">
+                            <div class="align-self-start col-12 p-0">
+                                <h5 class="">@game.Name</h5>
+                                <text class="">@game.ShortDescription</text>
+                            </div>
+                            <div class="align-self-end">
+                                @foreach (Gear.Models.Genre genre in game.Genres)
+                                {
+                                    @Html.ActionLink(genre.Name, "Search", "Store", null, new { @class = "badge badge-info ml-sm-1" })
+                                }
+                            </div>
+                        </div>
+                        <div class="col-auto align-self-center mr-2">
+                            @{
+                                DateTime now = DateTime.Now;
+                                Gear.Models.Discount hasDiscount = game.Discounts.Where(d => d.ExpireDate > now).Where(d => d.Hidden != 1).FirstOrDefault();
+                            }
+
+                            @if (hasDiscount != null)
+                            {
+                                <span class="d-block text-center badge badge-success">-@hasDiscount.Modifier.ToString("#0.##%")</span>
+                                <span class="d-block text-center badge badge-light">@((game.Price * hasDiscount.Modifier).ToString("0.00")) EUR</span>
+                            }
+                            else
+                            {
+                                <span class="d-block text-center badge badge-light">@game.Price EUR</span>
+                            }
+                        </div>
                     </div>
                 </div>
-                <div class="cart-wrapper">
-                    <div class="price">10.99 $</div>
-                    <div class="discount">100%</div>
-                    <div class="cart-button"><a class="button">+ To cart</a></div>
-                </div>
+            }
+        }
+        else
+        {
+            <div class="row jumbotron">
+                <h1 class="display-4">No results!</h1>
             </div>
         }
     </div>
-    <div style="grid-row:1;padding-left:5px;border-left:1px solid gray">
-        <div>Search</div>
-        <input type="text" placeholder="Input search tags"/>
-        <ul style="list-style-type:none;padding:0px;">
-            <li><a>+</a> <a>Tag1</a></li>
-            <li><a>+</a> <a>Tag2</a></li>
-            <li><a>+</a> <a>Tag3</a></li>
-            <li><a>+</a> <a>Tag4</a></li>
-        </ul>
-    </div>
+
+    @using (Html.BeginForm("Search", "Store", FormMethod.Post, new { @class = "col nav navbar-nav ml-1" }))
+    {
+            <div class="nav-item input-group mb-1">
+                <input type="text" class="form-control text-truncate" placeholder="Search store" name="search">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </div>
+            </div>
+            <div class="nav-item">
+                <button class="btn btn-light w-100" type="button" data-toggle="collapse" data-target="#cartCollapse" aria-expanded="false" aria-controls="cartCollapse"><b>Cart</b></button>
+                <div class="collapse multi-collapse" id="cartCollapse">
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="btn btn-outline-info w-100">Checkout</a>
+                    <div class="dropdown-divider"></div>
+                    <ul class="list-group">
+                        @if (Model.Cart != null && Model.Cart.CartItems.Count != 0)
+                        {
+                            foreach (Gear.Models.CartItem item in Model.Cart.CartItems)
+                            {
+                                <li class="list-group-item">
+                                    <span class="text-primary">x@(item.Amount)</span>
+                                    <span class="text-capitalize">@item.Game.Name</span>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="list-group-item alert alert-info text-center">Cart is empty!</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="nav-item text-center">
+                <button class="btn btn-light w-100" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse"><b>Categories</b></button>
+                <div class="collapse multi-collapse" id="tagCollapse">
+                    <div class="dropdown-divider"></div>
+                    @if (Model.Tags != null && Model.Tags.Count > 0)
+                    {
+                        <div class="btn-group-toggle" data-toggle="buttons">
+                            @foreach (Gear.Models.Genre item in Model.Tags)
+                            {
+                                <label class="btn btn-sm btn-warning">
+                                    <input type="radio" name="tag" value="@item.Name"> @item.Name
+                                </label>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="list-group-item alert alert-info text-center">No categories!</div>
+                    }
+                </div>
+            </div>
+    }
 </div>
