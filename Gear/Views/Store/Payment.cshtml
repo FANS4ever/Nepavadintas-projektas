@@ -1,12 +1,59 @@
-﻿
+﻿@model Gear.Models.Cart
 @{
-    ViewBag.Title = "Payment";
+                /**/
+
+                ViewBag.Title = "Payment";
 }
 
-@model List<Gear.Models.Cart>
+<h5 class="display-4 mt-2">Payment</h5>
+<hr />
 
-<div class="row">
-    <ul>
+@if (Model != null && Model.CartItems.Count > 0)
+{
+    <form class="row" method="post">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th class="text-center" scope="col">Amount</th>
+                    <th class="text-center" scope="col">Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Gear.Models.CartItem item in Model.CartItems)
+                {
+                    <tr class="">
+                        <td><span class="d-block">@item.Game.Name</span></td>
 
-    </ul>
-</div>
+                        <td class="text-center"><input class="text-center" value="@(item.Amount)"></td>
+                        @{
+                            DateTime now = DateTime.Now;
+                            Gear.Models.Discount hasDiscount = item.Game.Discounts.Where(d => d.ExpireDate > now).Where(d => d.Hidden != 1).FirstOrDefault();
+                        }
+                        @if (hasDiscount != null)
+                        {
+                            <td>
+                                <span class="d-block text-center badge badge-success">-@hasDiscount.Modifier.ToString("#0.##%")</span>
+                                <span class="d-block text-center badge badge-light">@(((item.Game.Price * hasDiscount.Modifier) * item.Amount).ToString("0.00")) EUR</span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td><span class="d-block text-center badge badge-light">@(item.Game.Price * item.Amount) EUR</span></td>
+                        }
+                        <td>@Html.ActionLink("X", "RemoveFromCart", "Store", new { id = item.Game_Id }, new { @class = "btn btn-sm btn-danger" })</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button class="btn btn-primary ml-auto">Checkout</button>
+    </form>
+}
+else
+{
+    <div class="row jumbotron">
+        <h1 class="display-4">Cart is empty!</h1>
+    </div>
+}
+
