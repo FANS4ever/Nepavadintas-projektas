@@ -71,19 +71,23 @@ namespace Gear.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-            public ActionResult Statistics()
+            public ActionResult Statistics(int id)
         {
-            double count = 1000, y = 100;
-            Random random = new Random();
-            //List<DataPoint> dataPoints = new List<DataPoint>();
+            Game game = db.Games.Where(x => x.Id == id).FirstOrDefault();
 
-            for (int i = 0; i < count; i++)
+            List<Visit> visits = game.Visits.ToList();
+            List<DataPoint> dataPoints = new List<DataPoint>();
+
+            int num = 0;
+
+            foreach (Visit item in visits)
             {
-                y += random.Next(-10, 11);
-                //dataPoints.Add(new DataPoint(i, y));
+                dataPoints.Add(new DataPoint(num++,item.Amount));
             }
 
-            //ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+
+         
 
             return View(@"~/Views/Creator/Statistics.cshtml");
         }

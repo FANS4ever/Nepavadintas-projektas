@@ -101,7 +101,7 @@
                     <div align="center">
                         <div class="l">
                             <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Edit", "Creator",new RouteValueDictionary(new { id = item.Id}))'">Edit</button>
-                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Statistics", "Creator")'">Statistics</button>
+                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Statistics", "Creator",new RouteValueDictionary(new { id = item.Id}))'")>Statistics</button>
                         </div>
                         <div class="l">
                             <button type="button" class="btn btn-primary" onclick="showDiscount('');">Discounts</button>

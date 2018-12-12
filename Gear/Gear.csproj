@@ -202,6 +202,7 @@
     <Compile Include="Models\Country.cs">
       <DependentUpon>GearDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataPoint.cs" />
     <Compile Include="Models\Developer.cs">
       <DependentUpon>GearDB.tt</DependentUpon>
     </Compile>
