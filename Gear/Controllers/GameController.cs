@@ -277,31 +277,39 @@ namespace Gear.Controllers
             }
             else if (addToCart != null)
             {
-                var carts = db.Carts.Where(c => c.User_Username.Equals(user.Username)).ToList();
+                var cart = db.Carts.Where(c => c.User_Username.Equals(user.Username)).Where(c=>c.Receipts.Count == 0).FirstOrDefault();
 
-                if (carts.Count == 0)
+                if (cart == null)
                 {
-                    db.Carts.Add(new Cart()
+                    cart = new Cart()
                     {
                         CreateDate = DateTime.Now,
                         EditDate = DateTime.Now,
                         User_Username = user.Username
-                    });
+                    };
+
+                    db.Carts.Add(cart);
                     db.SaveChanges();
                 }
-                var cart = db.Carts.Where(c => c.User_Username.Equals(user.Username)).ToList()[0];
 
                 cart.EditDate = DateTime.Now;
 
-                db.CartItems.Add(new CartItem()
+                CartItem item = cart.CartItems.Where(c => c.Game_Id == id).FirstOrDefault();
+
+                if (item == null)
                 {
-                    CreateDate = DateTime.Now,
-                    Amount = 1,
-                    Cart_Id = cart.Id,
-                    Game_Id = id
-                });
-
-
+                    db.CartItems.Add(new CartItem()
+                    {
+                        CreateDate = DateTime.Now,
+                        Amount = 1,
+                        Cart_Id = cart.Id,
+                        Game_Id = id
+                    });
+                }
+                else
+                {
+                    item.Amount += 1;
+                }
             }
             db.SaveChanges();
             return RedirectToAction("Index", new { id = id});

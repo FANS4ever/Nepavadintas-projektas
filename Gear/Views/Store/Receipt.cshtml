@@ -1,8 +1,8 @@
-﻿@{
+﻿@model Gear.ViewModels.ReceiptViewModel
+@{
     ViewBag.Title = "Payment";
 }
 
-@model Gear.Models.Receipt
 
 @if (Model != null)
 {
@@ -16,32 +16,43 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (Gear.Models.CartItem item in Model.Cart.CartItems)
+                @foreach (Gear.Models.CartItem item in Model.receipt.Cart.CartItems)
                 {
-                <tr class="">
-                    <td><span class="d-block">@item.Game.Name</span></td>
-                    <td><span class="d-block text-center">@item.Amount</span></td>
-                    @{
-                        DateTime now = DateTime.Now;
-                        Gear.Models.Discount hasDiscount = item.Game.Discounts.Where(d => d.ExpireDate > now).Where(d => d.Hidden != 1).FirstOrDefault();
-                    }
-                    @if (hasDiscount != null)
-                    {
-                        <td>
-                            <span class="d-block text-center badge badge-success">-@hasDiscount.Modifier.ToString("#0.##%")</span>
-                            <span class="d-block text-center badge badge-light">@(((item.Game.Price * hasDiscount.Modifier) * item.Amount).ToString("0.00")) EUR</span>
-                        </td>
-                    }
-                    else
-                    {
-                        <td><span class="d-block text-center badge badge-light">@(item.Game.Price * item.Amount) EUR</span></td>
-                    }
-                </tr>
+                    <tr class="">
+                        <td><span class="d-block">@item.Game.Name</span></td>
+                        <td><span class="d-block text-center">@item.Amount</span></td>
+                        @{
+                            DateTime now = DateTime.Now;
+
+                            Gear.Models.Discount hasDiscount = item.Game.Discounts.Where(d => d.ExpireDate > Model.receipt.CreateDate).Where(d => d.Code.Equals("GLOBAL")).FirstOrDefault();
+                        }
+                        @if (hasDiscount != null)
+                        {
+                            <td>
+                                <span class="d-block text-center badge badge-success">-@hasDiscount.Modifier.ToString("#0.##%")</span>
+                                <span class="d-block text-center badge badge-light">@(((item.Game.Price * hasDiscount.Modifier) * item.Amount).ToString("0.00")) EUR</span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td><span class="d-block text-center badge badge-light">@(item.Game.Price * item.Amount) EUR</span></td>
+                        }
+                    </tr>
                 }
             </tbody>
         </table>
         @*@Url.Action("", "Store",new { cart = Model.Id })*@
-        <a class="btn btn-primary ml-auto" href="#">Pay</a>
+        <b>Total: @Model.receipt.Total.ToString("0.00") EUR</b>
+        <div class="ml-auto">
+           
+            <select class="custom-select-sm">
+                @foreach (Gear.Models.PaymentType type in Model.paymentType)
+                {
+                    <option value="@type.Id">@type.Name</option>
+                }
+            </select>
+            <a class="btn btn-primary" href="@(Url.Action("paidForItems","Store",new { cartId = Model.receipt.Cart_Id,  }))">Pay</a>
+        </div>
     </div>
 }
 else

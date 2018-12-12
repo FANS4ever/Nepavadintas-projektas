@@ -77,7 +77,7 @@ namespace Gear.Controllers
         public ActionResult Payment()
         {
             string user = (string)Session["Username"];
-            Cart cart = db.Carts.Where(c => c.User_Username.Equals(user)).Where(c => c.Receipts.Count == 0).FirstOrDefault();
+            Cart cart = db.Carts.Where(c => c.User_Username.Equals(user)).Where(c => c.Receipts.Count() == 0).FirstOrDefault();
 
             return View(cart);
         }
@@ -120,7 +120,9 @@ namespace Gear.Controllers
             db.Receipts.Add(receipt);
             db.SaveChanges();
 
-            return View(receipt);
+            List<PaymentType> paymentType = db.PaymentTypes.ToList();
+
+            return View(new ReceiptViewModel() { receipt = receipt, paymentType = paymentType });
         }
 
         public ActionResult RemoveFromCart(int id)
@@ -149,6 +151,36 @@ namespace Gear.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Payment");
+        }
+
+        public ActionResult paidForItems(int cartId)
+        {
+            string username = (string)Session["Username"];
+            User usr = db.Users.Where(u=>u.Username.Equals(username)).FirstOrDefault();
+
+            if (usr != null)
+            {
+                Cart cart = db.Carts.Where(c => c.Id == cartId).FirstOrDefault();
+                if (cart != null && cart.CartItems.Count > 0)
+                {
+                    foreach (CartItem item in cart.CartItems)
+                    {
+                        LibraryGame libgame = usr.LibraryGames.Where(l=>l.Game_Id == item.Game_Id).FirstOrDefault();
+                        if (libgame == null)
+                        {
+                            usr.LibraryGames.Add(new LibraryGame() { CreateDate = DateTime.Now, Game_Id = item.Game_Id, LastOpen = DateTime.Now, PlayTime = TimeSpan.Zero, User_Username = usr.Username });
+                        }
+                        else
+                        {
+                            //code to give codes
+                        }
+                    }
+                }
+            }
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index","Profile");
         }
     }
 }
