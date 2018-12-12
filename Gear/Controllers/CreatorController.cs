@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.IO;
 
 /// <summary>
 /// Gabrielius Ulejevas
@@ -44,30 +44,40 @@ namespace Gear.Controllers
             return View(@"~/Views/Creator/Edit.cshtml", game);
         }
         [HttpPost]
-        public ActionResult Edit(string gamename, string message, string pic, string trailer, string version, string genre, string age, DateTime date, HttpPostedFileBase file, string price)
+        public ActionResult Edit(string id, string messageShort, string message, HttpPostedFileBase pic, string trailer, string version, string numberV, string genre, string age, DateTime date, HttpPostedFileBase file, string price)
         {
             string loggedUserName = (string)Session["Username"];
             Developer developer = db.Developers.Where(x => x.Users.Any(y => y.Username.Contains(loggedUserName))).ToList()[0];
-
-            //Game game = db.Games.Where(x => x.Id == id);
-
-            Game addGame = new Game()
+             int ids = int.Parse(id);
+            Game game = db.Games.Where(x => x.Id ==ids).FirstOrDefault();
+            String gamename = game.Name;
+            if (pic != null)
             {
-                Name = gamename,
-                Description = message,
-                ShortDescription = "ner",
-                TrailerURL = trailer,
-                Price = double.Parse(price),
-                VersionBranch = version,
-                VersionNumber = 1.0,
-                Dir = pic,
-                Available = (sbyte)1,
-                ReleaseDate = date,
-                AgeRestriction = int.Parse(age)
+                var fileName = Path.GetFileName(pic.FileName);
+                string[] values = fileName.Split('.');
+                string temp = values[1];
+                var path = Path.Combine(Server.MapPath("~/Files/" + gamename), "icon." + temp);
+                Directory.CreateDirectory(Server.MapPath("~/Files/" + gamename));
+                file.SaveAs(path);
 
-            };
+            }
+           
             
-            db.Games.Add(addGame);
+
+
+            game.Name = gamename;
+            game.Description = message;
+            game.ShortDescription = messageShort;
+            game.TrailerURL = trailer;
+            game.Price = double.Parse(price);
+            game.VersionBranch = version;
+            game.VersionNumber = int.Parse(numberV);
+            game.Dir = gamename;
+            game.Available = (sbyte)1;
+            game.ReleaseDate = date;
+            game.AgeRestriction = int.Parse(age);
+
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -97,21 +107,32 @@ namespace Gear.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(string gamename, string message, string pic, string trailer, string version,string genre, string age, DateTime date, HttpPostedFileBase file, string price)
+        public ActionResult Create(string gamename, string messageShort, string message, HttpPostedFileBase pic, string trailer, string version, string numberV,string genre, string age, DateTime date, HttpPostedFileBase file, string price)
         {
             string loggedUserName = (string)Session["Username"];
             Developer developer = db.Developers.Where(x => x.Users.Any(y => y.Username.Contains(loggedUserName))).ToList()[0];
+
+            if (pic != null)
+            {
+                var fileName = Path.GetFileName(pic.FileName);
+                string[] values = fileName.Split('.');
+                string temp = values[1];
+                var path = Path.Combine(Server.MapPath("~/Files/" + gamename), "icon." +temp);
+                Directory.CreateDirectory(Server.MapPath("~/Files/" + gamename));
+                file.SaveAs(path);
+                
+            }
 
             Game addGame = new Game()
             {
                 Name = gamename,
                 Description = message,
-                ShortDescription = "ner",
+                ShortDescription = messageShort,
                 TrailerURL = trailer,
                 Price = double.Parse(price),
                 VersionBranch = version,
-                VersionNumber = 1.0,
-                Dir = pic,
+                VersionNumber = int.Parse(numberV),
+                Dir = gamename,
                 Available = (sbyte)1,
                 ReleaseDate = date,
                 AgeRestriction = int.Parse(age)

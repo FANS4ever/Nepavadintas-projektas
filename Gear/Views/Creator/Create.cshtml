@@ -18,18 +18,23 @@
     }
 </style>
 
-
-<form  class= "form" method="post">
+<br>
+<br>
+<form class="form" method="post" enctype="multipart/form-data">
     <h3>Title:</h3>
     <input type="text" name="gamename">
+    <h4>Game shot discription:</h4>
+    <textarea name="messageShort" rows="3"></textarea>
     <h4>Game discription:</h4>
     <textarea name="message" rows="5"></textarea>
     <h4>Add photos:</h4>
-    <input type="file" name="pic" accept="image/*">
+    <input type="file" name="pic" id="file" accept="image/*">
     <h4>Link a youtube trailer:</h4>
     <input type="text" name="trailer">
     <h4>Version:</h4>
     <input type="text" name="version">
+    <h4>Version number:</h4>
+    <input type="numberV" min="0.00" max="10000.00" step="0.01" name="price" />
     <h4>Genre</h4>
     <div class="select">
         <select name="genre" id="genre">
@@ -55,7 +60,7 @@
         </select>
     </div>
     <h4>Age restriction:</h4>
-    <input type="number" min="0.00" max="10000.00" step="1" name="age"/>
+    <input type="number" min="0.00" max="10000.00" step="1" name="age" />
     <h4>Release date</h4>
     <input type="date" id="start" name="date"
            value="2018-07-22"
@@ -64,7 +69,7 @@
     <input type="file" id="myFile" name="file">
     <br>
     <h4>Pricing</h4>
-    <input type="number" min="0.00" max="10000.00" step="0.01" name="price"/>
+    <input type="number" min="0.00" max="10000.00" step="0.01" name="price" />
 
     <br>
     <input type="submit" value="Submit game">

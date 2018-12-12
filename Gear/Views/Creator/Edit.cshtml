@@ -19,54 +19,62 @@
 </style>
 
 
-    <div class="form">
-        <br>
-        <br>
-        <h3>Title:</h3>
-        <input class="myInput" type="text" name="name" value="@Model.Name">
-        <h4>Game discription:</h4>
-        <textarea name="message" rows="5" value="@Model.Description"></textarea>
-        <h4>Add photos:</h4>
-        <input type="file" name="pic" accept="image/*">
-        <h4>Link a youtube trailer:</h4>
-        <input type="text" name="trailer" value="@Model.TrailerURL">
-        <h4>Version:</h4>
-        <input type="text" name="version" value="VersionBranch">
-        <h4>Genre</h4>
-        <div class="select">
-            <select name="genre" id="genre">
-                <option data-value="none" data-selectable="" class="option selected">No genre</option>
-                <option data-value="action" data-selectable="" class="option">Action</option>
-                <option data-value="adventure" data-selectable="" class="option">Adventure</option>
-                <option data-value="card-game" data-selectable="" class="option">Card Game</option>
-                <option data-value="educational" data-selectable="" class="option">Educational</option>
-                <option data-value="fighting" data-selectable="" class="option">Fighting</option>
-                <option data-value="interactive-fiction" data-selectable="" class="option">Interactive Fiction</option>
-                <option data-value="platformer" data-selectable="" class="option">Platformer</option>
-                <option data-value="puzzle" data-selectable="" class="option">Puzzle</option>
-                <option data-value="racing" data-selectable="" class="option">Racing</option>
-                <option data-value="rhythm" data-selectable="" class="option">Rhythm</option>
-                <option data-value="rpg" data-selectable="" class="option">Role Playing</option>
-                <option data-value="shooter" data-selectable="" class="option">Shooter</option>
-                <option data-value="simulation" data-selectable="" class="option">Simulation</option>
-                <option data-value="sports" data-selectable="" class="option">Sports</option>
-                <option data-value="strategy" data-selectable="" class="option">Strategy</option>
-                <option data-value="survival" data-selectable="" class="option">Survival</option>
-                <option data-value="visual-novel" data-selectable="" class="option">Visual Novel</option>
-                <option data-value="other" data-selectable="" class="option">Other</option>
-            </select>
-        </div>
-        <h4>Age restriction:</h4>
-        <input type="number" min="0.00" max="10000.00" step="1" />
-        <h4>Instalation files:</h4>
-        <input type="file" id="myFile">
-        <br>
-        <h4>Pricing</h4>
-        <input type="number" min="0.00" max="10000.00" step="0.01" />
-
-        <br>
-        <input type="submit" value="Submit game">
+<br>
+<br>
+<form class="form" method="post" enctype="multipart/form-data">
+    <h3>Title:</h3>
+    <h3>@Model.Name</h3>
+    <h4>Game shot discription:</h4>
+    <textarea name="messageShort" rows="3">@Model.ShortDescription</textarea>
+    <h4>Game discription:</h4>
+    <textarea name="message" rows="5">@Model.Description</textarea>
+    <h4>Add photos:</h4>
+    <input type="file" name="pic" id="file" accept="image/*">
+    <h4>Link a youtube trailer:</h4>
+    <input type="text" name="trailer" value="@Model.TrailerURL">
+    <h4>Version:</h4>
+    <input type="text" name="version" value="@Model.VersionBranch">
+    <h4>Version number:</h4>
+    <input type="number" min="0.00" max="10000.00" step="0.01" name="numberV"value="@Model.VersionNumber" />
+    <h4>Genre</h4>
+    <div class="select">
+        <select name="genre" id="genre">
+            <option data-value="none" data-selectable="" class="option selected">No genre</option>
+            <option data-value="action" data-selectable="" class="option">Action</option>
+            <option data-value="adventure" data-selectable="" class="option">Adventure</option>
+            <option data-value="card-game" data-selectable="" class="option">Card Game</option>
+            <option data-value="educational" data-selectable="" class="option">Educational</option>
+            <option data-value="fighting" data-selectable="" class="option">Fighting</option>
+            <option data-value="interactive-fiction" data-selectable="" class="option">Interactive Fiction</option>
+            <option data-value="platformer" data-selectable="" class="option">Platformer</option>
+            <option data-value="puzzle" data-selectable="" class="option">Puzzle</option>
+            <option data-value="racing" data-selectable="" class="option">Racing</option>
+            <option data-value="rhythm" data-selectable="" class="option">Rhythm</option>
+            <option data-value="rpg" data-selectable="" class="option">Role Playing</option>
+            <option data-value="shooter" data-selectable="" class="option">Shooter</option>
+            <option data-value="simulation" data-selectable="" class="option">Simulation</option>
+            <option data-value="sports" data-selectable="" class="option">Sports</option>
+            <option data-value="strategy" data-selectable="" class="option">Strategy</option>
+            <option data-value="survival" data-selectable="" class="option">Survival</option>
+            <option data-value="visual-novel" data-selectable="" class="option">Visual Novel</option>
+            <option data-value="other" data-selectable="" class="option">Other</option>
+        </select>
     </div>
+    <h4>Age restriction:</h4>
+    <input type="number" min="0.00" max="10000.00" step="1" name="age" value="@Model.AgeRestriction" />
+    <h4>Release date</h4>
+    <input type="date" id="start" name="date"
+           value="@Model.ReleaseDate"
+           min="2018-01-01" max="2018-12-31" />
+    <h4>Instalation files:</h4>
+    <input type="file" id="myFile" name="file">
+    <br>
+    <h4>Pricing</h4>
+    <input type="number" min="0.00" max="10000.00" step="0.01" name="price" value="@Model.Price"/>
+    <input name="id" value="@Model.Id" style="display: none;">
+    <br>
+    <input type="submit" value="Submit game">
+</form>
 
 
 

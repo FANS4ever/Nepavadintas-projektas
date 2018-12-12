@@ -105,7 +105,8 @@
                         </div>
                         <div class="l">
                             <button type="button" class="btn btn-primary" onclick="showDiscount('');">Discounts</button>
-                            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Remove", "Creator",new RouteValueDictionary(new { id = item.Id}))'">Remove</button>
+                            <button type="button" class="btn btn-primary" onclick="showPrompt('Do yoy realy want to remove this game?');">Remove</button>
+                            <button ID = "confirm" type="button" class="btn btn-primary" Style="display: none" onclick="location.href='@Url.Action("Remove", "Creator",new RouteValueDictionary(new { id = item.Id}))'">Remove</button>
                         </div>
                     </div>
                 </th>
@@ -122,7 +123,7 @@
 <!-- Code for confirmation window-->
 
 <script>
-    function showPrompt(msg,index) {
+    function showPrompt(msg) {
         // CREATE A Promise TO RETURN
         var p = new Promise(function (resolve, reject) {
             ;
@@ -141,6 +142,7 @@
                         }))
                         .append($('<button/>', { class: 'btn btn-primary' }).html('Ok').on('click', function () {
                             $('.overlay').remove();
+                            $("#confirm").click();
                             // RESOLVE Promise TO true
                             resolve(true);
                         }))
